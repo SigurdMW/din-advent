@@ -30,7 +30,7 @@
   "dependencies": {
     "@prisma/cli": "2.5.1",
     "@prisma/client": "2.5.1",
-    "blitz": "0.17.1-canary.7",
+    "blitz": "0.18.0",
     "final-form": "4.20.1",
     "passport-facebook": "3.0.0",
     "passport-google-oauth20": "2.0.0",
