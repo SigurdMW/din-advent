@@ -43,6 +43,12 @@ const UserInfo = () => {
             <strong>Login</strong>
           </a>
         </Link>
+        <a href="/api/auth/facebook" className="button small">
+          Login with Facebook
+        </a>
+        <a href="/api/auth/google" className="button small">
+          Login with Google
+        </a>
       </>
     )
   }
