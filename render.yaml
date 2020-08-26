@@ -17,3 +17,4 @@ databases:
   - name: dinadvent_db_test
     region: frankfurt
     plan: starter
+    ipAllowList: []
