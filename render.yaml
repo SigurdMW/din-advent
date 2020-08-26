@@ -2,6 +2,7 @@ services:
   - type: web
     name: dinadvent_web_test
     env: node
+    region: frankfurt
     plan: starter
     buildCommand: yarn; blitz db migrate; blitz build
     startCommand: blitz start --production -H 0.0.0.0
@@ -14,4 +15,5 @@ services:
           property: connectionString
 databases:
   - name: dinadvent_db_test
+    region: frankfurt
     plan: starter
