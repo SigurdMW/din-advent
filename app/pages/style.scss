@@ -1,0 +1,106 @@
+body {
+  color: white;
+  background-color: #530253;
+}
+
+.da-footer {
+  color: white; /* Fallback for older browsers */
+  color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: transparent;
+  padding-top: 2em;
+  padding-bottom: 2em;
+}
+
+@media only screen and (max-width: 600px) {
+  .da-footer {
+    font-size: 5vw;
+  }
+}
+.da-footer > div {
+  margin: 0 5px 0 5px;
+}
+.da-footer a {
+  color: white; /* Fallback for older browsers */
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: underline;
+}
+.da-footer a:focus {
+  color: white; /* Fallback for older browsers */
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: underline;
+}
+.site {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  color: white;
+}
+.site-content {
+  width: 100%;
+  flex: 1;
+}
+.da-button {
+  display: inline-block;
+  padding: 5px;
+  width: 115px;
+  border-radius: 3px;
+  font-family: "Lobster", cursive;
+  font-size: 15px;
+  cursor: pointer;
+  outline: none;
+}
+.da-button:active {
+  -webkit-box-shadow: 0 8px 6px -6px black;
+  -moz-box-shadow: 0 8px 6px -6px black;
+  box-shadow: 0 8px 6px -6px black;
+  outline: none;
+}
+.da-button.da-btn-large {
+  width: 160px;
+  font-size: 20px;
+}
+.da-golden-btn {
+  background: linear-gradient(to right, #b97f24, #bf9553);
+  border: none;
+  color: white;
+}
+.da-golden-btn:hover {
+  background: linear-gradient(to right, #d49228, #d9a95d);
+  border: none;
+  color: white;
+}
+.da-golden-btn:active {
+  background: linear-gradient(to right, #875d1a, #8c6e3c);
+  border: none;
+  color: white;
+}
+.da-btn-purple {
+  background: linear-gradient(to right, #522888, #6c39ae);
+  color: white;
+  border-width: 1px;
+  border-color: #b97f24;
+}
+.da-btn-purple:hover {
+  background: #ffffff;
+  color: #522888;
+}
+.da-btn-purple:active {
+  background: #c7c7c7;
+  color: #522888;
+}
+.da-btn-white {
+  background: #eaeaea;
+  color: #522888;
+  border: none;
+}
+.da-btn-white:hover {
+  background: #ffffff;
+  color: #522888;
+}
+.da-btn-white:active {
+  background: #c7c7c7;
+  color: #522888;
+}

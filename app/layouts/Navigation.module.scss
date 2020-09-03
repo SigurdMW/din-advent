@@ -1,0 +1,15 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2em;
+
+  & img {
+    width: 140px;
+    height: auto;
+  }
+  & a {
+    color: white;
+    text-decoration: underline;
+  }
+}
