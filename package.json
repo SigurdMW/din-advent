@@ -7,7 +7,9 @@
     "build": "blitz build",
     "lint": "eslint --ignore-path .gitignore --ext .js,.ts,.tsx .",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "cypress": "cypress run",
+    "test:e2e": "wait-on npm start && npm run cypress"
   },
   "browserslist": [
     "defaults"
@@ -66,6 +68,7 @@
     "secure-password": "4.0.0",
     "ts-jest": "26.2.0",
     "typescript": "3.9.7",
+    "wait-on": "5.2.0",
     "zod": "1.10.3"
   },
   "devDependencies": {
