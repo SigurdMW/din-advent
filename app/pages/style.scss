@@ -14,6 +14,12 @@ body {
   padding-bottom: 2em;
 }
 
+h1 {
+  font-family: "Lobster", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 48px;
+}
+
 @media only screen and (max-width: 600px) {
   .da-footer {
     font-size: 5vw;
@@ -22,16 +28,18 @@ body {
 .da-footer > div {
   margin: 0 5px 0 5px;
 }
-.da-footer a {
-  color: white; /* Fallback for older browsers */
+a {
   color: rgba(255, 255, 255, 0.7);
   text-decoration: underline;
+
+  &:focus,
+  &:active,
+  &:visited {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: underline;
+  }
 }
-.da-footer a:focus {
-  color: white; /* Fallback for older browsers */
-  color: rgba(255, 255, 255, 0.7);
-  text-decoration: underline;
-}
+
 .site {
   display: flex;
   min-height: 100vh;

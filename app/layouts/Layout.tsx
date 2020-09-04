@@ -1,4 +1,4 @@
-import { Head } from "blitz"
+import { Head, Link } from "blitz"
 import Navigation from "./Navigation"
 
 const Layout = ({ title, children }) => (
@@ -7,7 +7,7 @@ const Layout = ({ title, children }) => (
       <title>{title || "din-advent"}</title>
       <link rel="icon" href="/favicon.ico" />
       <meta charSet="utf-8" />
-      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
       <meta name="viewport" content="width=device-width,initial-scale=1.0" />
       <link
         rel="stylesheet"
@@ -42,10 +42,8 @@ const Layout = ({ title, children }) => (
       <main className="site-content">{children}</main>
       <div className="da-footer" v-if="footer">
         <div>
-          {/* <router-link :to="{ name: 'privacy' }">Personvern</router-link> | 
-				<router-link :to="{ name: 'terms' }">Vilkår</router-link> | 
-				<router-link :to="{ name: 'about' }">Om oss</router-link> | 
-				<router-link :to="{ name: 'contact' }">Kontakt og tilbakemelding</router-link> */}
+          <Link href="/privacy">Personvern</Link> |<Link href="/terms">Vilkår</Link> |
+          <Link href="/about">Om oss</Link> |<Link href="/contact">Kontakt & tilbakemelding</Link>
         </div>
         <div>Made with ❤ in Sætre</div>
       </div>
