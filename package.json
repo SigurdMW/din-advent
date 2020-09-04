@@ -48,6 +48,7 @@
     "eslint-plugin-react-hooks": "4.1.0",
     "final-form": "4.20.1",
     "husky": "4.2.5",
+    "identity-obj-proxy": "3.0.0",
     "jest": "26.4.2",
     "jest-environment-jsdom-fourteen": "1.0.1",
     "jest-watch-typeahead": "0.6.0",
@@ -67,6 +68,8 @@
     "typescript": "3.9.7",
     "zod": "1.10.3"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "cypress": "5.1.0"
+  },
   "private": true
 }
