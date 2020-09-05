@@ -5,9 +5,15 @@
     "start": "blitz start",
     "studio": "blitz db studio",
     "build": "blitz build",
+    "migrate": "blitz db migrate",
     "lint": "eslint --ignore-path .gitignore --ext .js,.ts,.tsx .",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:dev": "cypress open --browser chrome",
+    "test:watch": "jest --watch",
+    "cypress": "cypress run",
+    "wait:test": "wait-on http://localhost:3000 && npm run cypress",
+    "write:testenv": "node ./scripts/write-env-file.js",
+    "test:ci": "npm run write:testenv && npm run migrate && node ./scripts/ci-cypress.js"
   },
   "browserslist": [
     "defaults"
@@ -39,8 +45,12 @@
     "@typescript-eslint/parser": "3.9.1",
     "babel-eslint": "10.1.0",
     "blitz": "0.18.0",
+    "colors": "1.4.0",
+    "concurrently": "5.3.0",
+    "cypress-jest-adapter": "0.1.1",
     "eslint": "7.7.0",
     "eslint-config-react-app": "5.2.1",
+    "eslint-plugin-cypress": "2.11.1",
     "eslint-plugin-flowtype": "5.2.0",
     "eslint-plugin-import": "2.22.0",
     "eslint-plugin-jsx-a11y": "6.3.1",
@@ -48,6 +58,7 @@
     "eslint-plugin-react-hooks": "4.1.0",
     "final-form": "4.20.1",
     "husky": "4.2.5",
+    "identity-obj-proxy": "3.0.0",
     "jest": "26.4.2",
     "jest-environment-jsdom-fourteen": "1.0.1",
     "jest-watch-typeahead": "0.6.0",
@@ -65,8 +76,11 @@
     "secure-password": "4.0.0",
     "ts-jest": "26.2.0",
     "typescript": "3.9.7",
+    "wait-on": "5.2.0",
     "zod": "1.10.3"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "cypress": "5.1.0"
+  },
   "private": true
 }
