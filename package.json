@@ -12,7 +12,8 @@
     "test:watch": "jest --watch",
     "cypress": "cypress run",
     "wait:test": "wait-on http://localhost:3000 && npm run cypress",
-    "test:ci": "npm run migrate && node ./scripts/ci-cypress.js"
+    "write:testenv": "node ./scripts/write-env-file.js",
+    "test:ci": "npm run write:testenv && npm run migrate && node ./scripts/ci-cypress.js"
   },
   "browserslist": [
     "defaults"
