@@ -5,13 +5,14 @@
     "start": "blitz start",
     "studio": "blitz db studio",
     "build": "blitz build",
+    "migrate": "blitz db migrate",
     "lint": "eslint --ignore-path .gitignore --ext .js,.ts,.tsx .",
     "test": "jest",
     "test:dev": "cypress open --browser chrome",
     "test:watch": "jest --watch",
     "cypress": "cypress run",
     "wait:test": "wait-on http://localhost:3000 && npm run cypress",
-    "test:e2e": "node ./scripts/ci-cypress.js"
+    "test:ci": "npm run migrate && node ./scripts/ci-cypress.js"
   },
   "browserslist": [
     "defaults"

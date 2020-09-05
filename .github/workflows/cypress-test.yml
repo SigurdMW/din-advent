@@ -11,6 +11,6 @@ jobs:
         with:
           node-version: 12.x
       - run: npm install
-      - run: npm run test:e2e
+      - run: npm run test:ci
       # - name: Cypress run
       #   uses: cypress-io/github-action@v2

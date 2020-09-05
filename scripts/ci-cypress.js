@@ -1,6 +1,8 @@
 const concurrently = require("concurrently")
 require("colors")
 
+process.env.DATABASE_URL = "file:./db.sqlite"
+
 const run = async () => {
   try {
     await concurrently(["npm start", "npm run wait:test"], {
