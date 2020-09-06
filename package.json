@@ -25,7 +25,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged && pretty-quick --staged",
-      "pre-push": "blitz test"
+      "pre-push": "blitz test && npm run build"
     }
   },
   "lint-staged": {
