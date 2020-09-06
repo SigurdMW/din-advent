@@ -63,6 +63,7 @@
     "jest-environment-jsdom-fourteen": "1.0.1",
     "jest-watch-typeahead": "0.6.0",
     "lint-staged": "10.2.11",
+    "mailgun.js": "2.0.1",
     "passport-facebook": "3.0.0",
     "passport-google-oauth20": "2.0.0",
     "prettier": "2.1.0",

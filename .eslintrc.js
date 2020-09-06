@@ -9,5 +9,7 @@ module.exports = {
     "import/no-webpack-loader-syntax": "off",
     "react/react-in-jsx-scope": "off", // React is always in scope with Blitz
     "jsx-a11y/anchor-is-valid": "off", //Doesn't play well with Blitz/Next <Link> usage
+    indent: ["error", 4],
+    "jsx-a11y/accessible-emoji": "off",
   },
 }

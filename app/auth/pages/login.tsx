@@ -8,7 +8,7 @@ const LoginPage: BlitzPage = () => {
 
   return (
     <div>
-      <LoginForm onSuccess={() => router.push("/")} />
+      <LoginForm onSuccess={() => router.push("/login-request")} />
     </div>
   )
 }

@@ -30,7 +30,7 @@ const run = async () => {
     const fileExist = await doesFileExist(path.resolve(root, "./.env"))
     if (!fileExist) {
       const env =
-        'DATABASE_URL="file:./db.sqlite"\nFACEBOOK_APP_ID=1234\nFACEBOOK_APP_SECRET=1253123\nGOOGLE_CLIENT_ID=1634234\nGOOGLE_CLIENT_SECRET=some-secret'
+        'DATABASE_URL="file:./db.sqlite"\nFACEBOOK_APP_ID=1234\nFACEBOOK_APP_SECRET=1253123\nGOOGLE_CLIENT_ID=1634234\nGOOGLE_CLIENT_SECRET=some-secret\nMAILGUN_API_KEY=somekey\nMAILGUN_DOMAIN=somedomain\nMAILGUN_URL=someurl'
       await writeFile(path.resolve(root, "./.env"), env)
     }
     console.log("Successfully completed write env file".green)
