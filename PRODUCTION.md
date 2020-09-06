@@ -9,6 +9,9 @@ Make sure the following environment variables are in place:
 - GOOGLE_CLIENT_SECRET
 - NODE_ENV
 - SESSION_SECRET_KEY
+- MAILGUN_API_KEY
+- MAILGUN_DOMAIN
+- MAILGUN_URL (api.mailgun.net or api.eu.mailgun.net)
 
 ## Automatic variables when running on render.com
 

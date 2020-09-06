@@ -1,5 +1,6 @@
 import db from "db"
 import { SessionContext } from "blitz"
+import { sendMessage } from "../../email"
 
 export default async function getCurrentUser(_ = null, ctx: { session?: SessionContext } = {}) {
   if (!ctx.session?.userId) return null

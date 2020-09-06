@@ -5,6 +5,7 @@ import { Form, FORM_ERROR } from "app/components/Form"
 import { LabeledTextField } from "app/components/LabeledTextField"
 import signup from "app/auth/mutations/signup"
 import { SignupInput, SignupInputType } from "app/auth/validations"
+import loginRequest from "../mutations/login-request"
 
 const SignupPage: BlitzPage = () => {
   const router = useRouter()
@@ -18,8 +19,9 @@ const SignupPage: BlitzPage = () => {
         schema={SignupInput}
         onSubmit={async (values) => {
           try {
-            await signup({ email: values.email, password: values.password })
-            router.push("/")
+            await signup({ email: values.email })
+            await loginRequest({ email: values.email })
+            router.push("/login-request")
           } catch (error) {
             if (error.code === "P2002" && error.meta?.target?.includes("email")) {
               // This error comes from Prisma
@@ -31,7 +33,6 @@ const SignupPage: BlitzPage = () => {
         }}
       >
         <LabeledTextField name="email" label="Email" placeholder="Email" />
-        <LabeledTextField name="password" label="Password" placeholder="Password" type="password" />
       </Form>
     </div>
   )
