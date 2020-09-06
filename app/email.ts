@@ -4,6 +4,7 @@ const { MAILGUN_API_KEY, MAILGUN_DOMAIN, MAILGUN_URL } = process.env
 
 if (!MAILGUN_API_KEY || !MAILGUN_DOMAIN || !MAILGUN_URL) {
   throw new Error("Missing MailGun config")
+  process.exit(1)
 }
 
 const mailgunClient = mailgun.client({
