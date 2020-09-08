@@ -35,23 +35,9 @@ const UserInfo = () => {
       <>
         <Link href="/signup">
           <a className="button small">
-            <strong>Opprett bruker</strong>
+            <strong>Opprett gratis bruker</strong>
           </a>
-        </Link>{" "}
-        |
-        <Link href="/login">
-          <a className="button small">
-            <strong>Logg inn</strong>
-          </a>
-        </Link>{" "}
-        |
-        <a href="/api/auth/facebook" className="button small">
-          Logg inn med Facebook
-        </a>{" "}
-        |
-        <a href="/api/auth/google" className="button small">
-          Logg inn med Google
-        </a>
+        </Link>
       </>
     )
   }
@@ -68,6 +54,6 @@ const Home: BlitzPage = () => {
   )
 }
 
-Home.getLayout = (page) => <Layout title="Home">{page}</Layout>
+Home.getLayout = (page) => <Layout title="Forside - Din Advent">{page}</Layout>
 
 export default Home

@@ -4,7 +4,7 @@ import Navigation from "./Navigation"
 const Layout = ({ title, children }) => (
   <>
     <Head>
-      <title>{title || "din-advent"}</title>
+      <title>{title || "Din Advent"}</title>
       <link rel="icon" href="/favicon.ico" />
       <meta charSet="utf-8" />
       <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
@@ -20,12 +20,11 @@ const Layout = ({ title, children }) => (
       />
       <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
       <meta name="theme-color" content="#512B84" />
-      <title>Din Advent - digital julekalender på nett</title>
-      <meta property="og:title" content="Digital julekalender på nett" />
-      <meta
+      <meta property="og:title" content={title || "Din Advent - Digital julekalender"} />
+      {/* <meta
         property="og:image"
         content="https://cdn.sanity.io/images/82cwwg7j/production/f9d39ef9172bfed82eeb82a42892ee9f881c887e-600x600.png"
-      />
+      /> */}
       <meta
         property="og:description"
         content="Med Din Advent kan du opprette og dele digitale julekalendere til noen du vil glede. Det er enkelt, morsomt og klimanøytralt."
@@ -45,7 +44,7 @@ const Layout = ({ title, children }) => (
           <Link href="/privacy">Personvern</Link> |<Link href="/terms">Vilkår</Link> |
           <Link href="/about">Om oss</Link> |<Link href="/contact">Kontakt & tilbakemelding</Link>
         </div>
-        <div>Made with ❤ in Sætre</div>
+        <div>Made with ❤ in Drammen</div>
       </div>
     </div>
   </>
