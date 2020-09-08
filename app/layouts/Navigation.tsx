@@ -15,12 +15,7 @@ export const NavigationContent = () => {
             <a className="button small">
               <strong>Kalendere</strong>
             </a>
-          </Link>
-          <Link href="/calendars">
-            <a className="button small">
-              <strong>Kalendere</strong>
-            </a>
-          </Link>
+          </Link>{" "}
           <button
             onClick={async () => {
               await logout()
@@ -31,6 +26,12 @@ export const NavigationContent = () => {
         </>
       ) : (
         <>
+          <Link href="/">
+            <a>Hjem</a>
+          </Link>{" "}
+          <Link href="/signup">
+            <a>Ny bruker</a>
+          </Link>{" "}
           <Link href="/login">
             <a className="button small">
               <strong>Logg inn</strong>
