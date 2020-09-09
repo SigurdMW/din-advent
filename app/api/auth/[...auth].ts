@@ -52,7 +52,6 @@ export default passportAuth({
         scope: ["profile", "email"],
       },
       async function (_token, _tokenSecret, profile, done) {
-        console.log("From Google", { token: _token, secret: _tokenSecret, profile })
         const email = profile.emails && profile.emails[0]?.value
         if (!email) {
           return done(new Error("Google OAuth response doesn't have email."))
