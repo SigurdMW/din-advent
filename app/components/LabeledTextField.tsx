@@ -14,7 +14,7 @@ export interface LabeledTextFieldProps extends PropsWithoutRef<JSX.IntrinsicElem
 export const LabeledTextField = React.forwardRef<HTMLInputElement, LabeledTextFieldProps>(
   ({ name, label, outerProps, ...props }, ref) => {
     const {
-      input,
+      input: { onChange, ...inputRest },
       meta: { touched, error, submitError, submitting },
     } = useField(name)
 
@@ -22,7 +22,15 @@ export const LabeledTextField = React.forwardRef<HTMLInputElement, LabeledTextFi
       <div {...outerProps}>
         <label>
           {label}
-          <input {...input} disabled={submitting} {...props} ref={ref} />
+          <input
+            {...inputRest}
+            onChange={(v) =>
+              onChange(props.type === "number" ? Number(v.target.value) : v.target.value)
+            }
+            disabled={submitting}
+            {...props}
+            ref={ref}
+          />
         </label>
 
         {touched && (error || submitError) && (

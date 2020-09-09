@@ -35,6 +35,7 @@ export function Form<FormValues extends Record<string, unknown>>({
       onSubmit={onSubmit}
       render={({ handleSubmit, submitting, submitError }) => (
         <form onSubmit={handleSubmit} className="form" {...props}>
+          {console.log(submitError)}
           {/* Form fields supplied as children are rendered here */}
           {children}
 
