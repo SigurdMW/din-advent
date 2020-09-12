@@ -1,9 +1,9 @@
-import React from "react"
+import React, { Suspense } from "react"
 import { useParam, BlitzPage, useQuery } from "blitz"
 import AuthLayout from "app/layouts/AuthLayout"
 import getWindow from "app/calendars/queries/getWindow"
 
-const ShowWindowPage: BlitzPage = () => {
+const GetWindow = () => {
   const day = useParam("windowId", "number")
   const calendarId = useParam("calendarId", "number")
   const [window] = useQuery(getWindow, { where: { calendarId, day } })
@@ -15,6 +15,12 @@ const ShowWindowPage: BlitzPage = () => {
     </div>
   )
 }
+
+const ShowWindowPage: BlitzPage = () => (
+  <Suspense fallback={<div>Loading...</div>}>
+    <GetWindow />
+  </Suspense>
+)
 
 ShowWindowPage.getLayout = (page) => (
   <AuthLayout title="Kalenderluke - Din Advent">{page}</AuthLayout>
