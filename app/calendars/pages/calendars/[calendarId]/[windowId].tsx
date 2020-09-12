@@ -1,5 +1,5 @@
 import React, { Suspense } from "react"
-import { useParam, BlitzPage, useQuery } from "blitz"
+import { useParam, BlitzPage, useQuery, Link } from "blitz"
 import AuthLayout from "app/layouts/AuthLayout"
 import getWindow from "app/calendars/queries/getWindow"
 
@@ -12,6 +12,9 @@ const GetWindow = () => {
     <div>
       Kalenderluke: {day}
       <span>{JSON.stringify(window)}</span>
+      <br />
+      <br />
+      <Link href={`/calendars/${calendarId}`}>Tilbake til kalender</Link>
     </div>
   )
 }
