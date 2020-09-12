@@ -1,5 +1,5 @@
 import React from "react"
-import { useParam, BlitzPage, useQuery } from "blitz"
+import { useParam, BlitzPage, Router } from "blitz"
 import AuthLayout from "app/layouts/AuthLayout"
 import Form, { FORM_ERROR } from "app/components/Form"
 import LabeledTextField from "app/components/LabeledTextField"
@@ -15,7 +15,8 @@ const CreateWindowPage: BlitzPage = () => {
       initialValues={{ day: undefined, content: {}, calendarId }}
       onSubmit={async (values) => {
         try {
-          await createWindow({ data: values })
+          const window = await createWindow({ data: values })
+          Router.push(`/calendars/${calendarId}/${window.day}`)
         } catch (error) {
           return {
             [FORM_ERROR]: "Beklager, en feil oppsto. Vennligst prøv igjen. - " + error.toString(),

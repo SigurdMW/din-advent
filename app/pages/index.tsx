@@ -1,8 +1,7 @@
 import { Link, BlitzPage } from "blitz"
-import Layout from "app/layouts/Layout"
-import logout from "app/auth/mutations/logout"
 import { useCurrentUser } from "app/hooks/useCurrentUser"
 import { Suspense } from "react"
+import ArticleLayout from "app/layouts/ArticleLayout"
 
 /*
  * This file is just for a pleasant getting started page for your new app.
@@ -14,21 +13,17 @@ const UserInfo = () => {
 
   if (currentUser) {
     return (
-      <>
-        <button
-          className="button small"
-          onClick={async () => {
-            await logout()
-          }}
-        >
-          Logg ut
-        </button>
-        <div>
-          Bruker id: <code>{currentUser.id}</code>
-          <br />
-          Bruker rolle: <code>{currentUser.role}</code>
-        </div>
-      </>
+      <div>
+        <p>Du er nå logget inn</p>
+        <Link href="/calendars">
+          <a>Dine kalendere</a>
+        </Link>
+        <br />
+        <br />
+        Bruker id: <code>{currentUser.id}</code>
+        <br />
+        Bruker rolle: <code>{currentUser.role}</code>
+      </div>
     )
   } else {
     return (
@@ -43,17 +38,15 @@ const UserInfo = () => {
   }
 }
 
-const Home: BlitzPage = () => {
-  return (
-    <div>
-      <h1>Din Advent</h1>
-      <Suspense fallback="Loading...">
-        <UserInfo />
-      </Suspense>
-    </div>
-  )
-}
+const Home: BlitzPage = () => (
+  <div>
+    <h1>Din Advent</h1>
+    <Suspense fallback="Loading...">
+      <UserInfo />
+    </Suspense>
+  </div>
+)
 
-Home.getLayout = (page) => <Layout title="Forside - Din Advent">{page}</Layout>
+Home.getLayout = (page) => <ArticleLayout title="Forside - Din Advent">{page}</ArticleLayout>
 
 export default Home

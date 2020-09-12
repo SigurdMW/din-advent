@@ -11,7 +11,9 @@ export const Calendar = () => {
 
   return (
     <div>
-      <h1>Kalender {calendar.id}</h1>
+      <h1>
+        {calendar.name} - id: {calendar.id}
+      </h1>
       <pre>{JSON.stringify(calendar, null, 2)}</pre>
 
       <Link href="/calendars/[calendarId]/edit" as={`/calendars/${calendar.id}/edit`}>

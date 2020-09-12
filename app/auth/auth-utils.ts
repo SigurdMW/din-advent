@@ -1,6 +1,7 @@
 import db from "db"
 
 export const authenticateUser = async (requestToken: string) => {
+  console.log("Authentication with loginToken " + requestToken)
   const loginRequest = await db.loginrequest.findOne({ where: { loginToken: requestToken } })
   console.log("login request", loginRequest)
   if (!loginRequest) {

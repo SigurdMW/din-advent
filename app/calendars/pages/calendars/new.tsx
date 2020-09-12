@@ -12,7 +12,8 @@ const NewCalendarPage: BlitzPage = () => {
       <h1>Opprett ny kalender</h1>
 
       <CalendarForm
-        initialValues={{}}
+        submitText="Opprett"
+        initialValues={{ name: undefined }}
         onSubmit={async (values) => {
           try {
             const calendarId = await createCalendar({ data: { name: values.name } })

@@ -6,14 +6,15 @@ import LabeledTextField from "app/components/LabeledTextField"
 type CalendarFormProps = {
   initialValues: any
   onSubmit: (v: CalendarInputType) => Promise<void>
+  submitText: string
 }
 
-const CalendarForm = ({ initialValues, onSubmit }: CalendarFormProps) => {
+const CalendarForm = ({ initialValues, onSubmit, submitText }: CalendarFormProps) => {
   return (
     <Form<CalendarInputType>
-      submitText="Opprett"
+      submitText={submitText}
       schema={CalendarInput}
-      initialValues={{ name: undefined }}
+      initialValues={initialValues}
       onSubmit={async (values) => {
         try {
           await onSubmit(values)

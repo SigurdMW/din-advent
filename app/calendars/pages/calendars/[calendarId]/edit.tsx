@@ -1,9 +1,9 @@
 import React, { Suspense } from "react"
-import Layout from "app/layouts/Layout"
 import { Link, useRouter, useQuery, useParam, BlitzPage } from "blitz"
 import getCalendar from "app/calendars/queries/getCalendar"
 import updateCalendar from "app/calendars/mutations/updateCalendar"
 import CalendarForm from "app/calendars/components/CalendarForm"
+import ArticleLayout from "app/layouts/ArticleLayout"
 
 export const EditCalendar = () => {
   const router = useRouter()
@@ -12,16 +12,19 @@ export const EditCalendar = () => {
 
   return (
     <div>
-      <h1>Edit Calendar {calendar.id}</h1>
+      <h1>
+        Edit {calendar.name} - id: {calendar.id}
+      </h1>
       <pre>{JSON.stringify(calendar)}</pre>
 
       <CalendarForm
+        submitText="Oppdater"
         initialValues={calendar}
-        onSubmit={async () => {
+        onSubmit={async (values) => {
           try {
             const updated = await updateCalendar({
               where: { id: calendarId },
-              data: { name: "MyNewName" },
+              data: { name: values.name },
             })
             mutate({ calendar: updated, windows })
             alert("Success!" + JSON.stringify(updated))
@@ -51,7 +54,7 @@ const EditCalendarPage: BlitzPage = () => (
 )
 
 EditCalendarPage.getLayout = (page) => (
-  <Layout title="Oppdater kalender - Din Advent">{page}</Layout>
+  <ArticleLayout title="Oppdater kalender - Din Advent">{page}</ArticleLayout>
 )
 
 export default EditCalendarPage
