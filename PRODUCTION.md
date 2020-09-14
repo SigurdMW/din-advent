@@ -12,6 +12,11 @@ Make sure the following environment variables are in place:
 - MAILGUN_API_KEY
 - MAILGUN_DOMAIN
 - MAILGUN_URL (api.mailgun.net or api.eu.mailgun.net)
+- VIPPS_CLIENT_ID
+- VIPPS_CLIENT_SECRET
+- VIPPS_SUBSCRIPTION_KEY
+- VIPPS_URL (https://apitest.vipps.no or https://api.vipps.no)
+- VIPPS_MERCHANT_NUMBER
 
 ## Automatic variables when running on render.com
 
