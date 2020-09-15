@@ -11,6 +11,7 @@ export default async function deleteCalendar(
 ) {
   ctx.session!.authorize()
 
-  await db.calendar.delete({ where, include: { calendarWindows: true, user: false } })
+  await db.calendarWindow.deleteMany({ where: { calendarId: where.id } })
+  await db.calendar.delete({ where })
   return
 }
