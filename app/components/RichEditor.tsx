@@ -66,12 +66,12 @@ interface RichEditorProps {
 export const RichEditor = ({ editorState, onChange }: RichEditorProps) => {
   const [editorLocalState, setEditorLocalState] = useState(() =>
     editorState
-      ? EditorState.createWithContent(convertFromRaw(JSON.parse(editorState)))
+      ? EditorState.createWithContent(convertFromRaw(editorState))
       : EditorState.createEmpty()
   )
 
   useEffect(() => {
-    onChange(JSON.stringify(convertToRaw(editorLocalState.getCurrentContent())))
+    onChange(convertToRaw(editorLocalState.getCurrentContent()))
   }, [editorLocalState])
 
   const toggleCode = () => {

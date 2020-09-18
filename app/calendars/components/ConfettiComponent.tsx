@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 /**
  * Confetti particle class
  * thanks to https://jsfiddle.net/hcxabsgh/
@@ -48,7 +48,7 @@ class ConfettiParticle {
     this.x += Math.sin(this.waveAngle)
     this.y += (Math.cos(this.waveAngle) + this.diameter + this.particleSpeed) * 0.4
     if (this.complete()) this.reset()
-    this.darken()
+    // this.darken()
   }
 
   complete() {
@@ -79,7 +79,8 @@ const startConfetti = () => {
   const canvas = document.createElement("canvas")
   const context = canvas.getContext("2d")
   if (!context) return
-  canvas.id = "particle-canvas"
+  const id = "particle-canvas"
+  canvas.id = id
   canvas.width = width
   canvas.height = height
   canvas.setAttribute(
@@ -87,12 +88,6 @@ const startConfetti = () => {
     "position:fixed;z-index: -1; top: 0; bottom: 0; left: 0; right: 0; pointer-events: none;"
   )
   document.body.appendChild(canvas)
-
-  // change body bg color
-  const changeBgColor = () => {
-    const hue = Math.floor(Math.random() * 360)
-    document.body.style.backgroundColor = "hsl(" + hue + ", 50%, 5%)"
-  }
 
   // update canvas size
   const updateSize = () => {
@@ -105,25 +100,24 @@ const startConfetti = () => {
   // create confetti particles
   const createParticles = () => {
     particles = []
-    let total = 100
+    let total = 25
 
     if (width > 1080) {
-      total = 400
+      total = 150
     } else if (width > 760) {
-      total = 300
+      total = 100
     } else if (width > 520) {
-      total = 200
+      total = 50
     }
 
     for (let i = 0; i < total; ++i) {
       particles.push(new ConfettiParticle(context, width, height))
     }
   }
-
+  let animationFn
   // animation loop function
   const animationFunc = () => {
-    requestAnimationFrame(animationFunc)
-    if (Math.random() > 0.98) changeBgColor()
+    animationFn = requestAnimationFrame(animationFunc)
     context.clearRect(0, 0, width, height)
 
     for (let p of particles) {
@@ -144,17 +138,27 @@ const startConfetti = () => {
   // start
   updateSize()
   createParticles()
-  changeBgColor()
   animationFunc()
 
-  return {
-    cleanup: () => {
-      window.removeEventListener("resize", resizeHandler)
-    },
+  return () => {
+    window.removeEventListener("resize", resizeHandler)
+    if (animationFn && cancelAnimationFrame) {
+      window.cancelAnimationFrame(animationFn)
+    }
+    context.clearRect(0, 0, width, height)
+    const canvasToRemove = document.getElementById(id)
+    if (canvasToRemove) canvasToRemove.remove()
   }
 }
 
 export const ConfettiComponent = () => {
-  startConfetti()
-  return <div></div>
+  useEffect(() => {
+    const cleanup = startConfetti()
+    return () => {
+      if (cleanup) {
+        cleanup()
+      }
+    }
+  }, [])
+  return null
 }

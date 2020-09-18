@@ -1,25 +1,29 @@
 export enum DynamicInputTypes {
-  richtext,
-  confetti,
+  richtext = "richtext",
+  confetti = "confetti",
 }
 
 interface DynamicInputCommon<T> {
   type: DynamicInputTypes
-  props: T
+  props: {
+    onChange: (val: T) => void
+  } & T
 }
 
-export interface RichTextProps {
-  content: string
-}
-export interface RichText extends DynamicInputCommon<RichTextProps> {
+export interface RichText
+  extends DynamicInputCommon<{
+    content: string
+  }> {
   type: DynamicInputTypes.richtext
 }
 
-export interface ConfettiProps {}
-interface Confetti extends DynamicInputCommon<ConfettiProps> {
+interface Confetti extends DynamicInputCommon<{}> {
   type: DynamicInputTypes.confetti
 }
 
+export type DynamicComponent = RichText | Confetti
+
 export interface DynamicInput {
-  components: Array<RichText | Confetti>
+  components: Array<DynamicComponent>
+  id: number
 }
