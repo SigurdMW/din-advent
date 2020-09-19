@@ -30,7 +30,7 @@ export const EditCalendar = () => {
             alert("Success!" + JSON.stringify(updated))
             router.push("/calendars/[calendarId]", `/calendars/${updated.id}`)
           } catch (error) {
-            console.log(error)
+            console.error(error)
             alert("Error creating calendar " + JSON.stringify(error, null, 2))
           }
         }}
