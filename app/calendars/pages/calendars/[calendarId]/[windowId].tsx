@@ -3,11 +3,8 @@ import { useParam, BlitzPage, useQuery, Link } from "blitz"
 import AuthLayout from "app/layouts/AuthLayout"
 import getWindow from "app/calendars/queries/getWindow"
 
-const GetWindow = () => {
-  const day = useParam("windowId", "number")
-  const calendarId = useParam("calendarId", "number")
+const GetWindow = ({ day, calendarId }) => {
   const [window] = useQuery(getWindow, { where: { calendarId, day } })
-  if (!day || !calendarId) return <div>Error</div>
   return (
     <div>
       Kalenderluke: {day}
@@ -19,11 +16,19 @@ const GetWindow = () => {
   )
 }
 
-const ShowWindowPage: BlitzPage = () => (
-  <Suspense fallback={<div>Loading...</div>}>
-    <GetWindow />
-  </Suspense>
-)
+const ShowWindowPage: BlitzPage = () => {
+  const day = useParam("windowId", "number")
+  const calendarId = useParam("calendarId", "number")
+
+  if (!day || !calendarId) {
+    return null
+  }
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <GetWindow day={day} calendarId={calendarId} />
+    </Suspense>
+  )
+}
 
 ShowWindowPage.getLayout = (page) => (
   <AuthLayout title="Kalenderluke - Din Advent">{page}</AuthLayout>

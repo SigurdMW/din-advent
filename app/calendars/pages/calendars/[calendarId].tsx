@@ -4,9 +4,8 @@ import getCalendar from "app/calendars/queries/getCalendar"
 import deleteCalendar from "app/calendars/mutations/deleteCalendar"
 import AuthLayout from "app/layouts/AuthLayout"
 
-export const Calendar = () => {
+export const Calendar = ({ calendarId }) => {
   const router = useRouter()
-  const calendarId = useParam("calendarId", "number")
   const [{ calendar, windows }] = useQuery(getCalendar, { where: { id: calendarId } })
 
   return (
@@ -60,6 +59,8 @@ export const Calendar = () => {
 }
 
 const ShowCalendarPage: BlitzPage = () => {
+  const calendarId = useParam("calendarId", "number")
+  if (!calendarId) return null
   return (
     <>
       <p>
@@ -69,7 +70,7 @@ const ShowCalendarPage: BlitzPage = () => {
       </p>
 
       <Suspense fallback={<div>Laster...</div>}>
-        <Calendar />
+        <Calendar calendarId={calendarId} />
       </Suspense>
     </>
   )

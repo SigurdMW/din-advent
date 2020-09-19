@@ -11,3 +11,9 @@ export const WindowInput = z.object({
   calendarId: z.number(),
 })
 export type WindowInputType = z.infer<typeof WindowInput>
+
+export const GetWindowInput = z.object({
+  day: z.number(),
+  calendarId: z.number(),
+})
+export type GetWindowInputType = z.infer<typeof GetWindowInput>
