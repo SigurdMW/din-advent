@@ -3,6 +3,7 @@ services:
     name: dinadvent_web_test
     env: node
     region: frankfurt
+    branch: dev
     plan: starter
     buildCommand: yarn; blitz db migrate; blitz build
     startCommand: blitz start --production -H 0.0.0.0
