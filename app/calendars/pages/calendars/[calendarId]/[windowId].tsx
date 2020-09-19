@@ -3,6 +3,9 @@ import { useParam, BlitzPage, useQuery, Link } from "blitz"
 import AuthLayout from "app/layouts/AuthLayout"
 import getWindow from "app/calendars/queries/getWindow"
 import { DynamicInputComponent } from "app/calendars/components/DynamicInputComponent"
+import Modal from "react-modal"
+
+Modal.setAppElement("#__next")
 
 const GetWindow = () => {
   const day = useParam("windowId", "number")

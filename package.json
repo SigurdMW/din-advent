@@ -73,6 +73,7 @@
     "react-dom": "0.0.0-experimental-33c3af284",
     "react-error-boundary": "2.3.1",
     "react-final-form": "6.5.1",
+    "react-modal": "3.11.2",
     "react-test-renderer": "16.13.1",
     "sass": "1.26.10",
     "secure-password": "4.0.0",

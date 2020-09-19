@@ -3,11 +3,9 @@ import { RichText } from "app/interfaces/DynamicInputComponent"
 import React from "react"
 
 export const RichTextComponent = ({ content, onChange, ...rest }: RichText["props"]) => {
-  console.log("Props", { content, ...rest })
-  const handleChange = (e: any) => {
-    console.log("from handle change", { changed: e, original: content })
-    if (e.content !== content) {
-      onChange({ content: e })
+  const handleChange = (newContent: any) => {
+    if (JSON.stringify(newContent) !== JSON.stringify(content)) {
+      onChange({ content: newContent })
     }
   }
   return <RichEditor editorState={content} onChange={handleChange} />

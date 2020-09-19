@@ -8,6 +8,8 @@ import {
   convertToRaw,
 } from "draft-js"
 
+// TODO: setup headings, list style as here: https://codesandbox.io/s/64nzqqxmmn?from-embed=&file=/src/components/PageContainer.js
+
 // thanks to https://codesandbox.io/s/n0ozyqr9z4?from-embed=&file=/src/components/entities/mediaBlockRenderer.js
 // https://medium.com/@siobhanpmahoney/building-a-rich-text-editor-with-react-and-draft-js-part-2-4-persisting-data-to-server-cd68e81c820
 // https://codesandbox.io/s/n0ozyqr9z4?from-embed=&file=/src/components/PageContainer.js
@@ -72,7 +74,7 @@ export const RichEditor = ({ editorState, onChange }: RichEditorProps) => {
 
   useEffect(() => {
     onChange(convertToRaw(editorLocalState.getCurrentContent()))
-  }, [editorLocalState])
+  }, [editorLocalState, onChange])
 
   const toggleCode = () => {
     setEditorLocalState(RichUtils.toggleCode(editorLocalState))

@@ -1,4 +1,6 @@
 import {
+  ComponentEmptyState,
+  ComponentTranslations,
   DynamicComponent,
   DynamicInput,
   DynamicInputTypes,
@@ -10,13 +12,45 @@ import { ErrorBoundary } from "react-error-boundary"
 import { queryCache } from "react-query"
 import DynamicComponentFrame from "./DynamicComponentFrame"
 import updateWindow from "../mutations/updateWindow"
+import UnsavedChangesModal from "./UnsaveChangesModal"
+
+const translations: ComponentTranslations = {
+  richtext: {
+    name: "Riktekst",
+  },
+  confetti: {
+    name: "Konfettiregn",
+  },
+}
+
+const componentEmptyState: ComponentEmptyState = {
+  richtext: {
+    type: DynamicInputTypes.richtext,
+    props: {
+      content: "",
+    },
+  },
+  confetti: {
+    type: DynamicInputTypes.confetti,
+    props: {},
+  },
+}
 
 export const DynamicInputComponent = ({ components = [], id }: DynamicInput) => {
   const [isSaving, setIsSaving] = useState(false)
   const [localComponents, setLocalComponents] = useState(components)
   const [isDirty, setIsDirty] = useState(false)
+  const [selected, setSelected] = useState<keyof ComponentEmptyState | undefined>(undefined)
+  const [restrictAdd, setRestrictAdd] = useState<DynamicInputTypes[]>([])
 
   useEffect(() => {
+    setRestrictAdd([])
+    localComponents.forEach((c) => {
+      // To only allow 1 confetti per calenar window
+      if (c.type === DynamicInputTypes.confetti) {
+        setRestrictAdd([...restrictAdd, DynamicInputTypes.confetti])
+      }
+    })
     if (JSON.stringify(localComponents) !== JSON.stringify(components)) {
       setIsDirty(true)
     }
@@ -24,7 +58,6 @@ export const DynamicInputComponent = ({ components = [], id }: DynamicInput) => 
 
   const handleSave = async () => {
     try {
-      console.log("HandlingSave: start")
       setIsSaving(true)
       await updateWindow({
         where: { id },
@@ -32,24 +65,15 @@ export const DynamicInputComponent = ({ components = [], id }: DynamicInput) => 
           content: JSON.stringify({ components: localComponents }),
         },
       })
-      console.log("HandlingSave: success")
     } catch (e) {
       console.error(e)
-      console.log("HandlingSave: error")
     } finally {
       setIsSaving(false)
-      console.log("HandlingSave: finished")
     }
-  }
-
-  if (components.length === 0) {
-    // TODO: log here
-    return null
   }
 
   const getComponent = (component: DynamicComponent, index: number) => {
     component.props.onChange = (c) => {
-      console.log("running onChange from component", c)
       const newComponents = localComponents.map((component, i) => {
         if (i === index) {
           return {
@@ -64,6 +88,7 @@ export const DynamicInputComponent = ({ components = [], id }: DynamicInput) => 
       })
       setLocalComponents(newComponents)
     }
+
     switch (component.type) {
       case DynamicInputTypes.richtext:
         return <RichTextComponent {...component.props} />
@@ -74,8 +99,14 @@ export const DynamicInputComponent = ({ components = [], id }: DynamicInput) => 
     }
   }
 
-  const removeComponent = (index: number) => {
-    console.log("remove", index)
+  const removeComponent = (index: number) => () => {
+    setLocalComponents(localComponents.filter((c, i) => i !== index))
+  }
+
+  const addComponent = () => {
+    if (!selected) return
+    const newComp = componentEmptyState[selected] as any
+    setLocalComponents([...localComponents, newComp])
   }
 
   const componentWithFrame = (component: DynamicComponent, index) => {
@@ -83,6 +114,12 @@ export const DynamicInputComponent = ({ components = [], id }: DynamicInput) => 
       <DynamicComponentFrame remove={removeComponent(index)} key={index}>
         {getComponent(component, index)}
       </DynamicComponentFrame>
+    )
+  }
+
+  const getAvailableComponents = () => {
+    return Object.keys(DynamicInputTypes).filter(
+      (key: DynamicInputTypes) => !restrictAdd.includes(key)
     )
   }
 
@@ -99,6 +136,19 @@ export const DynamicInputComponent = ({ components = [], id }: DynamicInput) => 
       <button onClick={handleSave} disabled={!isDirty || isSaving}>
         Lagre
       </button>
+      <select
+        value={selected}
+        onChange={(e) => setSelected(e.target.value as keyof ComponentEmptyState)}
+      >
+        <option>Velg innhold å legge til</option>
+        {getAvailableComponents().map((key) => (
+          <option value={key}>{translations[key].name}</option>
+        ))}
+      </select>
+      <button disabled={!selected} onClick={addComponent}>
+        Legg til
+      </button>
+      <UnsavedChangesModal isOpen={false} onClose={() => null} />
     </ErrorBoundary>
   )
 }

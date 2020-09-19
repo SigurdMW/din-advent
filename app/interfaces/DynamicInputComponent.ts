@@ -27,3 +27,9 @@ export interface DynamicInput {
   components: Array<DynamicComponent>
   id: number
 }
+
+export type ComponentEmptyState = Record<
+  DynamicInputTypes,
+  { type: DynamicInputTypes; props: Omit<DynamicComponent["props"], "onChange"> }
+>
+export type ComponentTranslations = Record<DynamicInputTypes, { name: string }>
