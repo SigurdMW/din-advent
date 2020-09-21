@@ -9,8 +9,6 @@ export enum Plan {
   plus = "plus",
 }
 
-export enum PlanPrice {
-  starter = 29,
-  basic = 59,
-  plus = 99,
+export type PricePlan = {
+  [key in Plan]: number
 }
