@@ -7,7 +7,7 @@ export type CalendarInputType = z.infer<typeof CalendarInput>
 
 export const WindowInput = z.object({
   day: z.number().min(1).max(24),
-  content: z.object({ components: z.array<any>([]) }),
+  content: z.object({ components: z.array<any>([]) }).optional(),
   calendarId: z.number(),
 })
 export type WindowInputType = z.infer<typeof WindowInput>

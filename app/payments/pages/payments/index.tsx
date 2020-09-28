@@ -1,7 +1,7 @@
 import React, { Suspense } from "react"
-import Layout from "app/layouts/Layout"
-import { Head, Link, usePaginatedQuery, useRouter, BlitzPage } from "blitz"
+import { Link, usePaginatedQuery, useRouter, BlitzPage } from "blitz"
 import getPayments from "app/payments/queries/getPayments"
+import AuthLayout from "app/layouts/AuthLayout"
 
 const ITEMS_PER_PAGE = 100
 
@@ -23,7 +23,10 @@ export const PaymentsList = () => {
         {payments.map((payment) => (
           <li key={payment.id}>
             <Link href="/payments/[paymentId]" as={`/payments/${payment.id}`}>
-              <a>{payment.name}</a>
+              <a>
+                Payment from {payment.provider} with amount {payment.amount} kr from userId{" "}
+                {payment.userId}
+              </a>
             </Link>
           </li>
         ))}
@@ -39,30 +42,22 @@ export const PaymentsList = () => {
   )
 }
 
-const PaymentsPage: BlitzPage = () => {
-  return (
-    <div>
-      <Head>
-        <title>Payments</title>
-      </Head>
+const PaymentsPage: BlitzPage = () => (
+  <>
+    <h1>Payments</h1>
 
-      <main>
-        <h1>Payments</h1>
+    <p>
+      <Link href="/payments/new">
+        <a>Create Payment</a>
+      </Link>
+    </p>
 
-        <p>
-          <Link href="/payments/new">
-            <a>Create Payment</a>
-          </Link>
-        </p>
+    <Suspense fallback={<div>Loading...</div>}>
+      <PaymentsList />
+    </Suspense>
+  </>
+)
 
-        <Suspense fallback={<div>Loading...</div>}>
-          <PaymentsList />
-        </Suspense>
-      </main>
-    </div>
-  )
-}
-
-PaymentsPage.getLayout = (page) => <Layout title={"Payments"}>{page}</Layout>
+PaymentsPage.getLayout = (page) => <AuthLayout title="Betalinger - Din Advent">{page}</AuthLayout>
 
 export default PaymentsPage

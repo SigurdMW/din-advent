@@ -16,7 +16,7 @@ export default async function getCalendar(
 
   if (!calendar) throw new NotFoundError()
 
-  const windows = await db.calendarWindow.findMany({ where: { calendarId: calendar.id } })
+  //   const windows = await db.calendarWindow.findMany({ where: { calendarId: calendar.id } })
 
-  return { calendar, windows }
+  return calendar
 }

@@ -7,6 +7,9 @@ export default async function createWindow(
   ctx: { session?: SessionContext } = {}
 ) {
   ctx.session!.authorize()
+  if (!data.content) {
+    data.content = { components: [] }
+  }
   if (!data.day || data.day > 24 || data.day < 1) throw new Error("Dag må være mellom 1 og 24")
   // See that JSON.stringify doesn't throw error
   JSON.stringify(data.content)

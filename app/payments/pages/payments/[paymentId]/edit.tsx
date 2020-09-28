@@ -1,9 +1,9 @@
 import React, { Suspense } from "react"
-import Layout from "app/layouts/Layout"
-import { Head, Link, useRouter, useQuery, useParam, BlitzPage } from "blitz"
+import { Link, useRouter, useQuery, useParam, BlitzPage } from "blitz"
 import getPayment from "app/payments/queries/getPayment"
 import updatePayment from "app/payments/mutations/updatePayment"
 import PaymentForm from "app/payments/components/PaymentForm"
+import AuthLayout from "app/layouts/AuthLayout"
 
 export const EditPayment = () => {
   const router = useRouter()
@@ -36,28 +36,22 @@ export const EditPayment = () => {
   )
 }
 
-const EditPaymentPage: BlitzPage = () => {
-  return (
-    <div>
-      <Head>
-        <title>Edit Payment</title>
-      </Head>
+const EditPaymentPage: BlitzPage = () => (
+  <>
+    <Suspense fallback={<div>Loading...</div>}>
+      <EditPayment />
+    </Suspense>
 
-      <main>
-        <Suspense fallback={<div>Loading...</div>}>
-          <EditPayment />
-        </Suspense>
+    <p>
+      <Link href="/payments">
+        <a>Payments</a>
+      </Link>
+    </p>
+  </>
+)
 
-        <p>
-          <Link href="/payments">
-            <a>Payments</a>
-          </Link>
-        </p>
-      </main>
-    </div>
-  )
-}
-
-EditPaymentPage.getLayout = (page) => <Layout title={"Edit Payment"}>{page}</Layout>
+EditPaymentPage.getLayout = (page) => (
+  <AuthLayout title="Rediger betaling - Din Advent">{page}</AuthLayout>
+)
 
 export default EditPaymentPage

@@ -1,8 +1,8 @@
 import React, { Suspense } from "react"
-import Layout from "app/layouts/Layout"
-import { Head, Link, useRouter, useQuery, useParam, BlitzPage } from "blitz"
+import { Link, useRouter, useQuery, useParam, BlitzPage } from "blitz"
 import getPayment from "app/payments/queries/getPayment"
 import deletePayment from "app/payments/mutations/deletePayment"
+import AuthLayout from "app/layouts/AuthLayout"
 
 export const Payment = () => {
   const router = useRouter()
@@ -10,7 +10,7 @@ export const Payment = () => {
   const [payment] = useQuery(getPayment, { where: { id: paymentId } })
 
   return (
-    <div>
+    <>
       <h1>Payment {payment.id}</h1>
       <pre>{JSON.stringify(payment, null, 2)}</pre>
 
@@ -29,32 +29,24 @@ export const Payment = () => {
       >
         Delete
       </button>
-    </div>
+    </>
   )
 }
 
-const ShowPaymentPage: BlitzPage = () => {
-  return (
-    <div>
-      <Head>
-        <title>Payment</title>
-      </Head>
+const ShowPaymentPage: BlitzPage = () => (
+  <>
+    <p>
+      <Link href="/payments">
+        <a>Payments</a>
+      </Link>
+    </p>
 
-      <main>
-        <p>
-          <Link href="/payments">
-            <a>Payments</a>
-          </Link>
-        </p>
+    <Suspense fallback={<div>Loading...</div>}>
+      <Payment />
+    </Suspense>
+  </>
+)
 
-        <Suspense fallback={<div>Loading...</div>}>
-          <Payment />
-        </Suspense>
-      </main>
-    </div>
-  )
-}
-
-ShowPaymentPage.getLayout = (page) => <Layout title={"Payment"}>{page}</Layout>
+ShowPaymentPage.getLayout = (page) => <AuthLayout title="Betaling - Din Advent">{page}</AuthLayout>
 
 export default ShowPaymentPage
