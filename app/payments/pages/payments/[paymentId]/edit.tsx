@@ -16,12 +16,13 @@ export const EditPayment = () => {
       <pre>{JSON.stringify(payment)}</pre>
 
       <PaymentForm
+        submitText="Oppdater"
         initialValues={payment}
         onSubmit={async () => {
           try {
             const updated = await updatePayment({
               where: { id: payment.id },
-              data: { name: "MyNewName" },
+              data: {},
             })
             mutate(updated)
             alert("Success!" + JSON.stringify(updated))
