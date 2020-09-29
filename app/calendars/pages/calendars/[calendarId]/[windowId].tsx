@@ -12,8 +12,7 @@ const GetWindow = ({ day, calendarId }) => {
   const components = (JSON.parse(window.content) || {}).components
   return (
     <div>
-      Kalenderluke: {day}
-      <span>{JSON.stringify(window)}</span>
+      <h1>Kalenderluke: {day}</h1>
       <DynamicInputComponent components={components} id={window.id} />
       <br />
       <br />

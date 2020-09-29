@@ -27,7 +27,7 @@ const componentEmptyState: ComponentEmptyState = {
   richtext: {
     type: DynamicInputTypes.richtext,
     props: {
-      content: "",
+      content: undefined,
     },
   },
   confetti: {
@@ -46,15 +46,19 @@ export const DynamicInputComponent = ({ components = [], id }: DynamicInput) => 
   useEffect(() => {
     setRestrictAdd([])
     localComponents.forEach((c) => {
-      // To only allow 1 confetti per calenar window
+      // To only allow 1 confetti per calendar window
       if (c.type === DynamicInputTypes.confetti) {
         setRestrictAdd([...restrictAdd, DynamicInputTypes.confetti])
       }
     })
     if (JSON.stringify(localComponents) !== JSON.stringify(components)) {
+      // console.log("Components are different")
       setIsDirty(true)
+    } else {
+      // console.log("Components are similar")
+      setIsDirty(false)
     }
-  }, [localComponents])
+  }, [localComponents, components])
 
   const handleSave = async () => {
     try {
@@ -65,6 +69,7 @@ export const DynamicInputComponent = ({ components = [], id }: DynamicInput) => 
           content: JSON.stringify({ components: localComponents }),
         },
       })
+      setIsDirty(false)
     } catch (e) {
       console.error(e)
     } finally {
@@ -72,8 +77,12 @@ export const DynamicInputComponent = ({ components = [], id }: DynamicInput) => 
     }
   }
 
+  const handleDiscard = () => {
+    setLocalComponents(components)
+  }
+
   const getComponent = (component: DynamicComponent, index: number) => {
-    component.props.onChange = (c) => {
+    const onChange = (c) => {
       const newComponents = localComponents.map((component, i) => {
         if (i === index) {
           return {
@@ -91,7 +100,7 @@ export const DynamicInputComponent = ({ components = [], id }: DynamicInput) => 
 
     switch (component.type) {
       case DynamicInputTypes.richtext:
-        return <RichTextComponent {...component.props} />
+        return <RichTextComponent {...component.props} onChange={onChange} />
       case DynamicInputTypes.confetti:
         return <ConfettiComponent />
       default:
@@ -109,13 +118,11 @@ export const DynamicInputComponent = ({ components = [], id }: DynamicInput) => 
     setLocalComponents([...localComponents, newComp])
   }
 
-  const componentWithFrame = (component: DynamicComponent, index) => {
-    return (
-      <DynamicComponentFrame remove={removeComponent(index)} key={index}>
-        {getComponent(component, index)}
-      </DynamicComponentFrame>
-    )
-  }
+  const componentWithFrame = (component: DynamicComponent, index) => (
+    <DynamicComponentFrame remove={removeComponent(index)} key={index}>
+      {getComponent(component, index)}
+    </DynamicComponentFrame>
+  )
 
   const getAvailableComponents = () => {
     return Object.keys(DynamicInputTypes).filter(
@@ -133,9 +140,6 @@ export const DynamicInputComponent = ({ components = [], id }: DynamicInput) => 
       }}
     >
       {localComponents.map(componentWithFrame)}
-      <button onClick={handleSave} disabled={!isDirty || isSaving}>
-        Lagre
-      </button>
       <select
         value={selected}
         onChange={(e) => setSelected(e.target.value as keyof ComponentEmptyState)}
@@ -148,7 +152,12 @@ export const DynamicInputComponent = ({ components = [], id }: DynamicInput) => 
       <button disabled={!selected} onClick={addComponent}>
         Legg til
       </button>
-      <UnsavedChangesModal isOpen={false} onClose={() => null} />
+      <br />
+      <button onClick={handleSave} disabled={!isDirty || isSaving}>
+        Lagre
+      </button>
+      <button onClick={handleDiscard}>Forkast</button>
+      <UnsavedChangesModal isDirty={isDirty} save={handleSave} discard={handleDiscard} />
     </ErrorBoundary>
   )
 }

@@ -7,14 +7,22 @@ export default async function createWindow(
   ctx: { session?: SessionContext } = {}
 ) {
   ctx.session!.authorize()
+  if (!data.content) {
+    data.content = { components: [] }
+  }
   if (!data.day || data.day > 24 || data.day < 1) throw new Error("Dag må være mellom 1 og 24")
-  // See that JSON.stringify doesn't throw error
+
+  // Test if JSON.stringify throws error
   JSON.stringify(data.content)
 
   const windows = await db.calendarWindow.findMany({ where: { calendarId: data.calendarId } })
-  windows.forEach((w) => {
-    if (w.day === data.day) throw new Error("Dagen finnes allerede")
+  const matchingWindow = windows.filter((w) => {
+    if (w.day === data.day) return true
+    return false
   })
+
+  // Already exist, return window
+  if (matchingWindow.length > 0) return matchingWindow[0]
 
   const window = await db.calendarWindow.create({
     data: {

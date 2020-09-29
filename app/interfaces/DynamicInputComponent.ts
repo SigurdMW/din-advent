@@ -12,7 +12,7 @@ interface DynamicInputCommon<T> {
 
 export interface RichText
   extends DynamicInputCommon<{
-    content: string
+    content: any[]
   }> {
   type: DynamicInputTypes.richtext
 }

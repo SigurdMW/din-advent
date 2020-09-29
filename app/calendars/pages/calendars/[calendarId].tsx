@@ -6,14 +6,13 @@ import AuthLayout from "app/layouts/AuthLayout"
 
 export const Calendar = ({ calendarId }) => {
   const router = useRouter()
-  const [{ calendar, windows }] = useQuery(getCalendar, { where: { id: calendarId } })
+  const [calendar] = useQuery(getCalendar, { where: { id: calendarId } })
 
   return (
     <div>
       <h1>
-        {calendar.name} - id: {calendar.id}
+        Kalendernavn <b>{calendar.name}</b>
       </h1>
-      <pre>{JSON.stringify(calendar, null, 2)}</pre>
 
       <Link href="/calendars/[calendarId]/edit" as={`/calendars/${calendar.id}/edit`}>
         <a>Rediger</a>
@@ -22,26 +21,18 @@ export const Calendar = ({ calendarId }) => {
       <br />
       <br />
 
-      <Link href="/calendars/[calendarId]/new" as={`/calendars/${calendar.id}/new`}>
-        <a>Ny kalenderluke</a>
-      </Link>
-
-      {windows.length ? (
-        <ul>
-          {windows.map((window) => (
-            <li key={window.id}>
-              <Link
-                href="/calendars/[calendarId]/[windowId]"
-                as={`/calendars/${calendar.id}/${window.day}`}
-              >
-                <a>{window.day}</a>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>Ingen luker enda</p>
-      )}
+      <ul>
+        {new Array(24).fill(0).map((c, i) => (
+          <li key={i + 1}>
+            <Link
+              href="/calendars/[calendarId]/[windowId]"
+              as={`/calendars/${calendar.id}/${i + 1}`}
+            >
+              <a>{i + 1}</a>
+            </Link>
+          </li>
+        ))}
+      </ul>
 
       <button
         type="button"
