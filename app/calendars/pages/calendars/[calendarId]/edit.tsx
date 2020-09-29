@@ -8,7 +8,7 @@ import ArticleLayout from "app/layouts/ArticleLayout"
 export const EditCalendar = () => {
   const router = useRouter()
   const calendarId = useParam("calendarId", "number")
-  const [{ calendar, windows }, { mutate }] = useQuery(getCalendar, { where: { id: calendarId } })
+  const [calendar, { mutate }] = useQuery(getCalendar, { where: { id: calendarId } })
 
   return (
     <div>
@@ -26,7 +26,7 @@ export const EditCalendar = () => {
               where: { id: calendarId },
               data: { name: values.name },
             })
-            mutate({ calendar: updated, windows })
+            mutate(updated)
             alert("Success!" + JSON.stringify(updated))
             router.push("/calendars/[calendarId]", `/calendars/${updated.id}`)
           } catch (error) {

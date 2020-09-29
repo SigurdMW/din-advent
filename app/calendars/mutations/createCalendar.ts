@@ -1,10 +1,7 @@
 import { CalendarInputType } from "./../validations"
 import { SessionContext } from "blitz"
-import db, { CalendarCreateArgs } from "db"
+import db from "db"
 
-type CreateCalendarInput = {
-  data: CalendarCreateArgs["data"]
-}
 export default async function createCalendar(
   { data }: { data: CalendarInputType },
   ctx: { session?: SessionContext } = {}
@@ -21,6 +18,25 @@ export default async function createCalendar(
       },
     },
   })
+
+  try {
+    const createWindowPromise = (day: number, calendarId: number) =>
+      db.calendarWindow.create({
+        data: {
+          day,
+          content: JSON.stringify({ components: [] }),
+          calendar: {
+            connect: {
+              id: calendarId,
+            },
+          },
+        },
+      })
+    await Promise.all(new Array(24).fill(0).map((c, i) => createWindowPromise(i + 1, calendar.id)))
+  } catch (e) {
+    // nothing
+    console.error("Error creating calendar window when creating calendar", e)
+  }
 
   return calendar.id
 }

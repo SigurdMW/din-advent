@@ -7,7 +7,7 @@ import ErrorComponent from "app/components/ErrorComponent"
 import ArticleLayout from "app/layouts/ArticleLayout"
 import { Router } from "blitz"
 import React, { useEffect } from "react"
-import "draft-js/dist/Draft.css"
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css"
 
 export default function App({ Component, pageProps }: AppProps) {
   const getLayout = Component.getLayout || ((page) => page)
