@@ -1,6 +1,30 @@
 import React, { useEffect, useState } from "react"
 import { EditorState, convertFromRaw, convertToRaw } from "draft-js"
 import { dynamic } from "blitz"
+import classes from "./RichEditor.module.scss"
+
+// https://jpuri.github.io/react-draft-wysiwyg/#/docs?_k=jjqinp
+const editorOptions = {
+  options: [
+    "inline",
+    "blockType",
+    "fontSize",
+    "fontFamily",
+    "list",
+    "textAlign",
+    "link",
+    "emoji",
+    "image",
+    "history",
+  ],
+  inline: {
+    inDropdown: false,
+    className: undefined,
+    component: undefined,
+    dropdownClassName: undefined,
+    options: ["bold", "italic", "underline", "strikethrough"],
+  },
+}
 
 const Editor: any = dynamic(
   () => {
@@ -8,8 +32,6 @@ const Editor: any = dynamic(
   },
   { loading: () => null, ssr: false }
 )
-
-// JSON.stringify(convertToRaw(editorState.getCurrentContent()))
 
 const RichEditor = ({ editorState, onChange }) => {
   const [localEditorState, setLocalEditorState] = useState(() =>
@@ -25,9 +47,10 @@ const RichEditor = ({ editorState, onChange }) => {
   return (
     <Editor
       editorState={localEditorState}
+      toolbar={editorOptions}
       toolbarClassName="toolbarClassName"
-      wrapperClassName="wrapperClassName"
-      editorClassName="editorClassName"
+      wrapperClassName={classes.wrapper}
+      editorClassName={classes.editor}
       onEditorStateChange={setLocalEditorState}
     />
   )

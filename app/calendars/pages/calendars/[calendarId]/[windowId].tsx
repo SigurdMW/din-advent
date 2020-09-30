@@ -8,12 +8,12 @@ import Modal from "react-modal"
 Modal.setAppElement("#__next")
 
 const GetWindow = ({ day, calendarId }) => {
-  const [window] = useQuery(getWindow, { where: { calendarId, day } })
+  const [window, { mutate }] = useQuery(getWindow, { where: { calendarId, day } })
   const components = (JSON.parse(window.content) || {}).components
   return (
     <div>
       <h1>Kalenderluke: {day}</h1>
-      <DynamicInputComponent components={components} id={window.id} />
+      <DynamicInputComponent components={components} id={window.id} mutate={mutate} />
       <br />
       <br />
       <Link href={`/calendars/${calendarId}`}>Tilbake til kalender</Link>
