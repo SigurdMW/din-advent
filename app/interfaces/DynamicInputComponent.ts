@@ -26,6 +26,7 @@ export type DynamicComponent = RichText | Confetti
 export interface DynamicInput {
   components: Array<DynamicComponent>
   id: number
+  mutate: any
 }
 
 export type ComponentEmptyState = Record<

@@ -12,7 +12,7 @@ import { ErrorBoundary } from "react-error-boundary"
 import { queryCache } from "react-query"
 import DynamicComponentFrame from "./DynamicComponentFrame"
 import updateWindow from "../mutations/updateWindow"
-import UnsavedChangesModal from "./UnsaveChangesModal"
+// import UnsavedChangesModal from "./UnsaveChangesModal"
 
 const translations: ComponentTranslations = {
   richtext: {
@@ -36,7 +36,7 @@ const componentEmptyState: ComponentEmptyState = {
   },
 }
 
-export const DynamicInputComponent = ({ components = [], id }: DynamicInput) => {
+export const DynamicInputComponent = ({ components = [], id, mutate }: DynamicInput) => {
   const [isSaving, setIsSaving] = useState(false)
   const [localComponents, setLocalComponents] = useState(components)
   const [isDirty, setIsDirty] = useState(false)
@@ -63,12 +63,13 @@ export const DynamicInputComponent = ({ components = [], id }: DynamicInput) => 
   const handleSave = async () => {
     try {
       setIsSaving(true)
-      await updateWindow({
+      const test = await updateWindow({
         where: { id },
         data: {
           content: JSON.stringify({ components: localComponents }),
         },
       })
+      mutate(test)
       setIsDirty(false)
     } catch (e) {
       console.error(e)
@@ -156,8 +157,8 @@ export const DynamicInputComponent = ({ components = [], id }: DynamicInput) => 
       <button onClick={handleSave} disabled={!isDirty || isSaving}>
         Lagre
       </button>
-      <button onClick={handleDiscard}>Forkast</button>
-      <UnsavedChangesModal isDirty={isDirty} save={handleSave} discard={handleDiscard} />
+      {/* <button onClick={handleDiscard}>Forkast</button> */}
+      {/* <UnsavedChangesModal isDirty={isDirty} save={handleSave} discard={handleDiscard} /> */}
     </ErrorBoundary>
   )
 }
