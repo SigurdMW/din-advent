@@ -25,7 +25,12 @@ const CalendarForm = ({ initialValues, onSubmit, submitText }: CalendarFormProps
         }
       }}
     >
-      <LabeledTextField name="name" label="Kalendernavn" placeholder="Navn..." />
+      <LabeledTextField
+        name="name"
+        label="Kalendernavn"
+        placeholder="Navn..."
+        id="calendarformfield"
+      />
     </Form>
   )
 }

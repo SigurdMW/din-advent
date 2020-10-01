@@ -24,7 +24,13 @@ const CreateWindowPage: BlitzPage = () => {
         }
       }}
     >
-      <LabeledTextField name="day" label="Kalenderdag" placeholder="Dag..." type="number" />
+      <LabeledTextField
+        name="day"
+        label="Kalenderdag"
+        placeholder="Dag..."
+        type="number"
+        id="newwindowfield"
+      />
     </Form>
   )
 }
