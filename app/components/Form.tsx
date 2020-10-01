@@ -45,7 +45,11 @@ export function Form<FormValues extends Record<string, unknown>>({
             </div>
           )}
 
-          <button type="submit" disabled={submitting}>
+          <button
+            type="submit"
+            disabled={submitting}
+            className="da-button da-btn-large da-golden-btn"
+          >
             {submitText}
           </button>
 

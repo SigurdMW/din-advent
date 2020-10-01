@@ -6,6 +6,8 @@ import signup from "app/auth/mutations/signup"
 import { SignupInput, SignupInputType } from "app/auth/validations"
 import loginRequest from "../mutations/login-request"
 import ArticleLayout from "app/layouts/ArticleLayout"
+import GoogleButton from "../components/GoogleButton"
+import FacebookButton from "../components/FacebookButton"
 
 const SignupPage: BlitzPage = () => {
   const router = useRouter()
@@ -13,16 +15,14 @@ const SignupPage: BlitzPage = () => {
   return (
     <div>
       <h1>Opprett bruker</h1>
-      <p>Opprett gratis bruker på Din Advent.</p>
+      <p>Opprett din bruker på dinadvent.no. Det er gratis og uforpliktende å opprette bruker.</p>
 
-      <a href="/api/auth/facebook" className="button small">
-        Opprett med Facebook
-      </a>
+      <FacebookButton>Opprett med Facebook</FacebookButton>
       <br />
       <br />
-      <a href="/api/auth/google" className="button small">
-        Opprett med Google
-      </a>
+      <GoogleButton>Opprett med Google</GoogleButton>
+      <br />
+      <br />
 
       <Form<SignupInputType>
         submitText="Opprett bruker"
