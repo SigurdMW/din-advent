@@ -11,7 +11,7 @@ const Auth = ({ children }) => {
 }
 
 export const RequireAuth = ({ children }) => (
-  <Suspense fallback="Loading">
+  <Suspense fallback={<div>Laster...</div>}>
     <Auth>{children}</Auth>
   </Suspense>
 )

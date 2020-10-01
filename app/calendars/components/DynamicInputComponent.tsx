@@ -147,7 +147,9 @@ export const DynamicInputComponent = ({ components = [], id, mutate }: DynamicIn
       >
         <option>Velg innhold å legge til</option>
         {getAvailableComponents().map((key) => (
-          <option value={key}>{translations[key].name}</option>
+          <option value={key} key={key}>
+            {translations[key].name}
+          </option>
         ))}
       </select>
       <button disabled={!selected} onClick={addComponent}>

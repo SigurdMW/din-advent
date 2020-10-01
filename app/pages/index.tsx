@@ -45,7 +45,7 @@ const Home: BlitzPage = () => (
                   <a className="button small">&nbsp;se hvilke pakke som passer deg.</a>
                 </Link>
               </p>
-              <Suspense fallback={AnonAction}>
+              <Suspense fallback={<AnonAction />}>
                 <CTAButton />
               </Suspense>
             </div>

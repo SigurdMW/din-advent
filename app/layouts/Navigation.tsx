@@ -64,7 +64,7 @@ export const Navigation = () => (
       </div>
     </div>
     <div className={classes.right}>
-      <Suspense fallback={AnonHeader}>
+      <Suspense fallback={<AnonHeader />}>
         <NavigationContent />
       </Suspense>
     </div>
