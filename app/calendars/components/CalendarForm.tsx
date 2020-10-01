@@ -5,15 +5,17 @@ import LabeledTextField from "app/components/LabeledTextField"
 
 type CalendarFormProps = {
   initialValues: any
+  disabled?: boolean
   onSubmit: (v: CalendarInputType) => Promise<void>
   submitText: string
 }
 
-const CalendarForm = ({ initialValues, onSubmit, submitText }: CalendarFormProps) => {
+const CalendarForm = ({ initialValues, onSubmit, submitText, disabled }: CalendarFormProps) => {
   return (
     <Form<CalendarInputType>
       submitText={submitText}
       schema={CalendarInput}
+      disabled={disabled}
       initialValues={initialValues}
       onSubmit={async (values) => {
         try {
