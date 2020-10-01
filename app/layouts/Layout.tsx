@@ -45,10 +45,10 @@ const Layout = ({ title, children }) => (
       <main className="site-content">{children}</main>
       <div className="da-footer">
         <div>
-          <Link href="/privacy">Personvern</Link> |<Link href="/terms">Vilkår</Link> |
-          <Link href="/about">Om oss</Link> |<Link href="/contact">Kontakt & tilbakemelding</Link>
+          <Link href="/privacy">Personvern</Link> | <Link href="/terms">Vilkår</Link> |{" "}
+          <Link href="/about">Om oss</Link> | <Link href="/contact">Kontakt & tilbakemelding</Link>
         </div>
-        <div>Made with ❤ in Drammen</div>
+        <div className="da-footer-trademark">Made with ❤ in Drammen</div>
       </div>
     </div>
   </>

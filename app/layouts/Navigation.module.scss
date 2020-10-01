@@ -4,12 +4,27 @@
   justify-content: space-between;
   padding: 2em;
 
-  & img {
-    width: 140px;
-    height: auto;
-  }
   & a {
     color: white;
     text-decoration: underline;
+  }
+}
+
+.logo {
+  height: 26px;
+  width: auto;
+}
+
+.right {
+  & a,
+  button {
+    padding: 1em;
+  }
+
+  & button {
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    font-size: 1em;
   }
 }

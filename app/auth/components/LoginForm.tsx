@@ -19,8 +19,7 @@ export const LoginForm = (props: LoginFormProps) => {
       <br />
       <br />
       <GoogleButton>Logg inn med Google</GoogleButton>
-      <br />
-      <br />
+      <hr className="da-divider" />
       <Form<LoginInputType>
         submitText="Logg inn"
         schema={LoginInput}
@@ -36,7 +35,7 @@ export const LoginForm = (props: LoginFormProps) => {
           }
         }}
       >
-        <LabeledTextField name="email" label="E-post" placeholder="E-post" />
+        <LabeledTextField name="email" label="E-post" placeholder="E-post" id="loginformid" />
       </Form>
       <br />
       <br />

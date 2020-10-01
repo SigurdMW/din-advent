@@ -21,8 +21,13 @@ const SignupPage: BlitzPage = () => {
       <br />
       <br />
       <GoogleButton>Opprett med Google</GoogleButton>
-      <br />
-      <br />
+
+      <hr className="da-divider" />
+
+      <p>
+        Du kan også opprette bruker med e-post. Vi har passordfri innlogging - som betyr at du
+        logger inn ved å følge en link du får tilsendt på e-post.
+      </p>
 
       <Form<SignupInputType>
         submitText="Opprett bruker"
@@ -42,7 +47,7 @@ const SignupPage: BlitzPage = () => {
           }
         }}
       >
-        <LabeledTextField name="email" label="E-post" placeholder="E-post" />
+        <LabeledTextField name="email" label="E-post" placeholder="E-post" id="signupemail" />
       </Form>
     </div>
   )
