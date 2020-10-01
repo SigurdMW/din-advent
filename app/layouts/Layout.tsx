@@ -18,7 +18,11 @@ const Layout = ({ title, children }) => (
         href="https://fonts.googleapis.com/css?family=Lobster|Roboto:400,900,900i&display=swap"
         rel="stylesheet"
       />
-      <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
+      <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png" />
+      <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png" />
+      <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png" />
+      <link rel="manifest" href="/favicons/site.webmanifest" />
+      <meta name="msapplication-TileColor" content="#da532c" />
       <meta name="theme-color" content="#512B84" />
       <meta property="og:title" content={title || "Din Advent - Digital julekalender"} />
       {/* <meta
@@ -39,12 +43,12 @@ const Layout = ({ title, children }) => (
     <div className="site">
       <Navigation />
       <main className="site-content">{children}</main>
-      <div className="da-footer" v-if="footer">
+      <div className="da-footer">
         <div>
-          <Link href="/privacy">Personvern</Link> |<Link href="/terms">Vilkår</Link> |
-          <Link href="/about">Om oss</Link> |<Link href="/contact">Kontakt & tilbakemelding</Link>
+          <Link href="/privacy">Personvern</Link> | <Link href="/terms">Vilkår</Link> |{" "}
+          <Link href="/about">Om oss</Link> | <Link href="/contact">Kontakt & tilbakemelding</Link>
         </div>
-        <div>Made with ❤ in Drammen</div>
+        <div className="da-footer-trademark">Made with ❤ in Drammen</div>
       </div>
     </div>
   </>

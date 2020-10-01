@@ -48,9 +48,20 @@ export const NavigationContent = () => {
 export const Navigation = () => (
   <div className={classes.navbar}>
     <div className={classes.left}>
-      <Link href="/">
-        <a>Hjem</a>
-      </Link>
+      <div className="show-desktop">
+        <Link href="/">
+          <a>
+            <img src="/da-logo.svg" className={classes.logo} alt="Startside for Din Advent" />
+          </a>
+        </Link>
+      </div>
+      <div className="show-mobile">
+        <Link href="/">
+          <a>
+            <img src="/da-logo-small.png" className={classes.logo} alt="Startside for Din Advent" />
+          </a>
+        </Link>
+      </div>
     </div>
     <div className={classes.right}>
       <Suspense fallback={AnonHeader}>

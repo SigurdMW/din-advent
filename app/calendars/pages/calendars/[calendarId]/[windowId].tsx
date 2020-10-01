@@ -2,16 +2,18 @@ import React, { Suspense } from "react"
 import { useParam, BlitzPage, useQuery, Link } from "blitz"
 import AuthLayout from "app/layouts/AuthLayout"
 import getWindow from "app/calendars/queries/getWindow"
+import { DynamicInputComponent } from "app/calendars/components/DynamicInputComponent"
+import Modal from "react-modal"
 
-const GetWindow = () => {
-  const day = useParam("windowId", "number")
-  const calendarId = useParam("calendarId", "number")
-  const [window] = useQuery(getWindow, { where: { calendarId, day } })
-  if (!day || !calendarId) return <div>Error</div>
+Modal.setAppElement("#__next")
+
+const GetWindow = ({ day, calendarId }) => {
+  const [window, { mutate }] = useQuery(getWindow, { where: { calendarId, day } })
+  const components = (JSON.parse(window.content) || {}).components
   return (
     <div>
-      Kalenderluke: {day}
-      <span>{JSON.stringify(window)}</span>
+      <h1>Kalenderluke: {day}</h1>
+      <DynamicInputComponent components={components} id={window.id} mutate={mutate} />
       <br />
       <br />
       <Link href={`/calendars/${calendarId}`}>Tilbake til kalender</Link>
@@ -19,11 +21,19 @@ const GetWindow = () => {
   )
 }
 
-const ShowWindowPage: BlitzPage = () => (
-  <Suspense fallback={<div>Loading...</div>}>
-    <GetWindow />
-  </Suspense>
-)
+const ShowWindowPage: BlitzPage = () => {
+  const day = useParam("windowId", "number")
+  const calendarId = useParam("calendarId", "number")
+
+  if (!day || !calendarId) {
+    return null
+  }
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <GetWindow day={day} calendarId={calendarId} />
+    </Suspense>
+  )
+}
 
 ShowWindowPage.getLayout = (page) => (
   <AuthLayout title="Kalenderluke - Din Advent">{page}</AuthLayout>

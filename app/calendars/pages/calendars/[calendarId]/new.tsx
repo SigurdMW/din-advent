@@ -12,7 +12,7 @@ const CreateWindowPage: BlitzPage = () => {
     <Form<any>
       submitText="Ny luke"
       schema={WindowInput}
-      initialValues={{ day: undefined, content: {}, calendarId }}
+      initialValues={{ day: undefined, content: { components: [] }, calendarId }}
       onSubmit={async (values) => {
         try {
           const window = await createWindow({ data: values })
@@ -24,7 +24,13 @@ const CreateWindowPage: BlitzPage = () => {
         }
       }}
     >
-      <LabeledTextField name="day" label="Kalenderdag" placeholder="Dag..." type="number" />
+      <LabeledTextField
+        name="day"
+        label="Kalenderdag"
+        placeholder="Dag..."
+        type="number"
+        id="newwindowfield"
+      />
     </Form>
   )
 }

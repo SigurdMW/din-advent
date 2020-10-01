@@ -2,6 +2,7 @@ import React, { ReactNode, PropsWithoutRef } from "react"
 import { Form as FinalForm, FormProps as FinalFormProps } from "react-final-form"
 import * as z from "zod"
 export { FORM_ERROR } from "final-form"
+export { Field } from "react-final-form"
 
 type FormProps<FormValues> = {
   /** All your form fields */
@@ -35,7 +36,6 @@ export function Form<FormValues extends Record<string, unknown>>({
       onSubmit={onSubmit}
       render={({ handleSubmit, submitting, submitError }) => (
         <form onSubmit={handleSubmit} className="form" {...props}>
-          {console.log(submitError)}
           {/* Form fields supplied as children are rendered here */}
           {children}
 
@@ -45,7 +45,11 @@ export function Form<FormValues extends Record<string, unknown>>({
             </div>
           )}
 
-          <button type="submit" disabled={submitting}>
+          <button
+            type="submit"
+            disabled={submitting}
+            className="da-button da-btn-large da-golden-btn"
+          >
             {submitText}
           </button>
 

@@ -6,6 +6,8 @@ import signup from "app/auth/mutations/signup"
 import { SignupInput, SignupInputType } from "app/auth/validations"
 import loginRequest from "../mutations/login-request"
 import ArticleLayout from "app/layouts/ArticleLayout"
+import GoogleButton from "../components/GoogleButton"
+import FacebookButton from "../components/FacebookButton"
 
 const SignupPage: BlitzPage = () => {
   const router = useRouter()
@@ -13,16 +15,19 @@ const SignupPage: BlitzPage = () => {
   return (
     <div>
       <h1>Opprett bruker</h1>
-      <p>Opprett gratis bruker på Din Advent.</p>
+      <p>Opprett din bruker på dinadvent.no. Det er gratis og uforpliktende å opprette bruker.</p>
 
-      <a href="/api/auth/facebook" className="button small">
-        Opprett med Facebook
-      </a>
+      <FacebookButton>Opprett med Facebook</FacebookButton>
       <br />
       <br />
-      <a href="/api/auth/google" className="button small">
-        Opprett med Google
-      </a>
+      <GoogleButton>Opprett med Google</GoogleButton>
+
+      <hr className="da-divider" />
+
+      <p>
+        Du kan også opprette bruker med e-post. Vi har passordfri innlogging - som betyr at du
+        logger inn ved å følge en link du får tilsendt på e-post.
+      </p>
 
       <Form<SignupInputType>
         submitText="Opprett bruker"
@@ -42,7 +47,7 @@ const SignupPage: BlitzPage = () => {
           }
         }}
       >
-        <LabeledTextField name="email" label="E-post" placeholder="E-post" />
+        <LabeledTextField name="email" label="E-post" placeholder="E-post" id="signupemail" />
       </Form>
     </div>
   )
