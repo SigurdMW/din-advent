@@ -4,6 +4,8 @@ import { Form, FORM_ERROR } from "app/components/Form"
 import { LoginInput, LoginInputType } from "app/auth/validations"
 import loginRequest from "../mutations/login-request"
 import { Link } from "blitz"
+import FacebookButton from "./FacebookButton"
+import GoogleButton from "./GoogleButton"
 
 type LoginFormProps = {
   onSuccess?: () => void
@@ -13,14 +15,10 @@ export const LoginForm = (props: LoginFormProps) => {
   return (
     <div>
       <h1>Logg inn</h1>
-      <a href="/api/auth/facebook" className="button small">
-        Logg inn med Facebook
-      </a>
+      <FacebookButton>Logg inn med Facebook</FacebookButton>
       <br />
       <br />
-      <a href="/api/auth/google" className="button small">
-        Logg inn med Google
-      </a>
+      <GoogleButton>Logg inn med Google</GoogleButton>
       <br />
       <br />
       <Form<LoginInputType>
