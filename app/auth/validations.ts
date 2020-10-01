@@ -1,12 +1,12 @@
 import * as z from "zod"
 
 export const SignupInput = z.object({
-  email: z.string().email(),
+  email: z.string().email({ message: "Du må angi en gyldig e-post" }),
 })
 export type SignupInputType = z.infer<typeof SignupInput>
 
 export const LoginInput = z.object({
-  email: z.string().email(),
+  email: z.string().email({ message: "Du må angi en gyldig e-post" }),
 })
 export type LoginInputType = z.infer<typeof LoginInput>
 

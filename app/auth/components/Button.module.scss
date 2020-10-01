@@ -50,7 +50,7 @@
   }
 
   & .paragraph {
-    color: #757575;
+    color: #000;
   }
 }
 
@@ -61,9 +61,5 @@
 
   &:hover {
     box-shadow: 0 0 3px 3px rgba(59, 89, 152, 0.3);
-  }
-
-  & .paragraph {
-    color: rgba(255, 255, 255, 0.87);
   }
 }

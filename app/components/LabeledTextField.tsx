@@ -6,13 +6,14 @@ export interface LabeledTextFieldProps extends PropsWithoutRef<JSX.IntrinsicElem
   name: string
   /** Field label. */
   label: string
+  id: string
   /** Field type. Doesn't include radio buttons and checkboxes */
   type?: "text" | "password" | "email" | "number"
   outerProps?: PropsWithoutRef<JSX.IntrinsicElements["div"]>
 }
 
 export const LabeledTextField = React.forwardRef<HTMLInputElement, LabeledTextFieldProps>(
-  ({ name, label, outerProps, ...props }, ref) => {
+  ({ name, label, outerProps, id, ...props }, ref) => {
     const {
       input: { onChange, ...inputRest },
       meta: { touched, error, submitError, submitting },
@@ -20,41 +21,23 @@ export const LabeledTextField = React.forwardRef<HTMLInputElement, LabeledTextFi
 
     return (
       <div {...outerProps}>
-        <label>
-          {label}
-          <input
-            {...inputRest}
-            onChange={(v) =>
-              onChange(props.type === "number" ? Number(v.target.value) : v.target.value)
-            }
-            disabled={submitting}
-            {...props}
-            ref={ref}
-          />
-        </label>
+        <label htmlFor={id}>{label}</label>
+        <input
+          id={id}
+          {...inputRest}
+          onChange={(v) =>
+            onChange(props.type === "number" ? Number(v.target.value) : v.target.value)
+          }
+          disabled={submitting}
+          {...props}
+          ref={ref}
+        />
 
         {touched && (error || submitError) && (
           <div role="alert" style={{ color: "red" }}>
             {error || submitError}
           </div>
         )}
-
-        <style jsx>{`
-          label {
-            display: flex;
-            flex-direction: column;
-            align-items: start;
-            font-size: 1rem;
-          }
-          input {
-            font-size: 1rem;
-            padding: 0.25rem 0.5rem;
-            border-radius: 3px;
-            border: 1px solid purple;
-            appearance: none;
-            margin-top: 0.5rem;
-          }
-        `}</style>
       </div>
     )
   }
