@@ -1,10 +1,7 @@
-import { price } from "app/price"
+import { Plan } from "app/interfaces/Payment"
+import { createPaymentRequest } from "app/Stripe"
 import { SessionContext } from "blitz"
-import db, { PaymentCreateArgs } from "db"
-
-const getPayload = async () => {
-  return { msg: "some payload", transactionId: 13258787234 }
-}
+import { PaymentCreateArgs } from "db"
 
 type CreatePaymentInput = {
   data: Pick<PaymentCreateArgs["data"], "plan">
@@ -15,26 +12,6 @@ export default async function createPayment(
 ) {
   ctx.session!.authorize()
   const userId = ctx.session?.userId
-  const amount = price[data.plan]
-  if (amount === undefined) throw new Error("No price provided")
-  const payload = await getPayload()
-  const dataWithPayload: Omit<PaymentCreateArgs["data"], "user"> = {
-    ...data,
-    amount,
-    provider: "stripe",
-    payload: JSON.stringify(payload),
-  }
-
-  const payment = await db.payment.create({
-    data: {
-      ...dataWithPayload,
-      user: {
-        connect: {
-          id: userId,
-        },
-      },
-    },
-  })
-
-  return payment
+  const id = await createPaymentRequest({ userId, plan: data.plan as Plan })
+  return id
 }
