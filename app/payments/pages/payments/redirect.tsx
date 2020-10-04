@@ -5,7 +5,6 @@ import AuthLayout from "app/layouts/AuthLayout"
 import { useStripe } from "../../utils/useStripe"
 import { Plan } from "app/interfaces/Payment"
 
-// eslint-disable react-hooks/exhaustive-deps
 const PaymentRedirectPage: BlitzPage = () => {
   const { isReady, Stripe } = useStripe()
   const [timeoutError, setTimeoutError] = useState(false)
@@ -28,6 +27,7 @@ const PaymentRedirectPage: BlitzPage = () => {
     if (query.plan && isReady && Stripe) {
       createPaymentCore(query.plan as Plan)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isReady, query, Stripe])
 
   if (timeoutError) {
