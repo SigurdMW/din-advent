@@ -12,9 +12,10 @@ export default async function getCalendar(
   ctx: { session?: SessionContext } = {}
 ) {
   ctx.session!.authorize()
+  const userId = ctx.session?.userId
   const calendar = await db.calendar.findOne({ where })
 
-  if (!calendar) throw new NotFoundError()
+  if (!calendar || calendar.userId !== userId) throw new NotFoundError()
 
   //   const windows = await db.calendarWindow.findMany({ where: { calendarId: calendar.id } })
 

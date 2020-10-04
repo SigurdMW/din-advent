@@ -9,16 +9,18 @@ export const useStripe = () => {
   const [stripe, setStripe] = useState<null | Stripe>(null)
 
   useEffect(() => {
-    const script = document.createElement("script")
-    const onLoaded = () => {
-      setIsReady(true)
-    }
-    script.addEventListener("load", onLoaded)
-    script.async = true
-    script.src = "https://js.stripe.com/v3/"
-    document.head.appendChild(script)
-    return () => {
-      script.removeEventListener("load", onLoaded)
+    if (!(window as any).Stripe) {
+      const script = document.createElement("script")
+      const onLoaded = () => {
+        setIsReady(true)
+      }
+      script.addEventListener("load", onLoaded)
+      script.async = true
+      script.src = "https://js.stripe.com/v3/"
+      document.head.appendChild(script)
+      return () => {
+        script.removeEventListener("load", onLoaded)
+      }
     }
   })
 

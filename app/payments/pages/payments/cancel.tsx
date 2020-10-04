@@ -13,7 +13,7 @@ const PaymentCanceledPage: BlitzPage = () => (
 )
 
 PaymentCanceledPage.getLayout = (page) => (
-  <AuthLayout title="Betalinger - Din Advent">{page}</AuthLayout>
+  <AuthLayout title="Betaling avbrutt - Din Advent">{page}</AuthLayout>
 )
 
 export default PaymentCanceledPage

@@ -2,6 +2,7 @@ import Stripe from "stripe"
 import db from "db"
 import { Plan } from "./interfaces/Payment"
 import { price } from "./price"
+import { NotFoundError } from "blitz"
 
 // type RequiredEnvKey<T> = (arr: T) => Array<{[key in keyof T]: any}>
 
@@ -27,7 +28,7 @@ const stripe = new Stripe(STRIPE_KEY, {
 export const createPaymentRequest = async ({ plan, userId }: { plan: Plan; userId: number }) => {
   const amountInOre = price[plan] * 100
   const session = await stripe.checkout.sessions.create({
-    success_url: BASE_URL + "payments/success",
+    success_url: BASE_URL + "payments/success?sessionId={CHECKOUT_SESSION_ID}",
     cancel_url: BASE_URL + "payments/cancel",
     payment_method_types: ["card"],
     line_items: [
@@ -45,6 +46,7 @@ export const createPaymentRequest = async ({ plan, userId }: { plan: Plan; userI
       amount: amountInOre,
       payload: JSON.stringify(session),
       plan,
+      transactionId: session.id,
       provider: "stripe",
       user: {
         connect: {
@@ -54,4 +56,23 @@ export const createPaymentRequest = async ({ plan, userId }: { plan: Plan; userI
     },
   })
   return session.id
+}
+
+export const verifyPayment = async ({
+  sessionId,
+  userId,
+}: {
+  sessionId: string
+  userId: number
+}) => {
+  const payments = await db.payment.findMany({ where: { transactionId: sessionId } })
+  if (payments.length === 0) throw new NotFoundError()
+  const payment = payments[0]
+  if (payment.userId !== userId) throw new NotFoundError()
+  const session = await stripe.checkout.sessions.retrieve(sessionId)
+  if (session.amount_total !== payment.amount)
+    throw new Error("Something went wrong: payment error 1")
+  await db.payment.update({ where: { id: payment.id }, data: { completed: true } })
+  await db.user.update({ where: { id: userId }, data: { plan: payment.plan } })
+  return session
 }

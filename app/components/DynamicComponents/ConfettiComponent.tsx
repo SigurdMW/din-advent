@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 /**
  * Confetti particle class
  * thanks to https://jsfiddle.net/hcxabsgh/
@@ -151,14 +151,36 @@ const startConfetti = () => {
   }
 }
 
-export const ConfettiComponent = () => {
+export const ConfettiComponent = ({ editorMode }) => {
+  const [showConfetti, setShowConfetti] = useState(true)
   useEffect(() => {
-    const cleanup = startConfetti()
-    return () => {
-      if (cleanup) {
-        cleanup()
+    if (showConfetti) {
+      const cleanup = startConfetti()
+      return () => {
+        if (cleanup) {
+          cleanup()
+        }
       }
     }
-  }, [])
+  }, [showConfetti])
+  if (editorMode) {
+    return (
+      <div>
+        Forhåndsvisning av konfettiregn. Kun du ser denne visningen.
+        <br />
+        <label style={{ display: "inline-block" }}>
+          <input
+            id="prevoewconfetti"
+            style={{ margin: "0 12px 0 0", top: "3px" }}
+            checked={showConfetti}
+            type="checkbox"
+            className="input-toggle"
+            onChange={() => setShowConfetti(!showConfetti)}
+          />
+          {showConfetti ? "Skjul " : "Vis "} konfetti
+        </label>
+      </div>
+    )
+  }
   return null
 }

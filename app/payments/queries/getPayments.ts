@@ -15,9 +15,13 @@ export default async function getPayments(
   ctx: { session?: SessionContext } = {}
 ) {
   ctx.session!.authorize()
+  const userId = ctx.session?.userId
 
   const payments = await db.payment.findMany({
-    where,
+    where: {
+      ...where,
+      userId,
+    },
     orderBy,
     take,
     skip,
