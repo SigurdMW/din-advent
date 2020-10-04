@@ -2,22 +2,32 @@ import React, { Suspense } from "react"
 import { useParam, BlitzPage, useQuery, Link } from "blitz"
 import AuthLayout from "app/layouts/AuthLayout"
 import getWindow from "app/calendars/queries/getWindow"
-import { DynamicInputComponent } from "app/calendars/components/DynamicInputComponent"
-import Modal from "react-modal"
+// import Modal from "react-modal"
+import { useCurrentUser } from "app/hooks/useCurrentUser"
+import CalendarWindow from "app/components/CalendarWindow"
+import updateWindow from "app/calendars/mutations/updateWindow"
+import { CalendarWindowUpdateInput } from "db"
 
-Modal.setAppElement("#__next")
+// Modal.setAppElement("#__next")
 
 const GetWindow = ({ day, calendarId }) => {
   const [window, { mutate }] = useQuery(getWindow, { where: { calendarId, day } })
-  const components = (JSON.parse(window.content) || {}).components
+  const user = useCurrentUser()
+
+  const saveWindow = async (v: CalendarWindowUpdateInput) => {
+    const newWindow = await updateWindow({
+      where: { id: window.id },
+      data: v,
+    })
+    mutate(newWindow)
+  }
+
+  if (!user) return null
   return (
-    <div>
-      <h1>Kalenderluke: {day}</h1>
-      <DynamicInputComponent components={components} id={window.id} mutate={mutate} />
-      <br />
-      <br />
-      <Link href={`/calendars/${calendarId}`}>Tilbake til kalender</Link>
-    </div>
+    <>
+      <CalendarWindow calendarWindow={window} editorMode={true} save={saveWindow} />
+      <Link href={`/calendars/${calendarId}`}>Tilbake til kalenderen</Link>
+    </>
   )
 }
 

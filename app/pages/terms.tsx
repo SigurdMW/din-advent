@@ -1,22 +1,24 @@
 import Layout from "app/layouts/ArticleLayout"
+import { Link } from "blitz"
 
 export const TermsPage = () => (
   <div>
     <h1>Vilkår</h1>
+    <h2>Registrering og betaling</h2>
     <p>
-      <h2>Registrering og betaling</h2>
-      Ved å registrere deg på Din Advent får du tilgang til å lage opptil 25 kalendere. For å
-      benytte "dele kalender" funksjonaliteten betaler du en pris på 49 NOK. Betaling kan gjøres
-      inne på de innloggede sidene.
+      Det er gratis å opprette bruker på Din Advent. For å dele kalendere du har laget, må du kjøpe
+      en av våre pakker.{" "}
+      <Link href="/pricing">
+        <a>Se hvilke pakker som er tilgjengelige og hva de koster her</a>
+      </Link>
     </p>
+    <h2>Tilgjengelighet</h2>
     <p>
-      <h2>Tilgjengelighet</h2>
-      Alle produserte kalendere vil være tilgjengelig frem til og med 31. desember 2019. Etter denne
-      datoen slettes alt innhold permanent. Sørg derfor på å hente ut ditt innhold før denne datoen
-      dersom du ønsker å ta vare på dette.
+      Kalenderne som legges inn er tilgjengelige i løsningen til 31.12.2020. Etter dette slettes
+      kalendere for godt.{" "}
     </p>
+    <h2>Innhold</h2>
     <p>
-      <h2>Innhold</h2>
       Som bruker av denne tjenesten er du selv ansvarlig for innholdet som du legger inn. Alt av
       innhold som legges inn i en kalender må du regne med at kan sees av alle da kalenderene er
       enkle å distribuere. Følg derfor fornuftig nettvett, og legg ikke inn sensitivt innhold eller

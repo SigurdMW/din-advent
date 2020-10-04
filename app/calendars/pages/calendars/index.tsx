@@ -48,7 +48,7 @@ export const CalendarsList = () => {
 
 const CalendarsPage: BlitzPage = () => (
   <>
-    <h1>Kalendere</h1>
+    <h1>Dine kalendere</h1>
 
     <p>
       <Link href="/calendars/new">

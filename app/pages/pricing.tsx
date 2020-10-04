@@ -2,11 +2,14 @@ import Layout from "app/layouts/Layout"
 import classes from "./pricing.module.scss"
 import { price } from "app/price"
 import { Plan } from "app/interfaces/Payment"
+import { useSession, Link } from "blitz"
+import { Suspense } from "react"
 
 interface PricingItem {
   price: number
   features: string[]
   name: string
+  plan: Plan
 }
 
 interface PricingItemProps {
@@ -17,18 +20,21 @@ interface PricingItemProps {
 const sharedFeatures = ["Del med så mange personer du vil", "Last opp dine egne bilder"]
 const pricePlanAndFeatures: Record<Plan, PricingItem> = {
   [Plan.starter]: {
+    plan: Plan.starter,
     price: price[Plan.starter],
-    features: ["1 kalender inkludert", ...sharedFeatures],
+    features: ["1 delt kalender", ...sharedFeatures],
     name: "En kalender",
   },
   [Plan.basic]: {
+    plan: Plan.basic,
     price: price[Plan.basic],
-    features: ["5 kalendere inkludert", ...sharedFeatures],
+    features: ["5 delte kalendere", ...sharedFeatures],
     name: "5 kalendere",
   },
   [Plan.plus]: {
+    plan: Plan.plus,
     price: price[Plan.plus],
-    features: ["Ubegrenset antall kalendere inklkudert", ...sharedFeatures],
+    features: ["Ubegrenset antall delte kalendere", ...sharedFeatures],
     name: "Ubegrenset",
   },
 }
@@ -59,7 +65,10 @@ const CheckSvg = (
 )
 
 // thanks to https://codepen.io/xhepigerta/pen/oxxQaw
-const PricingItem = ({ item: { name, price, features = [] }, featured }: PricingItemProps) => {
+const PricingItem = ({
+  item: { name, price, features = [], plan },
+  featured,
+}: PricingItemProps) => {
   return (
     <div className={`${classes.pricingItem} ${featured ? classes.pricingItemFeatured : ""}`}>
       <div className={classes.pricingDeco}>
@@ -107,14 +116,37 @@ const PricingItem = ({ item: { name, price, features = [] }, featured }: Pricing
           </li>
         ))}
       </ul>
-      {/* <button>Velg</button> */}
+      <Suspense fallback={<LoginToBuy plan={plan} />}>
+        <ActionButton plan={plan} />
+      </Suspense>
     </div>
   )
 }
 
+const LoginToBuy = ({ plan }: { plan: Plan }) => (
+  <Link href={`/login?returnTo=${encodeURIComponent("/payments/new?plan=" + plan)}`}>
+    <a>Logg inn for å kjøpe</a>
+  </Link>
+)
+const ActionButton = ({ plan }: { plan: Plan }) => {
+  const session = useSession()
+  if (session.isLoading || !session.userId) {
+    return <LoginToBuy plan={plan} />
+  }
+  return (
+    <Link href={`/payments/redirect?plan=${plan}`}>
+      <a className={classes.buy}>Kjøp</a>
+    </Link>
+  )
+}
+
 export const PricingPage = () => (
-  <div>
+  <div className={classes.container}>
     <h1 style={{ textAlign: "center" }}>Priser</h1>
+    <p>
+      Det er gratis å opprette bruker. Du kan også opprette kalendere uten å betale, men dersom du
+      vil dele kalenderen du har laget med noen må du kjøpe en av følgende produkter:
+    </p>
     <div className={`${classes.pricing} ${classes.pricingPalden}`}>
       {Object.values(pricePlanAndFeatures).map((item, i) => (
         <PricingItem key={i} item={item} featured={i === 1} />

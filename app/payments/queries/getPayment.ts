@@ -13,9 +13,11 @@ export default async function getPayment(
 ) {
   ctx.session!.authorize()
 
-  const payment = await db.payment.findOne({ where })
+  const userId = ctx.session?.userId
 
-  if (!payment) throw new NotFoundError()
+  const payment = await db.payment.findOne({ where })
+  if (!payment || payment.userId !== userId) throw new NotFoundError()
+  if (payment?.userId !== userId) throw new NotFoundError()
 
   return payment
 }
