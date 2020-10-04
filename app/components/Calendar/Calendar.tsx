@@ -1,6 +1,6 @@
 import React, { FC } from "react"
 import { Link, useRouter } from "blitz"
-import classes from "./calendar.module.scss"
+import classes from "./Calendar.module.scss"
 import { CalendarCreateWithoutUserInput } from "db"
 
 interface CalendarProps {
