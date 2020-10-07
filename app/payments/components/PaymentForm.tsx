@@ -27,7 +27,11 @@ const PaymentForm = ({ initialValues, onSubmit, submitText }: PaymentFormProps) 
     <Field name="plan" component="select">
       <option value="">Please select</option>
       {Object.keys(price).map((key) => {
-        return <option value={key}>{key}</option>
+        return (
+          <option value={key} key={key}>
+            {key}
+          </option>
+        )
       })}
     </Field>
   </Form>

@@ -1,0 +1,19 @@
+.addComponent {
+  display: flex;
+  margin-bottom: 30px;
+
+  & select {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  & button {
+    white-space: nowrap;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+}
+
+.actions {
+  margin-bottom: 30px;
+}

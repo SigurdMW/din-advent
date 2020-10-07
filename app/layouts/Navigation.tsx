@@ -6,6 +6,9 @@ import logout from "app/auth/mutations/logout"
 
 const AnonHeader = () => (
   <>
+    <Link href="/pricing">
+      <a>Priser</a>
+    </Link>
     <Link href="/signup">
       <a>Ny bruker</a>
     </Link>{" "}
@@ -24,9 +27,12 @@ export const NavigationContent = () => {
     <div>
       {currentUser ? (
         <>
+          <Link href="/pricing">
+            <a>Priser</a>
+          </Link>
           <Link href="/calendars">
             <a className="button small">
-              <strong>Kalendere</strong>
+              <strong>Dine kalendere</strong>
             </a>
           </Link>{" "}
           <button
@@ -64,7 +70,7 @@ export const Navigation = () => (
       </div>
     </div>
     <div className={classes.right}>
-      <Suspense fallback={AnonHeader}>
+      <Suspense fallback={<AnonHeader />}>
         <NavigationContent />
       </Suspense>
     </div>

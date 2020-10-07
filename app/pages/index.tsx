@@ -45,23 +45,13 @@ const Home: BlitzPage = () => (
                   <a className="button small">&nbsp;se hvilke pakke som passer deg.</a>
                 </Link>
               </p>
-              <Suspense fallback={AnonAction}>
+              <Suspense fallback={<AnonAction />}>
                 <CTAButton />
               </Suspense>
             </div>
           </div>
         </div>
       </div>
-      <a className="down-btn" href="#section2">
-        <svg x="0px" y="0px" viewBox="0 0 59.414 59.414">
-          <g>
-            <polygon
-              style={{ fill: "#fff" }}
-              points="29.707,45.268 0,15.561 1.414,14.146 29.707,42.439 58,14.146 59.414,15.561 	"
-            />
-          </g>
-        </svg>
-      </a>
     </div>
 
     <div className={classes.smallSection}>
@@ -132,14 +122,14 @@ const Home: BlitzPage = () => (
         <h2>Informasjon og tips</h2>
         <div className={classes.row}>
           <div>
-            <img src="../icons/clock.svg" alt="" />
+            <img src="../icons/clock.svg" alt="" width="48px" />
             <p>
               Lag kalenderen underveis i desember. Start med de første lukene, og lag resten
               fortløpende under adventstiden.
             </p>
           </div>
           <div>
-            <img src="../icons/pen.svg" alt="" />
+            <img src="../icons/pen.svg" alt="" width="48px" />
             <p>
               Gjør endringer i sanntid på julekalenderen gjennom hele adventstiden selv om
               kalenderen allerede er delt med mottaker.
@@ -147,7 +137,7 @@ const Home: BlitzPage = () => (
           </div>
 
           <div>
-            <img src="../icons/lock.svg" alt="" />
+            <img src="../icons/lock.svg" alt="" width="48px" />
             <p>
               Mottakere kan kun åpne luker frem til og med dagens dato, og de vil alltid se siste
               oppdaterte endringer som du har lagt inn.

@@ -16,9 +16,13 @@ export default async function getCalendars(
   ctx: { session?: SessionContext } = {}
 ) {
   ctx.session!.authorize()
+  const userId = ctx.session?.userId
 
   const calendars = await db.calendar.findMany({
-    where,
+    where: {
+      ...where,
+      userId,
+    },
     orderBy,
     cursor,
     take,

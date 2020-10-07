@@ -93,3 +93,12 @@ model Payment {
 	completed		Boolean		@default(false)
 	provider		String
 }
+
+model Image {
+	id          	Int      	@default(autoincrement()) @id
+    createdAt   	DateTime	@default(now())
+	user       		User    	@relation(fields: [userId], references: [id])
+    userId     		Int
+	asset_id		String
+	url				String
+}

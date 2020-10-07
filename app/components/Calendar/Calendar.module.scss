@@ -1,0 +1,74 @@
+$listItemGap: 12px;
+
+a.calendarItem {
+  display: block;
+  background-color: #fff;
+  color: #000;
+  padding: 1em;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  text-decoration: none;
+  border-radius: 3px;
+  box-shadow: 0 8px 6px -6px black;
+
+  & h2 {
+    text-align: center;
+  }
+}
+
+.listItem {
+  padding: $listItemGap;
+
+  @media (min-width: 600px) {
+    max-width: 33.33333%;
+  }
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  margin: 0 -#{$listItemGap};
+  flex-wrap: wrap;
+
+  @media (max-width: 600px) {
+    flex-flow: column;
+  }
+}
+
+.overflow {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* Lets it scroll lazy */
+}
+
+.windowList {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  margin: 0 -#{$listItemGap};
+  flex-wrap: wrap;
+  min-width: 1250px;
+
+  & li {
+    padding: $listItemGap;
+    width: 16.66666666667%;
+  }
+}
+
+.calendar {
+  padding: 0 1em;
+
+  & h1 {
+    text-align: center;
+  }
+}
+
+.window {
+  font-family: "Lobster";
+  text-decoration: none;
+  padding: 4em 1em;
+  text-align: center;
+  display: block;
+  border: 1px solid;
+  min-width: 200px;
+}

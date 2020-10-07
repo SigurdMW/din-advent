@@ -9,6 +9,10 @@ type FormProps<FormValues> = {
   children: ReactNode
   /** Text to display in the submit button */
   submitText: string
+  /**
+   * @default false
+   */
+  disabled?: boolean
   onSubmit: FinalFormProps<FormValues>["onSubmit"]
   initialValues?: FinalFormProps<FormValues>["initialValues"]
   schema?: z.ZodType<any, any>
@@ -17,6 +21,7 @@ type FormProps<FormValues> = {
 export function Form<FormValues extends Record<string, unknown>>({
   children,
   submitText,
+  disabled = false,
   schema,
   initialValues,
   onSubmit,
@@ -47,7 +52,7 @@ export function Form<FormValues extends Record<string, unknown>>({
 
           <button
             type="submit"
-            disabled={submitting}
+            disabled={submitting || disabled}
             className="da-button da-btn-large da-golden-btn"
           >
             {submitText}

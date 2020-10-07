@@ -1,3 +1,12 @@
+.container {
+  p {
+    text-align: center;
+    max-width: 550px;
+    display: block;
+    margin: 0 auto 30px;
+  }
+}
+
 .pricing {
   display: -webkit-flex;
   display: flex;
@@ -17,6 +26,7 @@
   box-shadow: 0 0 10px rgba(46, 59, 125, 0.23);
   border-radius: 20px 20px 10px 10px;
   margin: 1em;
+  padding-bottom: 2em;
   position: relative;
   display: -webkit-flex;
   display: flex;
@@ -33,6 +43,7 @@
     margin: 0;
     padding: 0.25em 0 2.5em;
     list-style: none;
+    min-height: 208px;
 
     & li {
       position: relative;
@@ -43,30 +54,6 @@
         left: 18px;
         top: 5px;
       }
-    }
-  }
-
-  & button {
-    color: inherit;
-    border: none;
-    background: none;
-    font-weight: bold;
-    margin: auto 3em 2em 3em;
-    padding: 1em 2em;
-    color: #fff;
-    border-radius: 30px;
-    background: -webkit-linear-gradient(left, #d49228, #d9a95d);
-    background: linear-gradient(to right, #d49228, #d9a95d);
-    -webkit-transition: background-color 0.3s;
-    transition: background-color 0.3s;
-
-    &:hover,
-    &:focus {
-      background-color: #100a13;
-    }
-
-    &:focus {
-      outline: none;
     }
   }
 
@@ -90,6 +77,30 @@
       }
     }
   }
+
+  & a {
+    color: inherit;
+  }
+}
+
+a.buy {
+  border: none;
+  background: none;
+  font-weight: bold;
+  text-decoration: none;
+  margin: auto 3em 2em 3em;
+  padding: 1em 2em;
+  color: #fff;
+  border-radius: 30px;
+  background: -webkit-linear-gradient(left, #d49228, #d9a95d);
+  background: linear-gradient(to right, #d49228, #d9a95d);
+  -webkit-transition: background-color 0.3s;
+  transition: background-color 0.3s;
+
+  &:hover,
+  &:focus {
+    background-color: #100a13;
+  }
 }
 
 @media screen and (min-width: 66.25em) {
@@ -99,7 +110,7 @@
   .pricingItemFeatured {
     margin: 0;
     z-index: 10;
-    box-shadow: 0 0 20px rgba(46, 59, 125, 0.23);
+    box-shadow: 0 0 20px rgba(46, 59, 125, 0.5);
 
     & .pricingDeco {
       padding: 5em 0 8.885em 0;

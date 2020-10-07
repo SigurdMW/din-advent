@@ -8,6 +8,12 @@ body {
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
 .da-footer {
   color: white; /* Fallback for older browsers */
   color: rgba(255, 255, 255, 0.7);
@@ -23,6 +29,10 @@ body {
     padding-top: 1em;
     font-size: 0.85em;
   }
+
+  & > div {
+    margin: 0 5px 0 5px;
+  }
 }
 
 h1 {
@@ -30,14 +40,6 @@ h1 {
   font-size: 40px;
 }
 
-@media only screen and (max-width: 600px) {
-  .da-footer {
-    font-size: 5vw;
-  }
-}
-.da-footer > div {
-  margin: 0 5px 0 5px;
-}
 a {
   color: #fff;
   text-decoration: underline;
@@ -56,10 +58,12 @@ a {
   flex-direction: column;
   color: white;
 }
+
 .site-content {
   width: 100%;
   flex: 1;
 }
+
 .da-button {
   display: inline-block;
   padding: 5px;
@@ -68,12 +72,24 @@ a {
   font-family: "Lobster", cursive;
   font-size: 15px;
   cursor: pointer;
+  border: none;
 
   &:active {
-    -webkit-box-shadow: 0 8px 6px -6px black;
-    -moz-box-shadow: 0 8px 6px -6px black;
     box-shadow: 0 8px 6px -6px black;
     outline: none;
+  }
+
+  &:disabled,
+  &--disabled {
+    color: #646464;
+    background: #c5c5c5;
+  }
+
+  &:hover {
+    &:disabled {
+      color: #646464;
+      background: linear-gradient(to right, #c5c5c5, #4e4e4e);
+    }
   }
 }
 
@@ -81,13 +97,15 @@ a {
   width: 160px;
   font-size: 20px;
 }
+
 a.da-button {
   text-decoration: none;
   text-align: center;
 }
+
 .da-golden-btn {
   background: linear-gradient(to right, #b97f24, #bf9553);
-  background: linear-gradient(to right, #875d1a, #8c6e3c);
+  //   background: linear-gradient(to right, #875d1a, #8c6e3c);
   border: none;
   color: white;
 
@@ -163,5 +181,64 @@ label {
 input {
   padding: 0.5em 1em;
   font-size: 1em;
-  min-width: 320px;
+  width: 100%;
+  max-width: 503px;
+}
+
+select {
+  display: block;
+  width: 100%;
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  text-transform: none;
+  word-wrap: normal;
+}
+
+.input-toggle {
+  font-size: 30px;
+  -webkit-appearance: none;
+  width: 60px;
+  height: 30px;
+  background: #ddd;
+  border-radius: 3em;
+  margin: 0;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+
+  &:checked {
+    background: #0ebeff;
+  }
+
+  &:after {
+    position: absolute;
+    content: "";
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 0.25em rgba(0, 0, 0, 0.3);
+    transform: scale(0.7);
+    top: 0;
+    left: 0;
+    transition: all 0.2s ease-in-out;
+  }
+
+  &:checked:after {
+    left: calc(100% - 30px);
+  }
 }

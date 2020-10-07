@@ -45,9 +45,9 @@ $navbarHeight: 97.6px;
   margin-top: -$navbarHeight;
   @media (min-width: 767px) {
     flex-direction: row;
+
     .heroContent {
       padding-left: 1em;
-      max-width: 380px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -107,7 +107,6 @@ $navbarHeight: 97.6px;
 .h2 {
   font-family: "Lobster", arial;
   font-size: 40px;
-  text-align: center;
   margin-bottom: 1em;
   @media (max-width: 822px) {
     font-size: 30px;
@@ -119,9 +118,9 @@ $navbarHeight: 97.6px;
     width: 100%;
   }
   &-step {
-    text-align: center;
     font-size: 2em;
     padding: 0.5em 0;
+
     & span {
       display: block;
       margin: 0 auto;
@@ -136,11 +135,7 @@ $navbarHeight: 97.6px;
   }
   & h3 {
     font-weight: 600;
-    text-align: center;
     margin-bottom: 10px;
-  }
-  & p {
-    text-align: center;
   }
 }
 
@@ -152,7 +147,6 @@ $navbarHeight: 97.6px;
 
   & h2 {
     font: 2em "Lobster", serif;
-    text-align: center;
   }
 }
 
@@ -161,6 +155,7 @@ $navbarHeight: 97.6px;
   flex-direction: column;
   margin-left: -24px;
   margin-right: -24px;
+
   @media (min-width: 822px) {
     flex-direction: row;
   }
@@ -172,14 +167,7 @@ $navbarHeight: 97.6px;
 
     & img {
       display: block;
-      width: 24px;
-      margin: 0 auto;
+      width: 48px;
     }
-  }
-}
-
-.explainer {
-  & > div {
-    text-align: center;
   }
 }

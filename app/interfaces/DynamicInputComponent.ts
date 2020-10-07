@@ -1,3 +1,5 @@
+import { CalendarWindowUpdateInput } from "db"
+
 export enum DynamicInputTypes {
   richtext = "richtext",
   confetti = "confetti",
@@ -7,6 +9,7 @@ interface DynamicInputCommon<T> {
   type: DynamicInputTypes
   props: {
     onChange: (val: T) => void
+    editorMode: boolean
   } & T
 }
 
@@ -26,11 +29,12 @@ export type DynamicComponent = RichText | Confetti
 export interface DynamicInput {
   components: Array<DynamicComponent>
   id: number
-  mutate: any
+  save?: (v: CalendarWindowUpdateInput) => Promise<void>
+  editorMode: boolean
 }
 
 export type ComponentEmptyState = Record<
   DynamicInputTypes,
-  { type: DynamicInputTypes; props: Omit<DynamicComponent["props"], "onChange"> }
+  { type: DynamicInputTypes; props: Omit<DynamicComponent["props"], "onChange" | "editorMode"> }
 >
 export type ComponentTranslations = Record<DynamicInputTypes, { name: string }>

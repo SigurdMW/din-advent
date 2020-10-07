@@ -6,13 +6,13 @@ import {
   DynamicInputTypes,
 } from "app/interfaces/DynamicInputComponent"
 import React, { useEffect, useState } from "react"
-import { ConfettiComponent } from "./ConfettiComponent"
-import RichTextComponent from "./RichTextComponent"
 import { ErrorBoundary } from "react-error-boundary"
 import { queryCache } from "react-query"
-import DynamicComponentFrame from "./DynamicComponentFrame"
-import updateWindow from "../mutations/updateWindow"
+import DynamicComponentFrame from "../DynamicComponentFrame"
 // import UnsavedChangesModal from "./UnsaveChangesModal"
+import classes from "./DynamicInputRootComponent.module.scss"
+import { ConfettiComponent } from "../DynamicComponents/ConfettiComponent"
+import RichTextComponent from "../DynamicComponents/RichTextComponent"
 
 const translations: ComponentTranslations = {
   richtext: {
@@ -36,7 +36,17 @@ const componentEmptyState: ComponentEmptyState = {
   },
 }
 
-export const DynamicInputComponent = ({ components = [], id, mutate }: DynamicInput) => {
+/**
+ * Ideer:
+ * Snøfall: https://codepen.io/bsehovac/pen/GPwXxq og https://codepen.io/ibrahimjabbari/pen/XWrqWLy
+ */
+
+export const DynamicInputRootComponent = ({
+  components = [],
+  id,
+  save,
+  editorMode,
+}: DynamicInput) => {
   const [isSaving, setIsSaving] = useState(false)
   const [localComponents, setLocalComponents] = useState(components)
   const [isDirty, setIsDirty] = useState(false)
@@ -58,18 +68,16 @@ export const DynamicInputComponent = ({ components = [], id, mutate }: DynamicIn
       // console.log("Components are similar")
       setIsDirty(false)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localComponents, components])
 
   const handleSave = async () => {
+    if (!save) return
     try {
       setIsSaving(true)
-      const test = await updateWindow({
-        where: { id },
-        data: {
-          content: JSON.stringify({ components: localComponents }),
-        },
+      await save({
+        content: JSON.stringify({ components: localComponents }),
       })
-      mutate(test)
       setIsDirty(false)
     } catch (e) {
       console.error(e)
@@ -78,9 +86,9 @@ export const DynamicInputComponent = ({ components = [], id, mutate }: DynamicIn
     }
   }
 
-  const handleDiscard = () => {
-    setLocalComponents(components)
-  }
+  //   const handleDiscard = () => {
+  //     setLocalComponents(components)
+  //   }
 
   const getComponent = (component: DynamicComponent, index: number) => {
     const onChange = (c) => {
@@ -101,9 +109,11 @@ export const DynamicInputComponent = ({ components = [], id, mutate }: DynamicIn
 
     switch (component.type) {
       case DynamicInputTypes.richtext:
-        return <RichTextComponent {...component.props} onChange={onChange} />
+        return (
+          <RichTextComponent {...component.props} editorMode={editorMode} onChange={onChange} />
+        )
       case DynamicInputTypes.confetti:
-        return <ConfettiComponent />
+        return <ConfettiComponent editorMode={editorMode} />
       default:
         return null
     }
@@ -120,7 +130,7 @@ export const DynamicInputComponent = ({ components = [], id, mutate }: DynamicIn
   }
 
   const componentWithFrame = (component: DynamicComponent, index) => (
-    <DynamicComponentFrame remove={removeComponent(index)} key={index}>
+    <DynamicComponentFrame remove={removeComponent(index)} key={index} editMode={editorMode}>
       {getComponent(component, index)}
     </DynamicComponentFrame>
   )
@@ -130,6 +140,42 @@ export const DynamicInputComponent = ({ components = [], id, mutate }: DynamicIn
       (key: DynamicInputTypes) => !restrictAdd.includes(key)
     )
   }
+
+  const editorContent = (
+    <>
+      <div className={classes.addComponent}>
+        <select
+          value={selected}
+          onChange={(e) => setSelected(e.target.value as keyof ComponentEmptyState)}
+        >
+          <option value="">Velg innhold å legge til</option>
+          {getAvailableComponents().map((key) => (
+            <option value={key} key={key}>
+              {translations[key].name}
+            </option>
+          ))}
+        </select>
+        <button
+          disabled={!selected}
+          onClick={addComponent}
+          className="da-button da-btn-large da-golden-btn"
+        >
+          Legg til
+        </button>
+      </div>
+      <div className={classes.actions}>
+        <button
+          onClick={handleSave}
+          disabled={!isDirty || isSaving}
+          className="da-button da-btn-large da-golden-btn"
+        >
+          Lagre
+        </button>
+      </div>
+      {/* <button onClick={handleDiscard}>Forkast</button> */}
+      {/* <UnsavedChangesModal isDirty={isDirty} save={handleSave} discard={handleDiscard} /> */}
+    </>
+  )
 
   return (
     <ErrorBoundary
@@ -141,24 +187,7 @@ export const DynamicInputComponent = ({ components = [], id, mutate }: DynamicIn
       }}
     >
       {localComponents.map(componentWithFrame)}
-      <select
-        value={selected}
-        onChange={(e) => setSelected(e.target.value as keyof ComponentEmptyState)}
-      >
-        <option>Velg innhold å legge til</option>
-        {getAvailableComponents().map((key) => (
-          <option value={key}>{translations[key].name}</option>
-        ))}
-      </select>
-      <button disabled={!selected} onClick={addComponent}>
-        Legg til
-      </button>
-      <br />
-      <button onClick={handleSave} disabled={!isDirty || isSaving}>
-        Lagre
-      </button>
-      {/* <button onClick={handleDiscard}>Forkast</button> */}
-      {/* <UnsavedChangesModal isDirty={isDirty} save={handleSave} discard={handleDiscard} /> */}
+      {editorMode ? editorContent : null}
     </ErrorBoundary>
   )
 }

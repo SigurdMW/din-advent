@@ -1,36 +1,36 @@
 import React from "react"
-import { Link, useRouter, BlitzPage } from "blitz"
+import { BlitzPage } from "blitz"
 import createPayment from "app/payments/mutations/createPayment"
 import PaymentForm from "app/payments/components/PaymentForm"
 import AuthLayout from "app/layouts/AuthLayout"
+import { useStripe } from "../../utils/useStripe"
+import { Plan } from "app/interfaces/Payment"
 
 const NewPaymentPage: BlitzPage = () => {
-  const router = useRouter()
+  const { isReady, Stripe } = useStripe()
 
+  const createPaymentCore = async (plan: Plan) => {
+    const id = await createPayment({ data: { plan } })
+    Stripe?.redirectToCheckout({ sessionId: id })
+  }
+
+  if (!isReady || !Stripe) return <div>Laster....</div>
   return (
     <div>
-      <h1>Create New Payment</h1>
+      <h1>Ny betaling</h1>
 
       <PaymentForm
         submitText="Lag betaling"
         initialValues={{}}
         onSubmit={async (values) => {
           try {
-            const payment = await createPayment({ data: { plan: values.plan } })
-            alert("Success!" + JSON.stringify(payment))
-            router.push("/payments/[paymentId]", `/payments/${payment.id}`)
+            await createPaymentCore(values.plan as Plan)
           } catch (error) {
             console.error(error)
             alert("Error creating payment " + JSON.stringify(error, null, 2))
           }
         }}
       />
-
-      <p>
-        <Link href="/payments">
-          <a>Payments</a>
-        </Link>
-      </p>
     </div>
   )
 }
