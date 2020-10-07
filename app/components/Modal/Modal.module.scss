@@ -1,0 +1,28 @@
+.header {
+  text-align: center;
+}
+
+.close {
+  position: absolute;
+  top: -30px;
+  right: 0;
+  border: none;
+  background-color: transparent;
+  font-size: 20px;
+  font-family: cursive;
+}
+
+.body {
+  position: relative;
+  color: #000;
+
+  a {
+    color: #000;
+  }
+}
+
+.content {
+}
+
+.footer {
+}

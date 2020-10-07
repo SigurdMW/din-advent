@@ -24,5 +24,5 @@ export default async function shareCalendar(
     },
   })
 
-  return shareKey
+  return shareKey.key
 }
