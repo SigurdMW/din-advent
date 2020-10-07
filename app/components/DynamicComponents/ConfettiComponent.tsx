@@ -177,7 +177,7 @@ export const ConfettiComponent = ({ editorMode }) => {
             className="input-toggle"
             onChange={() => setShowConfetti(!showConfetti)}
           />
-          {showConfetti ? "Skjul " : "Vis "} konfetti
+          Skru {showConfetti ? "av " : "på "}forhåndsvisning av konfetti
         </label>
       </div>
     )
