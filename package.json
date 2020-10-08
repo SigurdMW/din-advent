@@ -11,9 +11,9 @@
     "test:dev": "cypress open --browser chrome",
     "test:watch": "jest --watch",
     "cypress": "cypress run",
-    "wait:test": "wait-on http://localhost:3000 && npm run cypress",
+    "wait:test": "wait-on http://localhost:3000 && yarn cypress",
     "write:testenv": "node ./scripts/write-env-file.js",
-    "test:ci": "npm run write:testenv && npm run migrate && node ./scripts/ci-cypress.js"
+    "test:ci": "yarn write:testenv && yarn migrate && node ./scripts/ci-cypress.js"
   },
   "browserslist": [
     "defaults"
@@ -32,6 +32,9 @@
     "*.{js,ts,tsx}": [
       "eslint --fix"
     ]
+  },
+  "resolutions": {
+    "next": "9.5.2"
   },
   "dependencies": {
     "@prisma/cli": "2.5.1",
