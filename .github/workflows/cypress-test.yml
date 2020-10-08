@@ -10,7 +10,15 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12.x
-      - run: npm install
-      - run: npm run migrate
-      - run: npm run build
-      - run: npm run test:ci
+      - uses: borales/actions-yarn@v2.0.0
+        with:
+          cmd: install
+      - uses: borales/actions-yarn@v2.0.0
+        with:
+          cmd: migrate
+      - uses: borales/actions-yarn@v2.0.0
+        with:
+          cmd: build
+      - uses: borales/actions-yarn@v2.0.0
+        with:
+          cmd: test:ci
