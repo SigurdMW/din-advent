@@ -10,7 +10,8 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12.x
-      - run: npm install
-      - run: npm run migrate
-      - run: npm run build
-      - run: npm run test:ci
+      - run: npm install -g yarn
+      - run: yarn install
+      - run: yarn migrate
+      - run: yarn build
+      - run: yarn test:ci
