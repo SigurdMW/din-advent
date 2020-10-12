@@ -1,4 +1,4 @@
-import { AppProps, Link } from "blitz"
+import { AppProps, Link, useRouter } from "blitz"
 import { ErrorBoundary } from "react-error-boundary"
 import { queryCache } from "react-query"
 import LoginForm from "app/auth/components/LoginForm"
@@ -27,6 +27,7 @@ export default function App({ Component, pageProps }: AppProps) {
 }
 
 function RootErrorFallback({ error, resetErrorBoundary }) {
+  const router = useRouter()
   useEffect(() => {
     Router.events.on("beforeHistoryChange", resetErrorBoundary)
     return () => {
@@ -36,7 +37,12 @@ function RootErrorFallback({ error, resetErrorBoundary }) {
   if (error.name === "AuthenticationError") {
     return (
       <ArticleLayout title="Logg inn for å se siden - Din Advent">
-        <LoginForm onSuccess={resetErrorBoundary} />
+        <LoginForm
+          onSuccess={(email) => {
+            resetErrorBoundary()
+            router.push(`/login-request?email=${encodeURIComponent(email)}`)
+          }}
+        />
       </ArticleLayout>
     )
   } else if (error.name === "AuthorizationError") {

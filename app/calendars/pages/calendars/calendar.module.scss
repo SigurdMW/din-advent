@@ -9,9 +9,11 @@ a.calendarItem {
   text-decoration: none;
   border-radius: 3px;
   box-shadow: 0 8px 6px -6px black;
+  overflow: hidden;
 
   & h2 {
     text-align: center;
+    font-size: 1.35em;
   }
 }
 
