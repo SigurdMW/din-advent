@@ -5,11 +5,12 @@ import ArticleLayout from "app/layouts/ArticleLayout"
 
 const LoginPage: BlitzPage = () => {
   const router = useRouter()
-
   return (
-    <div>
-      <LoginForm onSuccess={() => router.push("/login-request")} />
-    </div>
+    <LoginForm
+      onSuccess={(email: string) =>
+        router.push(`/login-request?email=${encodeURIComponent(email)}`)
+      }
+    />
   )
 }
 

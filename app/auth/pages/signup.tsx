@@ -36,7 +36,7 @@ const SignupPage: BlitzPage = () => {
           try {
             await signup({ email: values.email })
             await loginRequest({ email: values.email })
-            router.push("/login-request")
+            router.push(`/login-request?email=${encodeURIComponent(values.email)}`)
           } catch (error) {
             if (error.code === "P2002" && error.meta?.target?.includes("email")) {
               // This error comes from Prisma

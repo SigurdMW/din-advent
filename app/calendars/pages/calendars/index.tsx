@@ -8,7 +8,7 @@ const CalendarItem = ({ calendar, userId }) => (
   <li key={calendar.id} className={classes.listItem}>
     <Link href="/calendars/[calendarId]" as={`/calendars/${calendar.id}`}>
       <a className={classes.calendarItem}>
-        <h2>{calendar.name}</h2>
+        <h2 title={calendar.name}>{calendar.name}</h2>
         <p>
           Laget {userId === calendar.userId ? " av deg " : ""}{" "}
           {new Date(calendar.createdAt.toString()).toLocaleDateString()}
