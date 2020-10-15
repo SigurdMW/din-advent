@@ -55,7 +55,12 @@ const auth = async (req, res) => {
             },
             update: { email },
           })
-          const publicData = { userId: user.id, roles: [user.role], source: "facebook" }
+          const publicData = {
+            userId: user.id,
+            roles: [user.role],
+            source: "facebook",
+            plan: user.plan,
+          }
           done(null, { publicData, redirectUrl: returnTo })
         }
       ),
@@ -79,7 +84,12 @@ const auth = async (req, res) => {
             },
             update: { email },
           })
-          const publicData = { userId: user.id, roles: [user.role], source: "google" }
+          const publicData = {
+            userId: user.id,
+            roles: [user.role],
+            source: "google",
+            plan: user.plan,
+          }
           done(null, { publicData, redirectUrl: returnTo })
         }
       ),
