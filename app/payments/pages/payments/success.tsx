@@ -2,6 +2,7 @@ import React, { Suspense } from "react"
 import { BlitzPage, Link, useQuery, useRouterQuery } from "blitz"
 import AuthLayout from "app/layouts/AuthLayout"
 import getPaymentVerification from "app/payments/queries/getPaymentVerification"
+import Spinner from "app/components/Spinner"
 
 const ConfirmationMessage = ({ sessionId }) => {
   const [verification] = useQuery(getPaymentVerification, { sessionId })
@@ -37,7 +38,7 @@ const PaymentSuccessPage: BlitzPage = () => {
 
   if (query.sessionId) {
     return (
-      <Suspense fallback={<div>Laster...</div>}>
+      <Suspense fallback={<Spinner />}>
         <ConfirmationMessage sessionId={query.sessionId} />
       </Suspense>
     )
