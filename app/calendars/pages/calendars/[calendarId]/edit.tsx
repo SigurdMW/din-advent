@@ -4,6 +4,7 @@ import getCalendar from "app/calendars/queries/getCalendar"
 import updateCalendar from "app/calendars/mutations/updateCalendar"
 import CalendarForm from "app/calendars/components/CalendarForm"
 import ArticleLayout from "app/layouts/ArticleLayout"
+import Spinner from "app/components/Spinner"
 
 export const EditCalendar = () => {
   const router = useRouter()
@@ -41,7 +42,7 @@ export const EditCalendar = () => {
 
 const EditCalendarPage: BlitzPage = () => (
   <>
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Spinner />}>
       <EditCalendar />
     </Suspense>
 

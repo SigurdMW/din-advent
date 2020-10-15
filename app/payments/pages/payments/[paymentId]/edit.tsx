@@ -4,6 +4,7 @@ import getPayment from "app/payments/queries/getPayment"
 import updatePayment from "app/payments/mutations/updatePayment"
 import PaymentForm from "app/payments/components/PaymentForm"
 import AuthLayout from "app/layouts/AuthLayout"
+import Spinner from "app/components/Spinner"
 
 export const EditPayment = () => {
   const router = useRouter()
@@ -39,7 +40,7 @@ export const EditPayment = () => {
 
 const EditPaymentPage: BlitzPage = () => (
   <>
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Spinner />}>
       <EditPayment />
     </Suspense>
 

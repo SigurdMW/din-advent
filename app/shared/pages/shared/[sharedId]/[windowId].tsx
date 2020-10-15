@@ -4,6 +4,7 @@ import AuthLayout from "app/layouts/AuthLayout"
 import CalendarWindow from "app/components/CalendarWindow"
 import getSharedCalendarWindow from "app/shared/queries/getSharedCalendarWindow"
 import NotAllowedView from "app/components/NotAllowedView"
+import Spinner from "app/components/Spinner"
 
 const GetWindow = ({ day, sharedId }) => {
   const [window] = useQuery(getSharedCalendarWindow, { day, sharedId })
@@ -33,7 +34,7 @@ const ShowWindowPage: BlitzPage = () => {
     return <NotAllowedView day={day} />
   }
   return (
-    <Suspense fallback={<div>Laster...</div>}>
+    <Suspense fallback={<Spinner />}>
       <GetWindow day={day} sharedId={sharedId} />
     </Suspense>
   )

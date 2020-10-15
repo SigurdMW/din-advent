@@ -1,10 +1,16 @@
 import React, { FC } from "react"
+import classes from "./Spinner.module.scss"
 
-// Thanks to https://codepen.io/jonathanhooker/pen/wKaXPV
-// Alt: https://codepen.io/chrisgannon/pen/zyOjYw
+// Thanks to https://codepen.io/woodwoerk/pen/XXJoMa
 
 export const Spinner: FC<{}> = () => {
-  return <div>Laster...</div>
+  return (
+    <div className={classes.container}>
+      <div className={classes.candy}>
+        <div className={classes.candyLoader}></div>
+      </div>
+    </div>
+  )
 }
 
 export default Spinner

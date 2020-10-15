@@ -10,6 +10,7 @@ import Button from "app/components/Button"
 import Modal from "app/components/Modal"
 import { useCurrentUser } from "app/hooks/useCurrentUser"
 import shareCalendar from "app/calendars/mutations/shareCalendar"
+import Spinner from "app/components/Spinner"
 
 const getShareUrl = (shareKey: string) => {
   const { protocol, hostname } = window.location
@@ -127,7 +128,7 @@ const ShowCalendarPage: BlitzPage = () => {
   const calendarId = useParam("calendarId", "number")
   if (!calendarId) return null
   return (
-    <Suspense fallback={<div>Laster...</div>}>
+    <Suspense fallback={<Spinner />}>
       <CalendarRenderer calendarId={calendarId} />
     </Suspense>
   )
