@@ -59,6 +59,7 @@ const auth = async (req, res) => {
             userId: user.id,
             roles: [user.role],
             source: "facebook",
+            email,
             plan: user.plan,
           }
           done(null, { publicData, redirectUrl: returnTo })
@@ -88,6 +89,7 @@ const auth = async (req, res) => {
             userId: user.id,
             roles: [user.role],
             source: "google",
+            email,
             plan: user.plan,
           }
           done(null, { publicData, redirectUrl: returnTo })
