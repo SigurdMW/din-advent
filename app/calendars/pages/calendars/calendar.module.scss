@@ -74,3 +74,23 @@ a.calendarItem {
   border: 1px solid;
   min-width: 200px;
 }
+
+.iconButton {
+  background-color: transparent;
+  border: none;
+  font-size: 1em;
+  color: #fff;
+  margin-left: 0.25em;
+  cursor: pointer;
+
+  &:hover {
+    color: #000;
+  }
+
+  svg {
+    width: 1em;
+    height: auto;
+    color: currentColor;
+    fill: currentColor;
+  }
+}

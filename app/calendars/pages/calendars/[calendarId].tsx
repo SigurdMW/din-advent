@@ -1,125 +1,41 @@
-import React, { Suspense, useEffect, useState } from "react"
-import { useRouter, useQuery, useParam, BlitzPage, Link } from "blitz"
+import React, { Suspense, useState } from "react"
+import { useQuery, useParam, BlitzPage } from "blitz"
 import getCalendar from "app/calendars/queries/getCalendar"
-import getShareKey from "app/calendars/queries/getShareKey"
-import deleteCalendar from "app/calendars/mutations/deleteCalendar"
 import Layout from "app/layouts/Layout"
 import classes from "./calendar.module.scss"
 import Calendar from "app/components/Calendar"
-import Button from "app/components/Button"
-import Modal from "app/components/Modal"
-import { useCurrentUser } from "app/hooks/useCurrentUser"
-import shareCalendar from "app/calendars/mutations/shareCalendar"
 import Spinner from "app/components/Spinner"
+import CalendarSettingsModal from "app/calendars/components/CalendarSettingsModal"
 
-const getShareUrl = (shareKey: string) => {
-  const { protocol, hostname } = window.location
-  return protocol + "//" + hostname + "/" + "shared/" + shareKey
-}
-
-function copy() {
-  const copyText = document.getElementById("copysharekey") as HTMLInputElement | null
-  if (!copyText) return
-  copyText.select()
-  copyText.setSelectionRange(0, 99999) /*For mobile devices*/
-
-  document.execCommand("copy")
-}
+const settingsSvg = (
+  <svg height="512" viewBox="0 0 24 24" width="512">
+    <path d="m22.683 9.394-1.88-.239c-.155-.477-.346-.937-.569-1.374l1.161-1.495c.47-.605.415-1.459-.122-1.979l-1.575-1.575c-.525-.542-1.379-.596-1.985-.127l-1.493 1.161c-.437-.223-.897-.414-1.375-.569l-.239-1.877c-.09-.753-.729-1.32-1.486-1.32h-2.24c-.757 0-1.396.567-1.486 1.317l-.239 1.88c-.478.155-.938.345-1.375.569l-1.494-1.161c-.604-.469-1.458-.415-1.979.122l-1.575 1.574c-.542.526-.597 1.38-.127 1.986l1.161 1.494c-.224.437-.414.897-.569 1.374l-1.877.239c-.753.09-1.32.729-1.32 1.486v2.24c0 .757.567 1.396 1.317 1.486l1.88.239c.155.477.346.937.569 1.374l-1.161 1.495c-.47.605-.415 1.459.122 1.979l1.575 1.575c.526.541 1.379.595 1.985.126l1.494-1.161c.437.224.897.415 1.374.569l.239 1.876c.09.755.729 1.322 1.486 1.322h2.24c.757 0 1.396-.567 1.486-1.317l.239-1.88c.477-.155.937-.346 1.374-.569l1.495 1.161c.605.47 1.459.415 1.979-.122l1.575-1.575c.542-.526.597-1.379.127-1.985l-1.161-1.494c.224-.437.415-.897.569-1.374l1.876-.239c.753-.09 1.32-.729 1.32-1.486v-2.24c.001-.757-.566-1.396-1.316-1.486zm-10.683 7.606c-2.757 0-5-2.243-5-5s2.243-5 5-5 5 2.243 5 5-2.243 5-5 5z" />
+  </svg>
+)
 
 export const CalendarRenderer = ({ calendarId }) => {
-  const router = useRouter()
   const [calendar] = useQuery(getCalendar, { where: { id: calendarId } })
-  const [shareKey] = useQuery(getShareKey, { where: { calendarId: calendarId } })
-  const user = useCurrentUser()
-  const [openShareModal, setOpenShareModal] = useState(false)
-  const [createdShareKey, setCreatedShareKey] = useState("")
-  const [isCreatingShareKey, setIsCreatingShareKey] = useState(false)
-  const [didCopy, setDidCopy] = useState(false)
-
-  const share = async () => {
-    try {
-      setIsCreatingShareKey(true)
-      const newShareKey = await shareCalendar({ calendarId })
-      setCreatedShareKey(newShareKey)
-    } catch (e) {
-      console.error(e)
-    } finally {
-      setIsCreatingShareKey(false)
-    }
-  }
-
-  const handleDeleteCalendar = async () => {
-    if (
-      window.confirm(
-        "Kalenderen og alt tilhørende innhold vil bli slettet. Handlingen kan ikke angres. Vil du fortsette?"
-      )
-    ) {
-      await deleteCalendar({ where: { id: calendarId } })
-      router.push("/calendars")
-    }
-  }
-
-  useEffect(() => {
-    setTimeout(() => {
-      setDidCopy(false)
-    }, 5000)
-  }, [didCopy])
-
-  const onCopy = () => {
-    setDidCopy(true)
-    copy()
-  }
-
-  const getShareLinkInput = (key: string) => (
-    <div style={{ display: "flex" }}>
-      <input value={getShareUrl(key)} readOnly id="copysharekey" />
-      <Button type="primary" onClick={onCopy}>
-        {didCopy ? "Kopiert!" : "Kopier"}
-      </Button>
-    </div>
-  )
+  const [openSettingModal, setOpenSettingsModal] = useState(false)
 
   return (
     <div className={classes.calendar}>
-      <Calendar calendar={calendar} />
-
-      <Button type="primary" onClick={() => setOpenShareModal(true)}>
-        Del kalender
-      </Button>
-
-      <button className="da-button da-btn-white" type="button" onClick={handleDeleteCalendar}>
-        Slett kalender
-      </button>
-
-      <Modal
-        isOpen={openShareModal}
-        requestClose={() => setOpenShareModal(false)}
-        label="Del kalender"
-        header={<h2>Del kalender</h2>}
-      >
-        {user?.plan ? (
-          <div>
-            <p>Del denne linken med dem som skal få lov til å åpne kalenderen:</p>
-            {shareKey || createdShareKey ? (
-              <>{getShareLinkInput(shareKey || createdShareKey)}</>
-            ) : (
-              <>
-                <Button onClick={share} type="primary" disabled={isCreatingShareKey}>
-                  Del kalender nå
-                </Button>
-                {isCreatingShareKey && "Oppretter delingsnøkkel..."}
-              </>
-            )}
-          </div>
-        ) : (
-          <p>
-            Hvis du ønsker å dele kalenderen med noen, må du kjøpe et av våre produkter.{" "}
-            <Link href="/pricing">
-              <a>Se produkter og priser her</a>
-            </Link>
-          </p>
-        )}
-      </Modal>
+      <Calendar
+        titleContent={
+          <button
+            className={classes.iconButton}
+            title="Innstillinger for kalender"
+            onClick={() => setOpenSettingsModal(true)}
+          >
+            {settingsSvg}
+          </button>
+        }
+        calendar={calendar}
+      />
+      <CalendarSettingsModal
+        isOpen={openSettingModal}
+        onClose={() => setOpenSettingsModal(false)}
+        calendarId={calendarId}
+      />
     </div>
   )
 }

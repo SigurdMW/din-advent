@@ -167,9 +167,14 @@ a.da-button {
 }
 
 .da-divider {
+  $root: &;
   border: none;
   border-top: 1px solid rgba(255, 255, 255, 0.5);
   margin: 2em 0;
+
+  &--white-bg {
+    border-top-color: rgba(0, 0, 0, 0.15);
+  }
 }
 
 label {

@@ -1,4 +1,5 @@
 import { Plan } from "app/interfaces/Payment"
+import { ExceededPlanError, PaymentRequiredError } from "app/utils/errors"
 import { SessionContext } from "blitz"
 import db from "db"
 
@@ -15,11 +16,11 @@ export default async function shareCalendar(
   if (!userId || !calendarId) throw new Error("Missing userId or calendarId")
 
   const userPublicData = ctx.session?.publicData
-  if (!userPublicData || !userPublicData.plan) throw new Error("No plan")
+  if (!userPublicData || !userPublicData.plan) throw new PaymentRequiredError()
 
   const shareKeys = await db.shareKey.findMany({ where: { createdBy: userId } })
-  if (userPublicData.plan === Plan.starter && shareKeys.length > 1) throw new Error("Exeeded plan")
-  if (userPublicData.plan === Plan.basic && shareKeys.length > 5) throw new Error("Exeeded plan")
+  if (userPublicData.plan === Plan.starter && shareKeys.length >= 1) throw new ExceededPlanError()
+  if (userPublicData.plan === Plan.basic && shareKeys.length >= 5) throw new ExceededPlanError()
 
   const shareKey = await db.shareKey.create({
     data: {
