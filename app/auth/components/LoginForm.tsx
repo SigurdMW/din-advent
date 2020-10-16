@@ -8,7 +8,7 @@ import FacebookButton from "./FacebookButton"
 import GoogleButton from "./GoogleButton"
 
 type LoginFormProps = {
-  onSuccess?: () => void
+  onSuccess?: (email: string) => void
 }
 
 export const LoginForm = (props: LoginFormProps) => {
@@ -27,7 +27,7 @@ export const LoginForm = (props: LoginFormProps) => {
         onSubmit={async (values) => {
           try {
             await loginRequest({ email: values.email })
-            props.onSuccess && props.onSuccess()
+            props.onSuccess && props.onSuccess(values.email)
           } catch (error) {
             return {
               [FORM_ERROR]: "Beklager, en feil oppsto. Vennligst prøv igjen. - " + error.toString(),

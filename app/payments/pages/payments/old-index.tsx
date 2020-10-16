@@ -2,6 +2,7 @@ import React, { Suspense } from "react"
 import { Link, usePaginatedQuery, useRouter, BlitzPage } from "blitz"
 import getPayments from "app/payments/queries/getPayments"
 import AuthLayout from "app/layouts/AuthLayout"
+import Spinner from "app/components/Spinner"
 
 const ITEMS_PER_PAGE = 100
 
@@ -52,7 +53,7 @@ const PaymentsPage: BlitzPage = () => (
       </Link>
     </p>
 
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Spinner />}>
       <PaymentsList />
     </Suspense>
   </>

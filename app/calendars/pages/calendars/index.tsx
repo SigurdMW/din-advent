@@ -3,12 +3,13 @@ import { Link, useQuery, BlitzPage, useSession } from "blitz"
 import getCalendars from "app/calendars/queries/getCalendars"
 import AuthLayout from "app/layouts/AuthLayout"
 import classes from "./calendar.module.scss"
+import Spinner from "app/components/Spinner"
 
 const CalendarItem = ({ calendar, userId }) => (
   <li key={calendar.id} className={classes.listItem}>
     <Link href="/calendars/[calendarId]" as={`/calendars/${calendar.id}`}>
       <a className={classes.calendarItem}>
-        <h2>{calendar.name}</h2>
+        <h2 title={calendar.name}>{calendar.name}</h2>
         <p>
           Laget {userId === calendar.userId ? " av deg " : ""}{" "}
           {new Date(calendar.createdAt.toString()).toLocaleDateString()}
@@ -56,7 +57,7 @@ const CalendarsPage: BlitzPage = () => (
       </Link>
     </p>
 
-    <Suspense fallback={<div>Laster...</div>}>
+    <Suspense fallback={<Spinner />}>
       <CalendarsList />
     </Suspense>
   </>

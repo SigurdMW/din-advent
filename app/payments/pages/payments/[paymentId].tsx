@@ -3,6 +3,7 @@ import { Link, useRouter, useQuery, useParam, BlitzPage } from "blitz"
 import getPayment from "app/payments/queries/getPayment"
 import deletePayment from "app/payments/mutations/deletePayment"
 import AuthLayout from "app/layouts/AuthLayout"
+import Spinner from "app/components/Spinner"
 
 export const Payment = () => {
   const router = useRouter()
@@ -41,7 +42,7 @@ const ShowPaymentPage: BlitzPage = () => (
       </Link>
     </p>
 
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Spinner />}>
       <Payment />
     </Suspense>
   </>

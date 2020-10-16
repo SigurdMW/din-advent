@@ -7,6 +7,7 @@ import { useCurrentUser } from "app/hooks/useCurrentUser"
 import CalendarWindow from "app/components/CalendarWindow"
 import updateWindow from "app/calendars/mutations/updateWindow"
 import { CalendarWindowUpdateInput } from "db"
+import Spinner from "app/components/Spinner"
 
 // Modal.setAppElement("#__next")
 
@@ -39,7 +40,7 @@ const ShowWindowPage: BlitzPage = () => {
     return null
   }
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Spinner />}>
       <GetWindow day={day} calendarId={calendarId} />
     </Suspense>
   )

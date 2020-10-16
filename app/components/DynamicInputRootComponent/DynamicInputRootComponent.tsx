@@ -39,6 +39,9 @@ const componentEmptyState: ComponentEmptyState = {
 /**
  * Ideer:
  * Snøfall: https://codepen.io/bsehovac/pen/GPwXxq og https://codepen.io/ibrahimjabbari/pen/XWrqWLy
+ * https://codepen.io/danwilson/pen/zveqab
+ * https://codepen.io/machaidze/pen/WNbMBZP
+ * https://codepen.io/dylangggg/pen/zYxwbrx
  */
 
 export const DynamicInputRootComponent = ({
