@@ -1,4 +1,5 @@
-import { NotFoundError, SessionContext } from "blitz"
+import { NotFoundError } from "app/utils/errors"
+import { SessionContext } from "blitz"
 import db from "db"
 
 export default async function getShareKey(

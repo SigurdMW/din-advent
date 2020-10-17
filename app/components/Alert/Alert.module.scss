@@ -1,0 +1,48 @@
+.alert {
+  position: relative;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+}
+
+// thanks to https://getbootstrap.com/docs/4.5/components/alerts/
+.success {
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+
+  & a {
+    color: #0b2e13;
+  }
+}
+
+.info {
+  color: #004085;
+  background-color: #cce5ff;
+  border-color: #b8daff;
+
+  & a {
+    color: #002752;
+  }
+}
+
+.warning {
+  color: #856404;
+  background-color: #fff3cd;
+  border-color: #ffeeba;
+
+  & a {
+    color: #533f03;
+  }
+}
+
+.danger {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+
+  & a {
+    color: #491217;
+  }
+}

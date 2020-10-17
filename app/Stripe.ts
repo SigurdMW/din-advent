@@ -2,7 +2,7 @@ import Stripe from "stripe"
 import db from "db"
 import { Plan } from "./interfaces/Payment"
 import { price } from "./price"
-import { NotFoundError } from "blitz"
+import { NotFoundError } from "app/utils/errors"
 
 // type RequiredEnvKey<T> = (arr: T) => Array<{[key in keyof T]: any}>
 

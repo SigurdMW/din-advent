@@ -1,19 +1,7 @@
 import { IncomingForm } from "formidable"
-import { v2 as cloudinary } from "cloudinary"
 import db from "db"
 import { getSessionContext } from "@blitzjs/server"
-
-const { CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET } = process.env
-
-if (!CLOUDINARY_API_KEY || !CLOUDINARY_API_SECRET) {
-  throw new Error("Missing CLOUDINARY_API_SECRET or CLOUDINARY_API_KEY")
-}
-
-cloudinary.config({
-  cloud_name: "dhimkvo6s",
-  api_key: CLOUDINARY_API_KEY,
-  api_secret: CLOUDINARY_API_SECRET,
-})
+import cloudinary from "app/utils/cloudinary"
 
 export const config = {
   api: {
@@ -40,7 +28,7 @@ const imageUpload = async (req, res) => {
       const image = await cloudinary.uploader.upload(filePath)
       await db.image.create({
         data: {
-          asset_id: image.asset_id,
+          asset_id: image.public_id,
           url: image.secure_url,
           user: {
             connect: {

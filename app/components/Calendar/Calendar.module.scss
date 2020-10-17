@@ -57,6 +57,8 @@ a.calendarItem {
 
 .calendar {
   padding: 0 1em;
+  background: no-repeat center center;
+  background-size: cover;
 
   & h1 {
     text-align: center;
@@ -64,6 +66,7 @@ a.calendarItem {
 }
 
 .window {
+  color: inherit;
   font-family: "Lobster";
   text-decoration: none;
   padding: 4em 1em;
@@ -71,4 +74,12 @@ a.calendarItem {
   display: block;
   border: 1px solid;
   min-width: 200px;
+
+  &:visited {
+    color: inherit;
+  }
+
+  &:active {
+    color: inherit;
+  }
 }

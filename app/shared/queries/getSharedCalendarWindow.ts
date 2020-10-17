@@ -1,4 +1,4 @@
-import { NotFoundError } from "blitz"
+import { NotFoundError } from "app/utils/errors"
 import db from "db"
 
 export default async function getSharedCalendarWindow({
