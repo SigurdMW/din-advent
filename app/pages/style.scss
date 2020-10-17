@@ -247,3 +247,8 @@ select {
     left: calc(100% - 30px);
   }
 }
+
+.editorToolbar,
+.editorToolbar > * {
+  box-sizing: initial;
+}

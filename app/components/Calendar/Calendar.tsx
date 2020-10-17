@@ -11,8 +11,22 @@ interface CalendarProps {
 export const Calendar: FC<CalendarProps> = ({ calendar, titleContent }) => {
   const router = useRouter()
   const windowPath = (day) => router.asPath + "/" + day
+  const options = calendar.options ? JSON.parse(calendar.options) : {}
+  const colorTheme =
+    options.background && options.background.colorTheme ? options.background.colorTheme : ""
+  const bgImage = options.background && options.background.image ? options.background.image : ""
+
+  const getStyle = () => {
+    const bg = bgImage ? { backgroundImage: `url(${bgImage})` } : {}
+    const color = colorTheme ? { color: colorTheme === "light" ? "#000" : "#fff" } : {}
+    return {
+      ...bg,
+      ...color,
+    }
+  }
+
   return (
-    <div className={classes.calendar}>
+    <div className={classes.calendar} style={getStyle()}>
       <h1>
         {calendar.name}
         {titleContent && titleContent}
