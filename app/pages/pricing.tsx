@@ -4,6 +4,7 @@ import { price } from "app/price"
 import { Plan } from "app/interfaces/Payment"
 import { useSession, Link } from "blitz"
 import { Suspense } from "react"
+import { useCurrentUser } from "app/hooks/useCurrentUser"
 
 interface PricingItem {
   price: number
@@ -130,8 +131,12 @@ const LoginToBuy = ({ plan }: { plan: Plan }) => (
 )
 const ActionButton = ({ plan }: { plan: Plan }) => {
   const session = useSession()
+  const user = useCurrentUser()
   if (session.isLoading || !session.userId) {
     return <LoginToBuy plan={plan} />
+  }
+  if (user?.plan && user.plan === plan) {
+    return <span className={classes.yourPackage}>Du har denne pakken</span>
   }
   return (
     <Link href={`/payments/redirect?plan=${plan}`}>
