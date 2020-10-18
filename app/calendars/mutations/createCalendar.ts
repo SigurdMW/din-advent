@@ -1,6 +1,7 @@
 import { CalendarInputType } from "./../validations"
 import { SessionContext } from "blitz"
 import db from "db"
+import { getDefaultComponents } from "app/utils/getDefaultComponents"
 
 export default async function createCalendar(
   { data }: { data: CalendarInputType },
@@ -20,11 +21,12 @@ export default async function createCalendar(
   })
 
   try {
+    const components = getDefaultComponents()
     const createWindowPromise = (day: number, calendarId: number) =>
       db.calendarWindow.create({
         data: {
           day,
-          content: JSON.stringify({ components: [] }),
+          content: JSON.stringify({ components }),
           calendar: {
             connect: {
               id: calendarId,

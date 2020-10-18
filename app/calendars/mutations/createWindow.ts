@@ -1,6 +1,7 @@
 import { WindowInputType } from "./../validations"
 import { SessionContext } from "blitz"
 import db from "db"
+import { getDefaultComponents } from "app/utils/getDefaultComponents"
 
 export default async function createWindow(
   { data }: { data: WindowInputType },
@@ -8,7 +9,10 @@ export default async function createWindow(
 ) {
   ctx.session!.authorize()
   if (!data.content) {
-    data.content = { components: [] }
+    const components = getDefaultComponents()
+    data.content = {
+      components: [...components],
+    }
   }
   if (!data.day || data.day > 24 || data.day < 1) throw new Error("Dag må være mellom 1 og 24")
 
