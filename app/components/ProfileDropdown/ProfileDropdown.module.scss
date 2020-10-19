@@ -1,0 +1,51 @@
+$arrowHeight: 10px;
+
+.container {
+  position: relative;
+}
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + #{$arrowHeight});
+  right: 0;
+  background-color: #fff;
+  padding: 1em;
+  color: #000;
+  border-radius: 3px;
+  min-width: 180px;
+
+  & ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  button,
+  a {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 10px 0;
+    text-decoration: underline;
+  }
+}
+
+button.button {
+  padding: 0;
+}
+
+.closed {
+  display: none;
+}
+
+.arrow {
+  position: absolute;
+  top: -$arrowHeight;
+  right: 20px;
+  width: 0;
+  height: 0;
+  border-left: $arrowHeight solid transparent;
+  border-right: $arrowHeight solid transparent;
+
+  border-bottom: $arrowHeight solid #fff;
+}

@@ -14,5 +14,6 @@ module.exports = {
     "no-console": ["error", { allow: ["warn", "error"] }],
     "no-debugger": "error",
     "jsx-a11y/no-onchange": "off",
+    "jsx-a11y/no-static-element-interactions": "off",
   },
 }

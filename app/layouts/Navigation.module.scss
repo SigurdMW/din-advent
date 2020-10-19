@@ -3,9 +3,10 @@
   align-items: center;
   justify-content: space-between;
   padding: 1em 2em;
+  color: #fff;
 
   & a {
-    color: white;
+    color: inherit;
     text-decoration: underline;
   }
 }
@@ -16,6 +17,9 @@
 }
 
 .right {
+  display: flex;
+  align-items: center;
+
   & a,
   button {
     padding: 1em;
@@ -28,7 +32,20 @@
   & button {
     background-color: transparent;
     border: none;
-    color: #fff;
+    color: inherit;
     font-size: 1em;
+  }
+}
+
+.profile {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  padding: 5px;
+  background-color: rgba(0, 0, 0, 0.15);
+
+  & svg {
+    width: 100%;
+    height: auto;
   }
 }
