@@ -52,8 +52,9 @@ const auth = async (req, res) => {
             create: {
               email,
               name: profile.displayName,
+              active: true,
             },
-            update: { email },
+            update: { email, active: true },
           })
           const publicData = {
             userId: user.id,
@@ -82,8 +83,9 @@ const auth = async (req, res) => {
             create: {
               email,
               name: profile.displayName,
+              active: true,
             },
-            update: { email },
+            update: { email, active: true },
           })
           const publicData = {
             userId: user.id,

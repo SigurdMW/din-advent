@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react"
+import Toggle from "app/components/Toggle"
+
 /**
  * Confetti particle class
  * thanks to https://jsfiddle.net/hcxabsgh/
@@ -168,17 +170,12 @@ export const ConfettiComponent = ({ editorMode }) => {
       <div>
         Forhåndsvisning av konfettiregn. Kun du ser denne visningen.
         <br />
-        <label style={{ display: "inline-block" }}>
-          <input
-            id="prevoewconfetti"
-            style={{ margin: "0 12px 0 0", top: "3px" }}
-            checked={showConfetti}
-            type="checkbox"
-            className="input-toggle"
-            onChange={() => setShowConfetti(!showConfetti)}
-          />
-          Skru {showConfetti ? "av " : "på "}forhåndsvisning av konfetti
-        </label>
+        <Toggle
+          checked={showConfetti}
+          onChange={() => setShowConfetti(!showConfetti)}
+          id="previewofconfetti"
+          label={<>Skru {showConfetti ? "av " : "på "}forhåndsvisning av konfetti</>}
+        />
       </div>
     )
   }

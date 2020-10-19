@@ -3,7 +3,7 @@
 
 datasource db {
     provider = ["sqlite", "postgres"]
-    url      = env("DATABASE_URL")
+    url = "***"
 }
 
 generator client {
@@ -24,7 +24,6 @@ model User {
     Loginrequest   	Loginrequest[]
     Calendar       	Calendar[]
 	plan			String?
-	active			Boolean			@default(false)
 }
 
 model Session {
