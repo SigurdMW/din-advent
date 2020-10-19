@@ -1,6 +1,8 @@
 import { Head, Link } from "blitz"
 import Navigation from "./Navigation"
 
+const GAKey = process.env.NEXT_PUBLIC_GA_KEY
+
 const Layout = ({ title, children }) => (
   <>
     <Head>
@@ -38,6 +40,18 @@ const Layout = ({ title, children }) => (
         name="description"
         content="Med Din Advent kan du opprette og dele digitale julekalendere til noen du vil glede. Det er enkelt, morsomt og klimanøytralt."
       />
+      {GAKey && (
+        <>
+          <script async src={"https://www.googletagmanager.com/gtag/js?id=" + GAKey}></script>
+          <script>{`
+				window.dataLayer = window.dataLayer || [];
+				function gtag(){dataLayer.push(arguments);}
+				gtag('js', new Date());
+
+				gtag('config', '${GAKey}');
+			`}</script>
+        </>
+      )}
     </Head>
 
     <div className="site">
