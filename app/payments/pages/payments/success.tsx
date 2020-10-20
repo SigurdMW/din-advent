@@ -43,7 +43,11 @@ const PaymentSuccessPage: BlitzPage = () => {
       </Suspense>
     )
   }
-  return <div>Laster...</div>
+  return (
+    <Spinner>
+      <p>Vennligst vent mens vi verifiserer betalingen...</p>
+    </Spinner>
+  )
 }
 
 PaymentSuccessPage.getLayout = (page) => (

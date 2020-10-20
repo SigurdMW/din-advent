@@ -1,55 +1,11 @@
-/* candy spinner
-$bg-color: #fafafa;
-$candy-color: #d33144, #ffffee;
-$christmas-color: #31d354;
-$anim-time: 3s;
-$width: 300px;
-$height: 25px;
-$transform: 170px;
-
 .container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 400px;
-  width: 100%;
-}
+  text-align: center;
 
-.candy {
-  overflow: hidden;
-  position: relative;
-  width: $width;
-  height: $height;
-  background-color: $bg-color;
-  box-shadow: 40px 20px 15px -30px rgba(255, 0, 0, 0.1);
-}
-
-.candyLoader {
-  position: absolute;
-  left: -$transform;
-  height: $height;
-  width: $width * 3;
-  z-index: 1;
-  box-shadow: 0px 0px 10px rgba(255, 50, 0, 0.8) inset;
-  background: nth($candy-color, 1);
-  background: repeating-linear-gradient(
-    45deg,
-    nth($candy-color, 2),
-    nth($candy-color, 2) 15px,
-    nth($candy-color, 1) 15px,
-    nth($candy-color, 1) 30px
-  );
-  animation: startTrans $anim-time linear infinite;
-}
-
-@keyframes startTrans {
-  0% {
-    transform: translateX(0);
+  p {
+    max-width: 370px;
+    margin: 0 auto;
   }
-  100% {
-    transform: translateX($transform);
-  }
-} */
+}
 
 .loader {
   margin: 60px auto;

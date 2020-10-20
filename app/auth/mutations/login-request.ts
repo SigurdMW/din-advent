@@ -1,33 +1,29 @@
-import { logger } from "app/utils/logger"
 import db from "db"
 import { LoginInput, LoginInputType } from "../validations"
-import { sendEmail } from "app/email"
+import axios from "axios"
+import { createLoginRequest } from "../utils"
+
+if (!process.env.RECAPTCHA_SECRET) {
+  throw new Error("Missing config RECAPTCHA_SECRET")
+}
 
 export default async function loginRequest(input: LoginInputType) {
   // This throws an error if input is invalid
   const { email } = LoginInput.parse(input)
+  const response = await axios({
+    url: "https://www.google.com/recaptcha/api/siteverify",
+    method: "POST",
+    params: {
+      secret: process.env.RECAPTCHA_SECRET,
+      response: input.recaptcha,
+    },
+  })
+  if (!response.data.success) {
+    throw new Error("Ugyldig recaptcha verdi.")
+  }
   const user = await db.user.findOne({ where: { email } })
   if (user && user.active) {
-    const request = await db.loginrequest.create({
-      data: {
-        user: {
-          connect: {
-            id: user.id,
-          },
-        },
-      },
-    })
-    logger("Successfully created login request for " + email)
-    // TODO: Create or copy last years email template
-    await sendEmail({
-      to: email,
-      subject: "Innloggingsforespørsel - Din Advent",
-      html: `
-			<h1>Innlogging til Din Advent</h1>
-			<p>Noen, forhåpentlig vis du, har spurt om en innlogging til dinadvent.no. Trykk på linken for å fullføre innlogging:</p>
-			<p><a href="${process.env.BASE_URL + "auth/" + request.loginToken}">Fullfør innlogging</a></p>`,
-    })
-    logger("Successfully sent email to " + email)
+    await createLoginRequest(user.id, email)
   }
   return
 }

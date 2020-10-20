@@ -9,7 +9,7 @@ import Alert from "app/components/Alert"
 
 const getShareUrl = (shareKey: string) => {
   const { protocol, hostname } = window.location
-  return protocol + "//" + hostname + "/" + "shared/" + shareKey
+  return `${protocol}//${hostname}/shared/${shareKey}`
 }
 
 function copy() {
@@ -23,7 +23,7 @@ function copy() {
 
 export const CalendarShareSection = ({ calendarId }) => {
   const [shareKey] = useQuery(getShareKey, { where: { calendarId: calendarId } })
-  const user = useCurrentUser()
+  const { user } = useCurrentUser()
   const [createdShareKey, setCreatedShareKey] = useState("")
   const [isCreatingShareKey, setIsCreatingShareKey] = useState(false)
   const [didCopy, setDidCopy] = useState(false)
