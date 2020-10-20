@@ -14,9 +14,9 @@ const AnonAction = ({ text = "Sett i gang" }) => (
   </Link>
 )
 const CTAButton = () => {
-  const currentUser = useCurrentUser()
+  const { user } = useCurrentUser()
 
-  if (currentUser) {
+  if (user) {
     return (
       <Link href="/calendars">
         <a className="da-button da-btn-large da-golden-btn">Gå til dine kalendere</a>

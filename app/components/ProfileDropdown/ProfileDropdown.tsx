@@ -32,6 +32,7 @@ export const ProfileDropdown: FC<{ triggerContent: ReactNode }> = ({
         ref={dropdownEl}
         id="profiledropdown"
         className={`${classes.dropdown} ${isOpen ? "" : classes.closed}`}
+        onClick={() => setIsOpen(false)}
       >
         {children}
         <div className={classes.arrow}></div>

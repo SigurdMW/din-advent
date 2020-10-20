@@ -6,6 +6,7 @@ import loginRequest from "../mutations/login-request"
 import { Link } from "blitz"
 import FacebookButton from "./FacebookButton"
 import GoogleButton from "./GoogleButton"
+import NotARobot from "app/components/NotARobot"
 
 type LoginFormProps = {
   onSuccess?: (email: string) => void
@@ -23,10 +24,10 @@ export const LoginForm = (props: LoginFormProps) => {
       <Form<LoginInputType>
         submitText="Logg inn"
         schema={LoginInput}
-        initialValues={{ email: undefined }}
+        initialValues={{ email: undefined, recaptcha: undefined }}
         onSubmit={async (values) => {
           try {
-            await loginRequest({ email: values.email })
+            await loginRequest({ email: values.email, recaptcha: values.recaptcha })
             props.onSuccess && props.onSuccess(values.email)
           } catch (error) {
             return {
@@ -36,6 +37,7 @@ export const LoginForm = (props: LoginFormProps) => {
         }}
       >
         <LabeledTextField name="email" label="E-post" placeholder="E-post" id="loginformid" />
+        <NotARobot />
       </Form>
       <br />
       <br />

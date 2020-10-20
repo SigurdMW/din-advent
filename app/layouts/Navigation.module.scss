@@ -23,6 +23,7 @@
   & a,
   button {
     padding: 1em;
+    white-space: nowrap;
 
     @media (max-width: 600px) {
       padding: 1em 0.5em;

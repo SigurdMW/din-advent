@@ -53,9 +53,9 @@ const AnonHeader = () => (
 )
 
 export const NavigationContent = () => {
-  const currentUser = useCurrentUser()
+  const { user } = useCurrentUser()
 
-  if (currentUser) {
+  if (user) {
     return (
       <>
         <Link href="/pricing">
@@ -67,9 +67,7 @@ export const NavigationContent = () => {
           </a>
         </Link>{" "}
         <ProfileDropdown triggerContent={<ProfilePicture />}>
-          <span style={{ fontSize: "0.8em" }}>
-            Hei{currentUser.name ? ", " + currentUser.name : ""}!
-          </span>
+          <span style={{ fontSize: "0.8em" }}>Hei{user.name ? ", " + user.name : ""}!</span>
           <ul>
             <li>
               <Link href="/profile">Din profil</Link>

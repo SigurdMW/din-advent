@@ -4,6 +4,7 @@ import createPayment from "app/payments/mutations/createPayment"
 import AuthLayout from "app/layouts/AuthLayout"
 import { useStripe } from "../../utils/useStripe"
 import { Plan } from "app/interfaces/Payment"
+import Spinner from "app/components/Spinner"
 
 const PaymentRedirectPage: BlitzPage = () => {
   const { isReady, Stripe } = useStripe()
@@ -41,7 +42,11 @@ const PaymentRedirectPage: BlitzPage = () => {
       </>
     )
   }
-  return <div>Vennligst vent, du blir straks omdirigert til betaling....</div>
+  return (
+    <Spinner>
+      <p>Vennligst vent, du blir straks omdirigert til betaling...</p>
+    </Spinner>
+  )
 }
 
 PaymentRedirectPage.getLayout = (page) => (

@@ -13,7 +13,7 @@ import Spinner from "app/components/Spinner"
 
 const GetWindow = ({ day, calendarId }) => {
   const [window, { mutate }] = useQuery(getWindow, { where: { calendarId, day } })
-  const user = useCurrentUser()
+  const { user } = useCurrentUser()
 
   const saveWindow = async (v: CalendarWindowUpdateInput) => {
     const newWindow = await updateWindow({
