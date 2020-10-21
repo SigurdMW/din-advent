@@ -21,11 +21,16 @@ const customStyles = {
     backgroundColor: "rgba(0, 0, 0, 0.8)",
   },
   content: {
+    top: "50%",
     left: "50%",
+    right: "auto",
     bottom: "auto",
-    transform: "translateX(-50%)",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    overflowY: "auto",
     maxWidth: "600px",
     minWidth: "300px",
+    maxHeight: "100%",
   },
 }
 

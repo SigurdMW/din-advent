@@ -4,10 +4,10 @@ import { Form, FORM_ERROR } from "app/components/Form"
 import { LabeledTextField } from "app/components/LabeledTextField"
 import signup from "app/auth/mutations/signup"
 import { SignupInput, SignupInputType } from "app/auth/validations"
-import loginRequest from "../mutations/login-request"
 import ArticleLayout from "app/layouts/ArticleLayout"
 import GoogleButton from "../components/GoogleButton"
 import FacebookButton from "../components/FacebookButton"
+import NotARobot from "app/components/NotARobot"
 
 const SignupPage: BlitzPage = () => {
   const router = useRouter()
@@ -34,13 +34,12 @@ const SignupPage: BlitzPage = () => {
         schema={SignupInput}
         onSubmit={async (values) => {
           try {
-            await signup({ email: values.email })
-            await loginRequest({ email: values.email })
+            await signup({ email: values.email, recaptcha: values.recaptcha })
             router.push(`/login-request?email=${encodeURIComponent(values.email)}`)
           } catch (error) {
             if (error.code === "P2002" && error.meta?.target?.includes("email")) {
               // This error comes from Prisma
-              return { email: "Oi, noe gikk galt-" }
+              return { email: "Oi, noe gikk galt!" }
             } else {
               return { [FORM_ERROR]: error.toString() }
             }
@@ -48,6 +47,7 @@ const SignupPage: BlitzPage = () => {
         }}
       >
         <LabeledTextField name="email" label="E-post" placeholder="E-post" id="signupemail" />
+        <NotARobot />
       </Form>
     </div>
   )

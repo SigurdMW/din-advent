@@ -1,5 +1,10 @@
 import { SessionContext } from "blitz"
 
 export default async function logout(_ = null, ctx: { session?: SessionContext } = {}) {
-  return await ctx.session!.revoke()
+  try {
+    await ctx.session!.revoke()
+    return
+  } catch (e) {
+    return
+  }
 }

@@ -39,7 +39,7 @@ export function Form<FormValues extends Record<string, unknown>>({
         }
       }}
       onSubmit={onSubmit}
-      render={({ handleSubmit, submitting, submitError }) => (
+      render={({ handleSubmit, submitting, submitError, valid }) => (
         <form onSubmit={handleSubmit} className="form" {...props}>
           {/* Form fields supplied as children are rendered here */}
           {children}
@@ -52,7 +52,7 @@ export function Form<FormValues extends Record<string, unknown>>({
 
           <button
             type="submit"
-            disabled={submitting || disabled}
+            disabled={submitting || disabled || !valid}
             className="da-button da-btn-large da-golden-btn"
           >
             {submitText}
