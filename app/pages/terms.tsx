@@ -14,16 +14,14 @@ export const TermsPage = () => (
     </p>
     <h2>Tilgjengelighet</h2>
     <p>
-      Kalenderne som legges inn er tilgjengelige i løsningen til 31.12.2020. Etter dette slettes
-      kalendere for godt.{" "}
+      Når du kjøper en pakke fra oss, garanterer vi for at de er tilgjengelige til og med 31.12.2020. Om du skal benytte tjenesten i 2021, må du kjøpe en ny pakke neste år.
     </p>
     <h2>Innhold</h2>
     <p>
       Som bruker av denne tjenesten er du selv ansvarlig for innholdet som du legger inn. Alt av
-      innhold som legges inn i en kalender må du regne med at kan sees av alle da kalenderene er
-      enkle å distribuere. Følg derfor fornuftig nettvett, og legg ikke inn sensitivt innhold eller
+      innhold som legges inn i en kalender må du regne som offentlig tilgjengelig. Følg derfor fornuftig nettvett, og legg ikke inn sensitivt innhold eller
       utlever personopplysninger. Innhold som er av sjikanerende eller pornografisk karakter vil bli
-      slettet. Eksempler på innhold er tekst, bilder og video.
+      slettet. Eksempler på innhold i denne sammenhengen er tekst, bilder og video som du legger inn i tjenesten.
     </p>
   </div>
 )
