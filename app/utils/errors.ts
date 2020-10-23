@@ -10,6 +10,8 @@ export enum ErrorName {
   AuthenticationError = "AuthenticationError",
   AuthorizationError = "AuthorizationError",
   NotFoundError = "NotFoundError",
+  ValidationError = "ValidationError",
+  GeneralError = "GeneralError",
 }
 
 export class PaymentRequiredError extends Error {
@@ -30,6 +32,30 @@ export class ExceededPlanError extends Error {
   statusCode = 402
   constructor(
     message = "Du har brukt opp det som ligger i din plan. Vennligst oppgrader for å fortsette."
+  ) {
+    super(message)
+  }
+  get _clearStack() {
+    return true
+  }
+}
+
+export class ValidationError extends Error {
+  name = ErrorName.ValidationError
+  statusCode = 406
+  constructor(message = "Du har sendt inn ugyldige data.") {
+    super(message)
+  }
+  get _clearStack() {
+    return true
+  }
+}
+
+export class GeneralError extends Error {
+  name = ErrorName.GeneralError
+  statusCode = 500
+  constructor(
+    message = "Whoops, en uventet feil oppsto. Vi beklager ulempen. Ved gjentatte feil, ta kontakt."
   ) {
     super(message)
   }

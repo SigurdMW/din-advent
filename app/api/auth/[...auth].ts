@@ -1,5 +1,5 @@
+import createOrUpdateUser from "app/users/mutations/createOrUpdateUser"
 import { passportAuth } from "blitz"
-import db from "db"
 import FacebookStrategy from "passport-facebook"
 import GoogleStrategy from "passport-google-oauth20"
 
@@ -47,15 +47,7 @@ const auth = async (req, res) => {
           if (!email) {
             return done(new Error("Facebook OAuth response doesn't have email."))
           }
-          const user = await db.user.upsert({
-            where: { email },
-            create: {
-              email,
-              name: profile.displayName,
-              active: true,
-            },
-            update: { email, active: true },
-          })
+          const user = await createOrUpdateUser({ email, name: profile.displayName, active: true })
           const publicData = {
             userId: user.id,
             roles: [user.role],
@@ -78,15 +70,7 @@ const auth = async (req, res) => {
           if (!email) {
             return done(new Error("Google OAuth response doesn't have email."))
           }
-          const user = await db.user.upsert({
-            where: { email },
-            create: {
-              email,
-              name: profile.displayName,
-              active: true,
-            },
-            update: { email, active: true },
-          })
+          const user = await createOrUpdateUser({ email, name: profile.displayName, active: true })
           const publicData = {
             userId: user.id,
             roles: [user.role],

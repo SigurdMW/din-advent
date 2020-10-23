@@ -8,8 +8,10 @@ export default async function getShareKey(
 ) {
   try {
     ctx.session!.authorize()
-    // TODO: make sure this cannot be called by people not owning the calendar
-    const shareKeys = await db.shareKey.findMany({ where })
+    const userId = ctx.session?.userId
+
+    // can only get shareKeys the logged in user created
+    const shareKeys = await db.shareKey.findMany({ where: { ...where, userId } })
 
     if (!shareKeys || shareKeys.length === 0) throw new NotFoundError()
 

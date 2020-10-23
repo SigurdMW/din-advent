@@ -3,9 +3,10 @@ import { useQuery, Link } from "blitz"
 import getShareKey from "app/calendars/queries/getShareKey"
 import Button from "app/components/Button"
 import { useCurrentUser } from "app/hooks/useCurrentUser"
-import shareCalendar from "app/calendars/mutations/shareCalendar"
+import shareCalendarByKey from "app/calendars/mutations/shareCalendarByKey"
 import { ErrorName } from "app/utils/errors"
 import Alert from "app/components/Alert"
+import ShareByEmail from "./ShareByEmail"
 
 const getShareUrl = (shareKey: string) => {
   const { protocol, hostname } = window.location
@@ -33,8 +34,8 @@ export const CalendarShareSection = ({ calendarId }) => {
     try {
       setShareError(null)
       setIsCreatingShareKey(true)
-      const newShareKey = await shareCalendar({ calendarId })
-      setCreatedShareKey(newShareKey)
+      const newShareKey = await shareCalendarByKey({ calendarId })
+      if (newShareKey) setCreatedShareKey(newShareKey)
     } catch (e) {
       if (e.name === ErrorName.PaymentRequiredError) {
         setShareError(
@@ -98,8 +99,11 @@ export const CalendarShareSection = ({ calendarId }) => {
 
   return (
     <>
+      <h3>Del kalender</h3>
       {user?.plan ? (
         <div style={{ marginBottom: "1em" }}>
+          <ShareByEmail calendarId={calendarId} />
+          <h4>Del med link</h4>
           <p>Del denne linken med dem som skal få lov til å åpne kalenderen:</p>
           {shareKey || createdShareKey ? (
             <>{getShareLinkInput(shareKey || createdShareKey)}</>
