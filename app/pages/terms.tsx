@@ -14,7 +14,7 @@ export const TermsPage = () => (
     </p>
     <h2>Tilgjengelighet</h2>
     <p>
-      Når du kjøper en pakke fra oss, garanterer vi for at de er tilgjengelige til og med 31.12.2020. Om du skal benytte tjenesten i 2021, må du kjøpe en ny pakke neste år.
+      Når du kjøper en pakke fra oss, vil tjenesten være tilgjengelige til og med 31.12.2020. Om du skal benytte tjenesten i 2021, må du kjøpe en ny pakke neste år.
     </p>
     <h2>Innhold</h2>
     <p>
