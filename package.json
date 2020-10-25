@@ -37,7 +37,7 @@
     "next": "9.5.2"
   },
   "dependencies": {
-    "@prisma/cli": "2.5.1",
+    "@prisma/cli": "2.9.0",
     "@prisma/client": "2.5.1",
     "@testing-library/jest-dom": "5.11.4",
     "@testing-library/react": "10.4.9",

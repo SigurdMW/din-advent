@@ -4,7 +4,6 @@ import deleteCalendar from "app/calendars/mutations/deleteCalendar"
 import Button from "app/components/Button"
 import Modal from "app/components/Modal"
 import Spinner from "app/components/Spinner"
-import CalendarShareSection from "./CalendarShareSection"
 import CalendarBackgroundSection from "./CalendarBackgroundSection"
 
 const CalendarSettingsModal = ({ calendarId, isOpen = false, onClose }) => {
@@ -30,8 +29,6 @@ const CalendarSettingsModal = ({ calendarId, isOpen = false, onClose }) => {
         label="Innstillinger"
         header={<h2>Innstillinger</h2>}
       >
-        <hr className="da-divider da-divider--white-bg" />
-        <CalendarShareSection calendarId={calendarId} />
         <hr className="da-divider da-divider--white-bg" />
         <CalendarBackgroundSection calendarId={calendarId} />
         <hr className="da-divider da-divider--white-bg" />

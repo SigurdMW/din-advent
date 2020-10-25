@@ -23,7 +23,7 @@ export default async function loginRequest(input: LoginInputType) {
   }
   const user = await db.user.findOne({ where: { email } })
   if (user && user.active) {
-    await createLoginRequest(user.id, email)
+    await createLoginRequest(user)
   }
   return
 }

@@ -45,9 +45,7 @@ const AnonHeader = () => (
       <a>Ny bruker</a>
     </Link>{" "}
     <Link href="/login">
-      <a className="button small">
-        <strong>Logg inn</strong>
-      </a>
+      <a className="button small">Logg inn</a>
     </Link>
   </>
 )
@@ -62,9 +60,7 @@ export const NavigationContent = () => {
           <a>Priser</a>
         </Link>
         <Link href="/calendars">
-          <a className="button small">
-            <strong>Dine kalendere</strong>
-          </a>
+          <a className="button small">Dine kalendere</a>
         </Link>{" "}
         <ProfileDropdown triggerContent={<ProfilePicture />}>
           <span style={{ fontSize: "0.8em" }}>Hei{user.name ? ", " + user.name : ""}!</span>

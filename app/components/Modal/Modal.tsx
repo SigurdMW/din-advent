@@ -29,8 +29,8 @@ const customStyles = {
     transform: "translate(-50%, -50%)",
     overflowY: "auto",
     maxWidth: "600px",
-    minWidth: "300px",
     maxHeight: "100%",
+    width: "100%",
   },
 }
 

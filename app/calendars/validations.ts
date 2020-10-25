@@ -17,3 +17,12 @@ export const GetWindowInput = z.object({
   calendarId: z.number(),
 })
 export type GetWindowInputType = z.infer<typeof GetWindowInput>
+
+export const ShareByEmailInput = z.object({
+  email: z.string().email({ message: "Du må fylle inn e-post" }),
+})
+export const ShareByEmailFunctionArgs = ShareByEmailInput.extend({
+  calendarId: z.number(),
+})
+export type ShareByEmailInputType = z.infer<typeof ShareByEmailInput>
+export type ShareByEmailFunctionArgsType = z.infer<typeof ShareByEmailFunctionArgs>
