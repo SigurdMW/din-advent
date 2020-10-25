@@ -66,11 +66,10 @@ a {
 
 .da-button {
   display: inline-block;
-  padding: 5px;
-  width: 115px;
+  padding: 8px 1em;
   border-radius: 3px;
-  font-family: "Lobster", cursive;
-  font-size: 15px;
+  font-size: 16px;
+  letter-spacing: 1px;
   cursor: pointer;
   border: none;
 
@@ -94,7 +93,6 @@ a {
 }
 
 .da-button.da-btn-large {
-  width: 160px;
   font-size: 20px;
 }
 
@@ -104,7 +102,7 @@ a.da-button {
 }
 
 .da-golden-btn {
-  background: linear-gradient(to right, #b97f24, #bf9553);
+  background-color: #b97f24;
   //   background: linear-gradient(to right, #875d1a, #8c6e3c);
   border: none;
   color: white;
@@ -155,6 +153,12 @@ a.da-button {
   }
 }
 
+.da-button-subtle {
+  background-color: transparent;
+  color: #fff;
+  border: 1px solid #fff;
+}
+
 .show-desktop {
   @media (max-width: 600px) {
     display: none;
@@ -188,6 +192,10 @@ input {
   font-size: 1em;
   width: 100%;
   max-width: 503px;
+}
+
+input[type="checkbox"] {
+  width: auto;
 }
 
 select {

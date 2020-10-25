@@ -158,11 +158,7 @@ export const DynamicInputRootComponent = ({
             </option>
           ))}
         </select>
-        <button
-          disabled={!selected}
-          onClick={addComponent}
-          className="da-button da-btn-large da-golden-btn"
-        >
+        <button disabled={!selected} onClick={addComponent} className="da-button da-golden-btn">
           Legg til
         </button>
       </div>
@@ -170,7 +166,7 @@ export const DynamicInputRootComponent = ({
         <button
           onClick={handleSave}
           disabled={!isDirty || isSaving}
-          className="da-button da-btn-large da-golden-btn"
+          className="da-button da-golden-btn"
         >
           Lagre
         </button>

@@ -1,5 +1,5 @@
 import React, { Suspense, useState } from "react"
-import { useQuery, useParam, BlitzPage } from "blitz"
+import { useQuery, useParam, BlitzPage, Link } from "blitz"
 import getCalendar from "app/calendars/queries/getCalendar"
 import Layout from "app/layouts/Layout"
 import classes from "./calendar.module.scss"
@@ -18,25 +18,29 @@ export const CalendarRenderer = ({ calendarId }) => {
   const [openSettingModal, setOpenSettingsModal] = useState(false)
 
   return (
-    <div className={classes.calendar}>
-      <Calendar
-        titleContent={
-          <button
-            className={classes.iconButton}
-            title="Innstillinger for kalender"
-            onClick={() => setOpenSettingsModal(true)}
-          >
-            {settingsSvg}
-          </button>
-        }
-        calendar={calendar}
-      />
-      <CalendarSettingsModal
-        isOpen={openSettingModal}
-        onClose={() => setOpenSettingsModal(false)}
-        calendarId={calendarId}
-      />
-    </div>
+    <>
+      <div className={classes.share}>
+        <Link href={`/calendars/${calendarId}/share`}>
+          <a>Del kalender</a>
+        </Link>{" "}
+        |
+        <button
+          className={classes.iconButton}
+          title="Innstillinger for kalender"
+          onClick={() => setOpenSettingsModal(true)}
+        >
+          Kalenderinnstillinger {settingsSvg}
+        </button>
+      </div>
+      <div className={classes.calendar}>
+        <Calendar calendar={calendar} />
+        <CalendarSettingsModal
+          isOpen={openSettingModal}
+          onClose={() => setOpenSettingsModal(false)}
+          calendarId={calendarId}
+        />
+      </div>
+    </>
   )
 }
 

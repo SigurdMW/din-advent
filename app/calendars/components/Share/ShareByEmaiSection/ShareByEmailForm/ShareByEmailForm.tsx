@@ -4,17 +4,20 @@ import Form, { FORM_ERROR } from "app/components/Form"
 import { ShareByEmailInput, ShareByEmailInputType } from "app/calendars/validations"
 import LabeledTextField from "app/components/LabeledTextField"
 import Button from "app/components/Button"
+import { ErrorName } from "app/utils/errors"
+import ShareError from "../../ShareError"
 
-interface ShareByEmailProps {
+interface ShareByEmailFormProps {
   calendarId: number
+  onShared: () => Promise<void>
 }
 
-export const ShareByEmail: FC<ShareByEmailProps> = ({ calendarId }) => {
+export const ShareByEmailForm: FC<ShareByEmailFormProps> = ({ calendarId, onShared }) => {
   const [successEmail, setSuccessEmail] = useState<string>("")
   if (successEmail)
     return (
       <div>
-        <h4>🎉 Kalenderen ble delt med {successEmail}</h4>
+        <h2>🎉 Kalenderen ble delt med {successEmail}</h2>
         <p>{successEmail} får nå en e-post som beskriver hvordan man får tilgang til kalenderen.</p>
         <Button type="secondary" onClick={() => setSuccessEmail("")}>
           Del med en til
@@ -28,19 +31,28 @@ export const ShareByEmail: FC<ShareByEmailProps> = ({ calendarId }) => {
         schema={ShareByEmailInput}
         disabled={false}
         initialValues={{ email: undefined }}
+        handleSubmitError={(name: ErrorName) => {
+          return <ShareError errorType={name} />
+        }}
         onSubmit={async (values, form) => {
           try {
             await shareCalendarByEmail({ ...values, calendarId })
             setSuccessEmail(values.email)
+            if (onShared) await onShared()
             setTimeout(form.reset)
           } catch (error) {
             return {
-              [FORM_ERROR]: "Beklager, en feil oppsto. Vennligst prøv igjen. - " + error.toString(),
+              [FORM_ERROR]: error.name ? error.name : ErrorName.GeneralError,
             }
           }
         }}
       >
-        <h4>Del med e-post</h4>
+        <h2>Del med e-post</h2>
+        <p>
+          Når du deler med e-post, må den du deler med opprette en gratis bruker på dinadvent.no. Vi
+          sender en e-post til personen du deler med for å informere om at kalenderen har blitt delt
+          og videre steg.
+        </p>
         <LabeledTextField
           name="email"
           type="email"
@@ -53,4 +65,4 @@ export const ShareByEmail: FC<ShareByEmailProps> = ({ calendarId }) => {
   )
 }
 
-export default ShareByEmail
+export default ShareByEmailForm

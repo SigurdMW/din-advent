@@ -27,7 +27,7 @@ export default async function shareCalendar(
     // do nothing, share with a email if it fails
   }
 
-  if (userIdShare === userId) return
+  if (userIdShare === userId) throw new ValidationError("Mente du virkelig å dele med deg selv...?")
 
   const emailOrUndefined = userIdShare ? undefined : email
   const userIdOrUndefined = userIdShare ? userIdShare : undefined

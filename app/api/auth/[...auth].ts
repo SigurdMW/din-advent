@@ -1,4 +1,4 @@
-import createOrUpdateUser from "app/users/mutations/createOrUpdateUser"
+import { createOrUpdateUser } from "app/users/utils"
 import { passportAuth } from "blitz"
 import FacebookStrategy from "passport-facebook"
 import GoogleStrategy from "passport-google-oauth20"

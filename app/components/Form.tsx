@@ -1,6 +1,7 @@
 import React, { ReactNode, PropsWithoutRef } from "react"
 import { Form as FinalForm, FormProps as FinalFormProps } from "react-final-form"
 import * as z from "zod"
+import Alert from "./Alert"
 export { FORM_ERROR } from "final-form"
 export { Field } from "react-final-form"
 
@@ -14,6 +15,7 @@ type FormProps<FormValues> = {
    */
   disabled?: boolean
   onSubmit: FinalFormProps<FormValues>["onSubmit"]
+  handleSubmitError?: (err: string) => ReactNode
   initialValues?: FinalFormProps<FormValues>["initialValues"]
   schema?: z.ZodType<any, any>
 } & Omit<PropsWithoutRef<JSX.IntrinsicElements["form"]>, "onSubmit">
@@ -25,6 +27,7 @@ export function Form<FormValues extends Record<string, unknown>>({
   schema,
   initialValues,
   onSubmit,
+  handleSubmitError,
   ...props
 }: FormProps<FormValues>) {
   return (
@@ -53,15 +56,19 @@ export function Form<FormValues extends Record<string, unknown>>({
             {children}
 
             {!dirtySinceLastSubmit && submitError && (
-              <div role="alert" style={{ color: "red" }}>
-                {submitError}
-              </div>
+              <>
+                {handleSubmitError ? (
+                  <>{handleSubmitError(submitError)}</>
+                ) : (
+                  <Alert type="danger">{submitError}</Alert>
+                )}
+              </>
             )}
 
             <button
               type="submit"
               disabled={submitting || disabled || hasValidationErrors}
-              className="da-button da-btn-large da-golden-btn"
+              className="da-button da-golden-btn"
             >
               {submitText}
             </button>

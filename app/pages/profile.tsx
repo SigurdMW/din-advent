@@ -50,6 +50,9 @@ const NameField = ({ name, mutate }: { name: string | null; mutate: (name: strin
 const Profile = () => {
   const { user, mutate } = useCurrentUser()
   const [payments, { isLoading }] = useQuery(getCurrentUserPayments, null)
+  //   const [showDeleteModal, setShowDeleteModal] = useState(false)
+  //   const [didCheck, setDidCheck] = useState(false)
+  //   const router = useRouter()
 
   if (!user || isLoading) return <Spinner />
 
@@ -59,6 +62,11 @@ const Profile = () => {
   }
 
   const userPayments = payments || []
+
+  //   const handleDeleteUser = async () => {
+  // 	await deleteUser({ id: user.id })
+  // 	router.push("/")
+  //   }
 
   return (
     <>
@@ -104,6 +112,25 @@ const Profile = () => {
       ) : (
         <p>Du har ingen betalinger.</p>
       )}
+      {/* <h2>Slett meg</h2>
+	  <p>Slett all data om deg og dine kalendere fra dinadvent.no.</p>
+	  <Alert type="danger">
+		  <p>Dersom du sletter din bruker, kan ikke innholdet gjenopprettes.</p>
+		<Button type="secondary" className={classes.delete} onClick={() => setShowDeleteModal(true)}>Slett meg</Button>
+	  </Alert>
+	  <Modal isOpen={showDeleteModal} requestClose={() => setShowDeleteModal(false)} label="Slett bruker">
+		<div style={{ marginBottom: "1em", display: "block" }}>
+			<h2>Slett bruker</h2>
+			<p>Dersom du sletter din bruker, kan ikke innholdet gjenopprettes.</p>
+			<label><input type="checkbox" onChange={() => setDidCheck(!didCheck)} />Ja, jeg har forstått</label>
+			<Button
+				type="secondary"
+				className={classes.delete}
+				onClick={handleDeleteUser}
+				disabled={!didCheck}
+			>Slett meg</Button>
+		</div>
+		</Modal> */}
     </>
   )
 }

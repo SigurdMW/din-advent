@@ -42,5 +42,3 @@ const addUserIdToShareKey = async ({ email, id: userId }: User) => {
     return
   }
 }
-
-export default createOrUpdateUser
