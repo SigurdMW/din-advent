@@ -9,6 +9,7 @@ import ShareByEmailSection from "app/calendars/components/Share/ShareByEmaiSecti
 import ShareByLinkSection from "app/calendars/components/Share/ShareByLinkSection"
 import { useCurrentUser } from "app/hooks/useCurrentUser"
 import Alert from "app/components/Alert"
+import { ShareKey, User } from "db"
 
 const GetSharePage = ({ calendarId }) => {
   const [shareKeys, { mutate, refetch }] = useQuery(getShareKeys, { calendarId })
@@ -50,7 +51,7 @@ const GetSharePage = ({ calendarId }) => {
       <h2>Aktive delinger</h2>
       {shareKeys.length ? (
         <ul className={classes.list}>
-          {shareKeys.map(({ key: shareKey, ...s }) => (
+          {shareKeys.map(({ key: shareKey, ...s }: ShareKey & { sharedWith: User | null }) => (
             <ShareKeyItem key={s.id} shareKey={shareKey} {...s} onDelete={handleDelete} />
           ))}
         </ul>
