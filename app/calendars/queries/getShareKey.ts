@@ -3,10 +3,10 @@ import { SessionContext } from "blitz"
 import db from "db"
 
 export default async function getShareKey(
-  { where }: { where: { calendarId: number } },
-  ctx: { session?: SessionContext } = {}
+	{ where }: { where: { calendarId: number } },
+	ctx: { session?: SessionContext } = {}
 ) {
-  try {
+	try {
     ctx.session!.authorize()
     const userId = ctx.session?.userId
 
@@ -16,7 +16,7 @@ export default async function getShareKey(
     if (!shareKeys || shareKeys.length === 0) throw new NotFoundError()
 
     return shareKeys[0].key
-  } catch (e) {
-    return
-  }
+	} catch (e) {
+		return
+	}
 }

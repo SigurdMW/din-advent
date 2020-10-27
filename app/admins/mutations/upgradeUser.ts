@@ -3,8 +3,8 @@ import { SessionContext } from "blitz"
 import db from "db"
 
 export default async function upgradeUser(
-  { data }: { data: UpgradeUserInputType },
-  ctx: { session?: SessionContext } = {}
+	{ data }: { data: UpgradeUserInputType },
+	ctx: { session?: SessionContext } = {}
 ) {
   ctx.session!.authorize("admin")
   UpgradeUserInput.parse(data)

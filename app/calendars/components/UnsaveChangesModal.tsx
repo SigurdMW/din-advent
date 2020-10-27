@@ -24,48 +24,48 @@ interface BlockNavigationProps {
 }
 
 const BlockNavigation: FC<BlockNavigationProps> = ({
-  shouldBlock,
-  onNavigationAttempt,
-  children,
+	shouldBlock,
+	onNavigationAttempt,
+	children,
 }) => {
-  const [, setUrl] = useState<string | null>(null)
-  useEffect(() => {
-    const handleRouteChange = (url: string) => {
-      if (shouldBlock) {
-        setUrl(url)
-        if (onNavigationAttempt) onNavigationAttempt()
-        throw new Error("Please confim")
-      }
-    }
-    Router.events.on("routeChangeStart", handleRouteChange)
-    return () => {
-      Router.events.off("routeChangeStart", handleRouteChange)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [shouldBlock])
-  if (shouldBlock && children) return <>{children}</>
-  return null
+	const [, setUrl] = useState<string | null>(null)
+	useEffect(() => {
+		const handleRouteChange = (url: string) => {
+			if (shouldBlock) {
+				setUrl(url)
+				if (onNavigationAttempt) onNavigationAttempt()
+				throw new Error("Please confim")
+			}
+		}
+		Router.events.on("routeChangeStart", handleRouteChange)
+		return () => {
+			Router.events.off("routeChangeStart", handleRouteChange)
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [shouldBlock])
+	if (shouldBlock && children) return <>{children}</>
+	return null
 }
 
 const UnsavedChangesModal = ({ isDirty, save, discard }) => {
-  const [isOpen, setIsOpen] = useState(false)
-  const onDiscard = () => {
-    discard()
-    setIsOpen(false)
-  }
-  const onSave = () => {
-    save()
-    setIsOpen(false)
-  }
-  return (
-    <BlockNavigation shouldBlock={isDirty} onNavigationAttempt={() => setIsOpen(true)}>
-      <Modal isOpen={isOpen} onRequestClose={() => setIsOpen(false)} contentLabel="Example Modal">
-        <p>Du har endringer som ikke er lagret</p>
-        <button onClick={onSave}>Lagre endringer</button>
-        <button onClick={onDiscard}>Forkast endringer</button>
-      </Modal>
-    </BlockNavigation>
-  )
+	const [isOpen, setIsOpen] = useState(false)
+	const onDiscard = () => {
+		discard()
+		setIsOpen(false)
+	}
+	const onSave = () => {
+		save()
+		setIsOpen(false)
+	}
+	return (
+		<BlockNavigation shouldBlock={isDirty} onNavigationAttempt={() => setIsOpen(true)}>
+			<Modal isOpen={isOpen} onRequestClose={() => setIsOpen(false)} contentLabel="Example Modal">
+				<p>Du har endringer som ikke er lagret</p>
+				<button onClick={onSave}>Lagre endringer</button>
+				<button onClick={onDiscard}>Forkast endringer</button>
+			</Modal>
+		</BlockNavigation>
+	)
 }
 
 export default UnsavedChangesModal

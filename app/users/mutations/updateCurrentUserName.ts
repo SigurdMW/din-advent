@@ -8,8 +8,8 @@ type UpdateCalendarInput = {
 }
 
 export default async function updateCurrentUserName(
-  { name }: UpdateCalendarInput,
-  ctx: { session?: SessionContext } = {}
+	{ name }: UpdateCalendarInput,
+	ctx: { session?: SessionContext } = {}
 ) {
   ctx.session!.authorize()
   const userId = ctx.session?.userId

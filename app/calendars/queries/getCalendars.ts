@@ -12,8 +12,8 @@ type GetCalendarsInput = {
 }
 
 export default async function getCalendars(
-  { where, orderBy, cursor, take, skip }: GetCalendarsInput,
-  ctx: { session?: SessionContext } = {}
+	{ where, orderBy, cursor, take, skip }: GetCalendarsInput,
+	ctx: { session?: SessionContext } = {}
 ) {
   ctx.session!.authorize()
   const userId = ctx.session?.userId
@@ -21,8 +21,8 @@ export default async function getCalendars(
   const roles = data && data.roles ? data.roles : ([] as Role[])
   const calendarIds = roles.map((r) => r.calendarId)
   const calendars = await db.calendar.findMany({
-    where: { OR: [{ id: { in: calendarIds } }, { userId: userId }] },
-    orderBy,
+  	where: { OR: [{ id: { in: calendarIds } }, { userId: userId }] },
+  	orderBy,
   })
   return calendars
 }

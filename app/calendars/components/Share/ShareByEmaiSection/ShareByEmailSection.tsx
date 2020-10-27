@@ -9,17 +9,17 @@ interface ShareByEmailSectionProps {
 }
 
 export const ShareByEmailSection: FC<ShareByEmailSectionProps> = ({ calendarId, onShared }) => {
-  const [isOpen, setIsOpen] = useState(false)
-  return (
-    <>
-      <Button type="primary" onClick={() => setIsOpen(true)}>
+	const [isOpen, setIsOpen] = useState(false)
+	return (
+		<>
+			<Button type="primary" onClick={() => setIsOpen(true)}>
         Del med e-post
-      </Button>
-      <Modal isOpen={isOpen} requestClose={() => setIsOpen(false)} label="Del med e-post">
-        <ShareByEmailForm calendarId={calendarId} onShared={onShared} />
-      </Modal>
-    </>
-  )
+			</Button>
+			<Modal isOpen={isOpen} requestClose={() => setIsOpen(false)} label="Del med e-post">
+				<ShareByEmailForm calendarId={calendarId} onShared={onShared} />
+			</Modal>
+		</>
+	)
 }
 
 export default ShareByEmailSection

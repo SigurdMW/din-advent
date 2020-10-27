@@ -9,10 +9,10 @@ type GetCalendarInput = {
 }
 
 export default async function getCalendar(
-  { where }: GetCalendarInput,
-  ctx: { session?: SessionContext } = {}
+	{ where }: GetCalendarInput,
+	ctx: { session?: SessionContext } = {}
 ) {
-  if (!where.id) throw new NotFoundError()
+	if (!where.id) throw new NotFoundError()
   ctx.session!.authorize()
   const userId = ctx.session?.userId
   if (!ctx.session || !userId) throw new AuthenticationError()

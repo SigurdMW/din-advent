@@ -7,21 +7,21 @@ type CreateShareKeyInput = {
 }
 
 export default async function shareCalendarByKey(
-  { calendarId }: CreateShareKeyInput,
-  ctx: { session?: SessionContext } = {}
+	{ calendarId }: CreateShareKeyInput,
+	ctx: { session?: SessionContext } = {}
 ) {
-  const userId = await authAndValidatePlanLimit(ctx)
+	const userId = await authAndValidatePlanLimit(ctx)
 
-  const shareKey = await db.shareKey.create({
-    data: {
-      user: {
-        connect: { id: userId },
-      },
-      calendar: {
-        connect: { id: calendarId },
-      },
-    },
-  })
+	const shareKey = await db.shareKey.create({
+		data: {
+			user: {
+				connect: { id: userId },
+			},
+			calendar: {
+				connect: { id: calendarId },
+			},
+		},
+	})
 
-  return shareKey.key
+	return shareKey.key
 }
