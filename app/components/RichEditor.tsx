@@ -77,6 +77,7 @@ const RichEditor = ({ editorState, onChange }) => {
 
   useEffect(() => {
     onChange(convertToRaw(localEditorState.getCurrentContent()))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localEditorState])
 
   return (

@@ -9,6 +9,7 @@ const run = async () => {
       killOthers: ["failure", "success"],
       successCondition: "first",
     })
+    // eslint-disable-next-line
     console.log("\nSuccessfully finished test\n".green)
     process.exit(0)
   } catch (e) {

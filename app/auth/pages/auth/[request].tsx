@@ -24,6 +24,7 @@ const LoginRequestPage: BlitzPage = () => {
       }
     }
     query()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [requestId])
 
   if (error && !isLoggingIn) {

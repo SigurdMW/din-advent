@@ -28,7 +28,7 @@ const BlockNavigation: FC<BlockNavigationProps> = ({
   onNavigationAttempt,
   children,
 }) => {
-  const [url, setUrl] = useState<string | null>(null)
+  const [, setUrl] = useState<string | null>(null)
   useEffect(() => {
     const handleRouteChange = (url: string) => {
       if (shouldBlock) {
@@ -41,6 +41,7 @@ const BlockNavigation: FC<BlockNavigationProps> = ({
     return () => {
       Router.events.off("routeChangeStart", handleRouteChange)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [shouldBlock])
   if (shouldBlock && children) return <>{children}</>
   return null
