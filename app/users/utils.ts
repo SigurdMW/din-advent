@@ -12,33 +12,45 @@ export const createOrUpdateUser = async ({ email, name, active, role }: UserCrea
     },
     update: { email, active },
   })
-  await addUserIdToShareKey(user)
+  await createRoleFromUserInvite(user)
   return user
 }
 
-const addUserIdToShareKey = async ({ email, id: userId }: User) => {
-  try {
-    const shareKeys = await db.shareKey.findMany({ where: { email } })
-    if (shareKeys.length) {
-      shareKeys.forEach(async ({ id }) => {
-        await db.shareKey.update({
-          where: { id },
+const createRoleFromUserInvite = async ({ email, id }: User) => {
+  const userInvites = await db.userInvite.findMany({ where: { email } })
+  if (userInvites.length) {
+    userInvites.forEach(async ({ id: inviteId, calendarId, role, createdBy }) => {
+      try {
+        await db.role.create({
           data: {
-            sharedWith: {
-              connect: { id: userId },
+            role,
+            calendar: {
+              connect: { id: calendarId },
             },
-            email: null,
+            user: {
+              connect: { id },
+            },
+            createdByUser: {
+              connect: { id: createdBy },
+            },
           },
         })
-      })
-    }
-    return
-  } catch (e) {
-    if (e.message) {
-      logger("Error: " + e.message)
-    } else {
-      logger("Error: " + e.toString())
-    }
-    return
+        await db.userInvite.delete({ where: { id: inviteId } })
+      } catch (e) {
+        logger(
+          "Create role or delete userInvite failed for inviteId " + inviteId + " and userId " + id
+        )
+      }
+    })
+  }
+  return
+}
+
+export const getPrivateData = async (id: User["id"]) => {
+  const roles = await db.role.findMany({ where: { userId: id } })
+  const updated = Date.now()
+  return {
+    roles,
+    updated,
   }
 }

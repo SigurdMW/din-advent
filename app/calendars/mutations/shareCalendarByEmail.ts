@@ -2,9 +2,9 @@ import { AuthenticationError, NotFoundError, ValidationError } from "app/utils/e
 import { ShareByEmailFunctionArgsType, ShareByEmailFunctionArgs } from "../validations"
 import { SessionContext } from "blitz"
 import db from "db"
-import { authAndValidatePlanLimit, shareCalendarWithUserId, shareCalendarWithEmail } from "../utils"
+import { authAndValidatePlanLimit, createUserInvite, grantCalendarAccess } from "../utils"
 
-export default async function shareCalendar(
+export default async function shareCalendarByEmail(
   { email, calendarId }: ShareByEmailFunctionArgsType,
   ctx: { session?: SessionContext } = {}
 ) {
@@ -17,42 +17,21 @@ export default async function shareCalendar(
   // Only the user that created the calendar
   if (calendar.userId !== userId) throw new AuthenticationError()
 
-  let userIdShare: undefined | number = undefined
-  try {
-    const userToShare = await db.user.findOne({ where: { email } })
-    if (userToShare) {
-      userIdShare = userToShare.id
-    }
-  } catch (e) {
-    // do nothing, share with a email if it fails
-  }
-
-  if (userIdShare === userId) throw new ValidationError("Mente du virkelig å dele med deg selv...?")
-
-  const emailOrUndefined = userIdShare ? undefined : email
-  const userIdOrUndefined = userIdShare ? userIdShare : undefined
-
-  // Secure that the calendar isn't already shared
-  const share = await db.shareKey.findMany({
-    where: {
-      calendarId,
-      email: emailOrUndefined,
-      sharedWith: userIdOrUndefined ? { id: userIdOrUndefined } : undefined,
-    },
-  })
-  if (share.length > 0) {
-    throw new ValidationError("Kalenderen er allerede delt med denne brukeren.")
-  }
-
-  if (userIdShare) {
-    const shareUserId = await shareCalendarWithUserId({
-      calendarId,
+  const user = await db.user.findOne({ where: { email } })
+  if (!user) {
+    await createUserInvite({
       userId,
-      sharedWithUserId: userIdShare,
+      email,
+      calendarId,
+      role: "reader",
     })
-    return shareUserId
-  } else {
-    const shareEmail = await shareCalendarWithEmail({ calendarId, userId, email: email.trim() })
-    return shareEmail
+    return
   }
+  if (user.id === userId) throw new ValidationError("Mente du virkelig å dele med deg selv?")
+  await grantCalendarAccess({
+    user,
+    role: "reader",
+    calendarId,
+    createdBy: userId,
+  })
 }

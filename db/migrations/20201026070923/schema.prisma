@@ -3,7 +3,7 @@
 
 datasource db {
     provider = ["sqlite", "postgres"]
-    url      = env("DATABASE_URL")
+    url = "***"
 }
 
 generator client {
@@ -124,7 +124,7 @@ model UserInvite {
 	user		User		@relation(fields: [createdBy], references: [id])
     createdBy   Int
 	email		String
-	calendar    Calendar?	@relation(fields: [calendarId], references: [id])
-    calendarId  Int?
-	role		String?
+	calendar    Calendar	@relation(fields: [calendarId], references: [id])
+    calendarId  Int
+	role		String
 }

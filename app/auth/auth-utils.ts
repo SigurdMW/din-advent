@@ -10,7 +10,7 @@ const expiredRequest = (millisecondsSinceRequest: number) => {
   return false
 }
 
-export const authenticateUser = async (requestToken: string) => {
+export const validateLoginRequest = async (requestToken: string) => {
   logger("Authentication with loginToken " + requestToken)
   const loginRequest = await db.loginrequest.findOne({ where: { loginToken: requestToken } })
   if (!loginRequest) {
@@ -29,7 +29,7 @@ export const authenticateUser = async (requestToken: string) => {
     logger("No user found for userId: " + loginRequest.userId + " for token " + requestToken)
     throw new Error("Noe gikk feil. Vennligst forsøk igjen")
   }
-  if (!user?.active) await db.user.update({ where: { id: user?.id }, data: { active: true } })
+  if (!user.active) await db.user.update({ where: { id: user.id }, data: { active: true } })
 
   return user
 }

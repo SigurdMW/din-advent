@@ -14,7 +14,7 @@ interface ShareByEmailFormProps {
 
 export const ShareByEmailForm: FC<ShareByEmailFormProps> = ({ calendarId, onShared }) => {
   const [successEmail, setSuccessEmail] = useState<string>("")
-  if (successEmail)
+  if (successEmail) {
     return (
       <div>
         <h2>🎉 Kalenderen ble delt med {successEmail}</h2>
@@ -24,6 +24,7 @@ export const ShareByEmailForm: FC<ShareByEmailFormProps> = ({ calendarId, onShar
         </Button>
       </div>
     )
+  }
   return (
     <>
       <Form<ShareByEmailInputType>
@@ -49,9 +50,10 @@ export const ShareByEmailForm: FC<ShareByEmailFormProps> = ({ calendarId, onShar
       >
         <h2>Del med e-post</h2>
         <p>
-          Når du deler med e-post, må den du deler med opprette en gratis bruker på dinadvent.no. Vi
-          sender en e-post til personen du deler med for å informere om at kalenderen har blitt delt
-          og videre steg.
+          Når du deler med e-post, får personen du deler med en e-post fra dinadvent.no. Dersom
+          personen har en bruker på dinadvent.no fra før, holder det at personen logger inn for å få
+          tilgang. Hvis personen ikke har en bruker fra før, må personen opprette en bruker med
+          e-postadressen der den fikk mailen.
         </p>
         <LabeledTextField
           name="email"

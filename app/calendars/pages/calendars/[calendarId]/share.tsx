@@ -2,23 +2,37 @@ import React, { Suspense } from "react"
 import { useParam, BlitzPage, useQuery, Link } from "blitz"
 import AuthLayout from "app/layouts/AuthLayout"
 import Spinner from "app/components/Spinner"
-import getShareKeys from "app/calendars/queries/getShareKeys"
-import classes from "./share.module.scss"
-import ShareKeyItem from "app/calendars/components/Share/ShareKeyItem"
 import ShareByEmailSection from "app/calendars/components/Share/ShareByEmaiSection"
 import ShareByLinkSection from "app/calendars/components/Share/ShareByLinkSection"
 import { useCurrentUser } from "app/hooks/useCurrentUser"
 import Alert from "app/components/Alert"
-import { ShareKey, User } from "db"
+import getCalendarShares from "app/calendars/queries/getCalendarShares"
+import UserShareListing from "app/calendars/components/Share/UserShareListing"
+import ShareLinkListing from "app/calendars/components/Share/ShareLinkListing"
+import UserInviteListing from "app/calendars/components/Share/UserInviteListing"
 
 const GetSharePage = ({ calendarId }) => {
-  const [shareKeys, { mutate, refetch }] = useQuery(getShareKeys, { calendarId })
+  const [{ shareKeys, roles, userInvites }, { mutate, refetch }] = useQuery(getCalendarShares, {
+    calendarId,
+  })
   const { user } = useCurrentUser()
 
-  const handleDelete = async (id: number) => {
-    await mutate(shareKeys.filter((e) => e.id !== id))
+  const handleDeleteRole = async (roleId: number) => {
+    const newRoles = roles.filter((r) => r.id !== roleId)
+    await mutate({ shareKeys, roles: newRoles, userInvites })
+  }
+  const handleDeleteLink = async (shareKeyId: number) => {
+    const newLinks = shareKeys.filter((s) => s.id !== shareKeyId)
+    await mutate({ shareKeys: newLinks, roles, userInvites })
+  }
+  const handleDeleteInvite = async (inviteId: number) => {
+    const newInvites = userInvites.filter((i) => i.id !== inviteId)
+    await mutate({ shareKeys, roles, userInvites: newInvites })
   }
   const onShared = async () => await refetch()
+
+  const hasNoShares = shareKeys.length === 0 && roles.length === 0 && userInvites.length === 0
+
   return (
     <div>
       <h1>Del kalender</h1>
@@ -48,16 +62,14 @@ const GetSharePage = ({ calendarId }) => {
           </p>
         </Alert>
       )}
-      <h2>Aktive delinger</h2>
-      {shareKeys.length ? (
-        <ul className={classes.list}>
-          {shareKeys.map(({ key: shareKey, ...s }: ShareKey & { sharedWith: User | null }) => (
-            <ShareKeyItem key={s.id} shareKey={shareKey} {...s} onDelete={handleDelete} />
-          ))}
-        </ul>
-      ) : (
-        <p>Du har ikke delt denne kalenderen med noen enda.</p>
-      )}
+
+      <hr className="da-divider" />
+
+      <h2>Delinger</h2>
+      {hasNoShares && <p>Du har ikke delt denne kalenderen enda.</p>}
+      <UserShareListing roles={roles} onDelete={handleDeleteRole} />
+      <ShareLinkListing shareLinks={shareKeys} onDelete={handleDeleteLink} />
+      <UserInviteListing invites={userInvites} onDelete={handleDeleteInvite} />
 
       <br />
       <Link href={`/calendars/${calendarId}`}>

@@ -15,9 +15,8 @@ const ConfirmationMessage = ({ sessionId }) => {
           Noe gikk dessverre galt under betalingen. Vi har logget saken, så om feilen gjentar seg
           anbefaler vi at du{" "}
           <Link href="/contact">
-            <a>tar kontakt</a>
+            <a>tar kontakt.</a>
           </Link>
-          .
         </p>
       </>
     )
@@ -25,7 +24,7 @@ const ConfirmationMessage = ({ sessionId }) => {
   return (
     <>
       <h1>Takk for din betaling 🎉</h1>
-      <p>Din var vellykket - du er nå klar for å sette i gang!</p>
+      <p>Din betaling var vellykket - du er nå klar for å sette i gang!</p>
       <Link href="/calendars">
         <a>Gå til dine kalendere</a>
       </Link>

@@ -1,6 +1,7 @@
 import { SessionContext } from "blitz"
-import { authenticateUser } from "app/auth/auth-utils"
+import { validateLoginRequest } from "app/auth/auth-utils"
 import { LoginRequestInput, LoginRequestInputType } from "../validations"
+import createSession from "./createSession"
 
 class LoginRequestError extends Error {
   constructor(message: string) {
@@ -16,8 +17,8 @@ export default async function login(
   // This throws an error if input is invalid
   const { request } = LoginRequestInput.parse(input)
   try {
-    const user = await authenticateUser(request)
-    await ctx.session!.create({ userId: user.id, roles: [user.role] })
+    const user = await validateLoginRequest(request)
+    await createSession(user, ctx)
     return
   } catch (e) {
     throw new LoginRequestError(
