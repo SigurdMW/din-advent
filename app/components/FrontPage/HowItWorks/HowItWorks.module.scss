@@ -1,0 +1,38 @@
+.section {
+	background-color: #fff;
+	color: #000;
+	padding: 4em 0;
+
+	h2 {
+		color: #522888;
+		margin-bottom: 2em;
+	}
+}
+
+.row {
+	display: flex;
+	margin: 0 -30px;
+	max-width: 100%;
+	overflow: hidden;
+
+	@media (max-width: 650px) {
+		flex-direction: column;
+	}
+}
+
+.col {
+	padding: 0 30px;
+
+	& svg {
+		display: block;
+		margin: 0 auto;
+	}
+
+	& p {
+		text-align: center;
+	}
+}
+
+.subTitle {
+	text-align: center;
+}

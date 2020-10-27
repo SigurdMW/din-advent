@@ -1,6 +1,6 @@
 body {
   color: white;
-  background-color: #502586;
+  background-color: #361067;
   font-size: 18px;
   margin: 0;
   padding: 0;
@@ -36,8 +36,11 @@ body {
 }
 
 h1 {
-  font-family: "Lobster";
   font-size: 40px;
+}
+
+h2 {
+	font-size: 32px;
 }
 
 a {
@@ -66,7 +69,7 @@ a {
 
 .da-button {
   display: inline-block;
-  padding: 8px 1em;
+  padding: 10px 1em;
   border-radius: 3px;
   font-size: 16px;
   letter-spacing: 1px;
