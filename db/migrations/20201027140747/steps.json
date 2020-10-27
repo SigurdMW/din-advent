@@ -1,0 +1,23 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "UpdateField",
+      "model": "UserInvite",
+      "field": "calendar",
+      "arity": "Optional"
+    },
+    {
+      "tag": "UpdateField",
+      "model": "UserInvite",
+      "field": "calendarId",
+      "arity": "Optional"
+    },
+    {
+      "tag": "UpdateField",
+      "model": "UserInvite",
+      "field": "role",
+      "arity": "Optional"
+    }
+  ]
+}
