@@ -10,19 +10,19 @@ export interface ToggleProps {
 }
 
 export const Toggle: FC<ToggleProps> = ({ id, label, leftLabel, checked, onChange }) => {
-  return (
-    <label className={classes.label}>
-      {leftLabel && leftLabel}
-      <input
-        id={id}
-        checked={checked}
-        type="checkbox"
-        className={classes.toggle}
-        onChange={() => onChange(!checked)}
-      />
-      {label}
-    </label>
-  )
+	return (
+		<label className={classes.label}>
+			{leftLabel && leftLabel}
+			<input
+				id={id}
+				checked={checked}
+				type="checkbox"
+				className={classes.toggle}
+				onChange={() => onChange(!checked)}
+			/>
+			{label}
+		</label>
+	)
 }
 
 export default Toggle

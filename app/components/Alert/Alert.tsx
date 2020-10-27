@@ -6,7 +6,7 @@ interface AlertProps {
 }
 
 export const Alert: FC<AlertProps> = ({ type, children }) => (
-  <div className={`${classes.alert} ${classes[type]}`}>{children}</div>
+	<div className={`${classes.alert} ${classes[type]}`}>{children}</div>
 )
 
 export default Alert

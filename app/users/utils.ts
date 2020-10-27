@@ -2,43 +2,56 @@ import db, { User, UserCreateInput } from "db"
 import { logger } from "app/utils/logger"
 
 export const createOrUpdateUser = async ({ email, name, active, role }: UserCreateInput) => {
-  const user = await db.user.upsert({
-    where: { email },
-    create: {
-      email,
-      name,
-      active,
-      role,
-    },
-    update: { email, active },
-  })
-  await addUserIdToShareKey(user)
-  return user
+	const user = await db.user.upsert({
+		where: { email },
+		create: {
+			email,
+			name,
+			active,
+			role,
+		},
+		update: { email, active },
+	})
+	await createRoleFromUserInvite(user)
+	return user
 }
 
-const addUserIdToShareKey = async ({ email, id: userId }: User) => {
-  try {
-    const shareKeys = await db.shareKey.findMany({ where: { email } })
-    if (shareKeys.length) {
-      shareKeys.forEach(async ({ id }) => {
-        await db.shareKey.update({
-          where: { id },
-          data: {
-            sharedWith: {
-              connect: { id: userId },
-            },
-            email: null,
-          },
-        })
-      })
-    }
-    return
-  } catch (e) {
-    if (e.message) {
-      logger("Error: " + e.message)
-    } else {
-      logger("Error: " + e.toString())
-    }
-    return
-  }
+const createRoleFromUserInvite = async ({ email, id }: User) => {
+	const userInvites = await db.userInvite.findMany({ where: { email } })
+	if (userInvites.length) {
+		userInvites.forEach(async ({ id: inviteId, calendarId, role, createdBy }) => {
+			try {
+				if (!role || !calendarId) return // no role or calendarId means it's a general user invite
+				await db.role.create({
+					data: {
+						role,
+						calendar: {
+							connect: { id: calendarId },
+						},
+						user: {
+							connect: { id },
+						},
+						createdByUser: {
+							connect: { id: createdBy },
+						},
+					},
+				})
+				await db.userInvite.delete({ where: { id: inviteId } })
+			} catch (e) {
+				logger(
+					"Create role or delete userInvite failed for inviteId " + inviteId + " and userId " + id
+				)
+			}
+		})
+	}
+	return
+}
+
+export const getPrivateData = async (id: User["id"]) => {
+	const roles = await db.role.findMany({ where: { userId: id } })
+	const updated = Date.now()
+	return {
+		roles,
+		updated,
+	}
 }

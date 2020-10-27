@@ -5,33 +5,33 @@ interface Stripe {
 }
 
 export const useStripe = () => {
-  const [isReady, setIsReady] = useState(false)
-  const [stripe, setStripe] = useState<null | Stripe>(null)
+	const [isReady, setIsReady] = useState(false)
+	const [stripe, setStripe] = useState<null | Stripe>(null)
 
-  useEffect(() => {
-    if (!(window as any).Stripe) {
-      const script = document.createElement("script")
-      const onLoaded = () => {
-        setIsReady(true)
-      }
-      script.addEventListener("load", onLoaded)
-      script.async = true
-      script.src = "https://js.stripe.com/v3/"
-      document.head.appendChild(script)
-      return () => {
-        script.removeEventListener("load", onLoaded)
-      }
-    }
-  })
+	useEffect(() => {
+		if (!(window as any).Stripe) {
+			const script = document.createElement("script")
+			const onLoaded = () => {
+				setIsReady(true)
+			}
+			script.addEventListener("load", onLoaded)
+			script.async = true
+			script.src = "https://js.stripe.com/v3/"
+			document.head.appendChild(script)
+			return () => {
+				script.removeEventListener("load", onLoaded)
+			}
+		}
+	})
 
-  useEffect(() => {
-    if (isReady) {
-      setStripe((window as any).Stripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY))
-    }
-  }, [isReady])
+	useEffect(() => {
+		if (isReady) {
+			setStripe((window as any).Stripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY))
+		}
+	}, [isReady])
 
-  return {
-    isReady,
-    Stripe: stripe,
-  }
+	return {
+		isReady,
+		Stripe: stripe,
+	}
 }

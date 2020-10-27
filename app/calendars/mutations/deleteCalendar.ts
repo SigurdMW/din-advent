@@ -6,8 +6,8 @@ type DeleteCalendarInput = {
 }
 
 export default async function deleteCalendar(
-  { where }: DeleteCalendarInput,
-  ctx: { session?: SessionContext } = {}
+	{ where }: DeleteCalendarInput,
+	ctx: { session?: SessionContext } = {}
 ) {
   ctx.session!.authorize()
 

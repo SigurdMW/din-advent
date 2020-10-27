@@ -7,17 +7,17 @@ interface ErrorComponentProps {
 }
 
 const ErrorComponent: FC<ErrorComponentProps> = ({
-  statusCode,
-  title = "Serverfeil",
-  children = null,
+	statusCode,
+	title = "Serverfeil",
+	children = null,
 }) => (
-  <>
-    <h1>
-      {statusCode ? statusCode + " " : ""}
-      {title}
-    </h1>
-    {children}
-  </>
+	<>
+		<h1>
+			{statusCode ? statusCode + " " : ""}
+			{title}
+		</h1>
+		{children}
+	</>
 )
 
 export default ErrorComponent

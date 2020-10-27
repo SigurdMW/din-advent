@@ -13,40 +13,40 @@ type LoginFormProps = {
 }
 
 export const LoginForm = (props: LoginFormProps) => {
-  return (
-    <div>
-      <h1>Logg inn</h1>
-      <FacebookButton>Logg inn med Facebook</FacebookButton>
-      <br />
-      <br />
-      <GoogleButton>Logg inn med Google</GoogleButton>
-      <hr className="da-divider" />
-      <Form<LoginInputType>
-        submitText="Logg inn"
-        schema={LoginInput}
-        initialValues={{ email: undefined, recaptcha: undefined }}
-        onSubmit={async (values) => {
-          try {
-            await loginRequest({ email: values.email, recaptcha: values.recaptcha })
-            props.onSuccess && props.onSuccess(values.email)
-          } catch (error) {
-            return {
-              [FORM_ERROR]: "Beklager, en feil oppsto. Vennligst prøv igjen. - " + error.toString(),
-            }
-          }
-        }}
-      >
-        <LabeledTextField name="email" label="E-post" placeholder="E-post" id="loginformid" />
-        <NotARobot />
-      </Form>
-      <br />
-      <br />
+	return (
+		<div>
+			<h1>Logg inn</h1>
+			<FacebookButton>Logg inn med Facebook</FacebookButton>
+			<br />
+			<br />
+			<GoogleButton>Logg inn med Google</GoogleButton>
+			<hr className="da-divider" />
+			<Form<LoginInputType>
+				submitText="Logg inn"
+				schema={LoginInput}
+				initialValues={{ email: undefined, recaptcha: undefined }}
+				onSubmit={async (values) => {
+					try {
+						await loginRequest({ email: values.email, recaptcha: values.recaptcha })
+						props.onSuccess && props.onSuccess(values.email)
+					} catch (error) {
+						return {
+							[FORM_ERROR]: "Beklager, en feil oppsto. Vennligst prøv igjen. - " + error.toString(),
+						}
+					}
+				}}
+			>
+				<LabeledTextField name="email" label="E-post" placeholder="E-post" id="loginformid" />
+				<NotARobot />
+			</Form>
+			<br />
+			<br />
       Ingen bruker enda?{" "}
-      <Link href="/signup">
-        <a className="button small">Opprett bruker</a>
-      </Link>
-    </div>
-  )
+			<Link href="/signup">
+				<a className="button small">Opprett bruker</a>
+			</Link>
+		</div>
+	)
 }
 
 export default LoginForm

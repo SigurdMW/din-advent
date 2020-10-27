@@ -9,8 +9,8 @@ type GetPaymentInput = {
 }
 
 export default async function getPayment(
-  { where /* include */ }: GetPaymentInput,
-  ctx: { session?: SessionContext } = {}
+	{ where /* include */ }: GetPaymentInput,
+	ctx: { session?: SessionContext } = {}
 ) {
   ctx.session!.authorize()
 

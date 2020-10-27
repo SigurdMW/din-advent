@@ -11,30 +11,30 @@ type CalendarFormProps = {
 }
 
 const CalendarForm = ({ initialValues, onSubmit, submitText, disabled }: CalendarFormProps) => {
-  return (
-    <Form<CalendarInputType>
-      submitText={submitText}
-      schema={CalendarInput}
-      disabled={disabled}
-      initialValues={initialValues}
-      onSubmit={async (values) => {
-        try {
-          await onSubmit(values)
-        } catch (error) {
-          return {
-            [FORM_ERROR]: "Beklager, en feil oppsto. Vennligst prøv igjen. - " + error.toString(),
-          }
-        }
-      }}
-    >
-      <LabeledTextField
-        name="name"
-        label="Kalendernavn"
-        placeholder="Navn..."
-        id="calendarformfield"
-      />
-    </Form>
-  )
+	return (
+		<Form<CalendarInputType>
+			submitText={submitText}
+			schema={CalendarInput}
+			disabled={disabled}
+			initialValues={initialValues}
+			onSubmit={async (values) => {
+				try {
+					await onSubmit(values)
+				} catch (error) {
+					return {
+						[FORM_ERROR]: "Beklager, en feil oppsto. Vennligst prøv igjen. - " + error.toString(),
+					}
+				}
+			}}
+		>
+			<LabeledTextField
+				name="name"
+				label="Kalendernavn"
+				placeholder="Navn..."
+				id="calendarformfield"
+			/>
+		</Form>
+	)
 }
 
 export default CalendarForm

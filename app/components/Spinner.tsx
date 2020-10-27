@@ -5,13 +5,13 @@ import classes from "./Spinner.module.scss"
 // More xmasy https://codepen.io/woodwoerk/pen/XXJoMa
 
 export const Spinner: FC<{}> = ({ children }) => {
-  if (!children) return <div className={classes.loader}>Loading...</div>
-  return (
-    <div className={classes.container}>
-      <div className={classes.loader}>Loading...</div>
-      {children}
-    </div>
-  )
+	if (!children) return <div className={classes.loader}>Loading...</div>
+	return (
+		<div className={classes.container}>
+			<div className={classes.loader}>Loading...</div>
+			{children}
+		</div>
+	)
 }
 
 export default Spinner
