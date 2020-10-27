@@ -21,6 +21,7 @@ const createRoleFromUserInvite = async ({ email, id }: User) => {
 	if (userInvites.length) {
 		userInvites.forEach(async ({ id: inviteId, calendarId, role, createdBy }) => {
 			try {
+				if (!role || !calendarId) return // no role or calendarId means it's a general user invite
 				await db.role.create({
 					data: {
 						role,
