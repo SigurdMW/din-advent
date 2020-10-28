@@ -1,14 +1,13 @@
 import Layout from "app/layouts/ArticleLayout"
 
+// thanks to https://webdesign.no/gdpr/
 export const PrivacyPage = () => (
 	<div className="priv-container">
-		<h1>Personvern</h1>
+		<h1>Personvernerklæring for dinadvent.no</h1>
+
 		<p>
       Denne personvernerklæringen gjelder for dinadvent.no, heretter benevnt som
-      Behandlingsansvarlig.
-		</p>
-		<p>
-      Erklæringen gir informasjon om databehandling utført av Behandlingsansvarlig og bestemmer
+      Behandlingsansvarlig. Erklæringen gir informasjon om databehandling utført av Behandlingsansvarlig og bestemmer
       formålet og virkemidlene for behandlingen samt databehandling vi gjør på vegne av våre kunder
       basert på deres instruksjoner.
 		</p>
@@ -25,73 +24,46 @@ export const PrivacyPage = () => (
       klage til Datatilsynet.
 		</p>
 
-		<h2>Behandlingsansvarlig</h2>
-		<p>
-      WEBAWESOME SIGURD M WAHL
-			<br />
-      Hans Hansens vei 176
-			<br />
-      Drammen
-			<br />
-      E-post: dinadvent@gmail.com
-			<br />
-      Personvernombud: E-post: dinadvent@gmail.com Telefon: +47 911 28 859
-		</p>
+		<h2>1. Behandlingsansvarlig</h2>
+		<p>Sigurd Moland Wahl (e-post: sigurdmwahl@gmail.com, telefon: +47 911 28 859) er på vegne av dinadvent.no behandlingsansvarlig for selskapets behandling av personopplysninger.</p>
 
-		<h2>Underleverandører</h2>
-		<p>
-      Behandlingsansvarlig benytter seg også av tjenester levert av 3. Part. Her er en oversikt over
-      underleverandører hvor informasjon kan lagres
-		</p>
+		<h2>2. Personopplysninger som lagres</h2>
+		<p>Vi lagrer følgende personopplysninger om våre kunder: <br/>
+		E-postadresse og (valgfritt) navn<br/>
+		Vi lagrer i tillegg kjøpshistorikk og adferdsmønster på vår nettside, dvs. opplysninger om hvordan den enkelte kunde navigerer på siden.</p>
 
-		<h2>Innsyn og retting</h2>
-		<p>
-      Du har krav på innsyn i de opplysninger som er registrert om deg. Innsyn kan også fås ved å
-      sende en henvendelse til privacy@gdpr.no. Dersom de registrerte opplysninger ikke er riktige
-      eller er ufullstendige, kan du kreve at opplysningene korrigeres i henhold til
-      personopplysningsloven.
-		</p>
+		<h2>3. Formål med behandlingen</h2>
+		<p>Vi behandler opplysningene for å kunne gjennomføre våre forpliktelser etter avtale med deg.</p>
 
-		<h2>Oppbevaring og sletting</h2>
-		<p>Alle data i tjenesten slettes etter 31.12.2019.</p>
+		<h2>4. Grunnlaget for behandlingen</h2>
+		<p>Informasjon om navn og e-postadresse benyttes for å oppfylle kjøpsavtalen. Grunnlaget for denne behandlingen er personvernforordningens artikkel Art 6 (b).</p>
 
-		<h2>Informasjon om bruk av informasjonskapsler.</h2>
-		<p>
-      En informasjonskapsel (cookie) er en liten tekstfil som lagres på din datamaskin. Vi bruker
-      informasjonskapsler blant annet til å huske din innlogging, til å samle tilbakemelding og som
-      en del av vår markedsføring.
-		</p>
+		<h2>5. Innhenting av personopplysninger</h2>
+		<p>Vi lagrer de personopplysningene du har avgitt på våre nettsider. Vi bruker informasjonskapsler/cookies på våre nettsider for å gi deg som besøker siden best kundeopplevelse og service. Lov om elektronisk kommunikasjon krever at vi informerer våre besøkende om bruk av informasjonskapsler (cookies).</p>
 
-		<p>
-      Når du besøker våre tjenester, setter vi både midlertidige og varige informasjonskapsler. En
-      midlertidig informasjonskapsel slettes ofte automatisk når du lukker nettleseren din, mens
-      varige kan ligge på din maskin i opptil ett år. Om du ønsker å lære mer om informasjonskapsler
-      kan http://www.aboutcookies.org benyttes.
-		</p>
+		<h2>6. Utlevering av opplysninger til tredjeparter</h2>
+		<p>Vi vil ikke dele, selge, overføre eller på annen måte utlevere personopplysninger til andre, med mindre vi er rettslig forpliktet til det.</p>
 
-		<h2>Følgende informasjonskapsler er i bruk i våre tjenester</h2>
+		<h2>7. Sletting av personopplysninger</h2>
+		<p>Opplysninger vi har mottatt i forbindelse med ditt kjøp lagres i vårt aktive kunderegister i 5 år.</p>
 
-		<h3>Bruk av nettside</h3>
-		<p>
-      Vi benytter informasjonskapsler til blant annet å huske deg som kunde. Uten
-      informasjonskapsler vil ikke en bruker kunne logge inn.
-		</p>
+		<h2>8. Rettigheter for den registrerte</h2>
+		<p>Vi behandler dine personopplysninger i henhold til personopplysningsloven og gjeldende forskrifter. Det gjøres oppmerksom på at du kan kreve innsyn i og flytting av egne personopplysninger, samt kreve retting eller sletting av opplysninger. Det kan klages til Datatilsynet på behandling i strid med reglene.</p>
 
-		<h3>Stripe Checkout</h3>
-		<p>
-      Vi benytter Stipe Checkout som vår betalingsløsning. Se mer informasjon om hvordan de bruker
-      informasjonskapsler her:{" "}
-			<a href="https://stripe.com/cookies-policy/legal">https://stripe.com/cookies-policy/legal</a>
-		</p>
+		<h2>9. Personvernombud</h2>
+		<p>Vi har et personvernombud, Sigurd Moland Wahl, som påser at personopplysningslovens regler om behandling av personopplysninger blir fulgt.</p>
 
-		<h3>Google Analytics</h3>
-		<p>Google Analytics benytter informasjonskapsler for analyse av trafikk.</p>
+		<h2>10. Informasjonssikkerhet</h2>
+		<p>Vi sikrer dine personopplysninger ved virtuell adgangs- og tilgangskontroll. Strategien vår er å hente inn så lite data som mulig - vi ber deg ikke om mer data enn det vi må ha for å kunne tilby tjenesten. Vi lagrer ikke passort eller andre sensitive opplysninger.</p>
 
-		<h2>Samtykke i bruk av informasjonskapsler</h2>
-		<p>
-      I henhold til norsk lov har du automatisk samtykket i at vi lagrer informasjonskapsler på din
-      datamaskin dersom du tillater dette gjennom innstillingene i din nettleser.
-		</p>
+		<h2>Kontaktinformasjon</h2>
+		<p>Henvendelser om hvilke opplysninger som er registrert, retting og sletting kan sende skriftlig til følgende adresser:<br/>
+		Sigurd Moland Wahl<br />
+		WEBAWESOME SIGURD M WAHL<br />
+		Org.nr. 913 302 540<br/>
+		Hans Hansens vei 176<br/> 
+		3022 Drammen<br/>
+		Norge</p>
 	</div>
 )
 

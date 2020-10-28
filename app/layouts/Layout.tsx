@@ -59,7 +59,7 @@ const Layout = ({ title, children }) => (
 			<main className="site-content">{children}</main>
 			<div className="da-footer">
 				<div>
-					<Link href="/privacy">Personvern</Link> | <Link href="/terms">Vilkår</Link> |{" "}
+					<Link href="/privacy">Personvern</Link> | <Link href="/terms">Vilkår</Link> | <Link href="/cookies">Cookies</Link> |{" "}
 					<Link href="/about">Om oss</Link> | <Link href="/contact">Kontakt & tilbakemelding</Link>
 				</div>
 				<div className="da-footer-trademark">Made with ❤ in Drammen</div>
