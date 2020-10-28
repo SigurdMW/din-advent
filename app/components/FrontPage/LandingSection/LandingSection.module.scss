@@ -1,0 +1,61 @@
+$navBarHeight: 96px;
+$padding: 10em;
+$paddingMobile: 4em;
+
+.hero {
+	background: radial-gradient(#633491, #361067);
+	padding-top: calc(#{$navBarHeight} + #{$padding});
+	padding-bottom: 2em;
+	margin-top: -$navBarHeight;
+
+	@media (max-width: 650px) {
+		padding-top: calc(#{$navBarHeight} + #{$paddingMobile});
+	}
+}
+
+.heroContent {
+	display: flex;
+	flex-direction: row-reverse;
+
+	@media (max-width: 1100px) {
+		flex-direction: column;
+	}
+}
+
+.heroImage {
+	min-width: 50%;
+	position: relative;
+
+	& img {
+		width: calc(100% + 114px);
+		position: absolute;
+		top: 8px;
+		left: -26px;
+
+		@media (max-width: 1300px) {
+			width: 100%;
+			top: 67px;
+		}
+
+		@media (max-width: 1300px) {
+			width: 100%;
+			top: 67px;
+		}
+
+		@media (max-width: 1100px) {
+			position: static;
+			display: block;
+			margin: 0 auto;
+			width: 100%;
+			max-width: 500px;
+		}
+	}
+}
+
+.heroText {
+	padding-right: 1em;
+
+	p {
+		margin-bottom: 30px;
+	}
+}

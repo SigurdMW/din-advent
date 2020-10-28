@@ -6,8 +6,8 @@ type DeletePaymentInput = {
 }
 
 export default async function deletePayment(
-  { where }: DeletePaymentInput,
-  ctx: { session?: SessionContext } = {}
+	{ where }: DeletePaymentInput,
+	ctx: { session?: SessionContext } = {}
 ) {
   ctx.session!.authorize()
 

@@ -7,8 +7,8 @@ type CreatePaymentInput = {
   data: Pick<PaymentCreateArgs["data"], "plan">
 }
 export default async function createPayment(
-  { data }: CreatePaymentInput,
-  ctx: { session?: SessionContext } = {}
+	{ data }: CreatePaymentInput,
+	ctx: { session?: SessionContext } = {}
 ) {
   ctx.session!.authorize()
   const userId = ctx.session?.userId

@@ -7,8 +7,8 @@ type UpdateCalendarWindowInput = {
 }
 
 export default async function updateWindow(
-  { where, data }: UpdateCalendarWindowInput,
-  ctx: { session?: SessionContext } = {}
+	{ where, data }: UpdateCalendarWindowInput,
+	ctx: { session?: SessionContext } = {}
 ) {
   ctx.session!.authorize()
 

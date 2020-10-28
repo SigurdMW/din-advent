@@ -7,8 +7,8 @@ type UpdatePaymentInput = {
 }
 
 export default async function updatePayment(
-  { where, data }: UpdatePaymentInput,
-  ctx: { session?: SessionContext } = {}
+	{ where, data }: UpdatePaymentInput,
+	ctx: { session?: SessionContext } = {}
 ) {
   ctx.session!.authorize()
 

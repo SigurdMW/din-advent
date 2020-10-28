@@ -9,22 +9,22 @@ interface CalendarWindowProps {
 }
 
 export const CalendarWindow: FC<CalendarWindowProps> = ({ calendarWindow, save, editorMode }) => {
-  const components = (JSON.parse(calendarWindow.content) || {}).components
-  return (
-    <div>
-      <header>
-        <h1>{calendarWindow.day}. desember</h1>
-      </header>
-      <section>
-        <DynamicInputRootComponent
-          components={components}
-          id={calendarWindow.id}
-          editorMode={editorMode}
-          save={save}
-        />
-      </section>
-    </div>
-  )
+	const components = (JSON.parse(calendarWindow.content) || {}).components
+	return (
+		<div>
+			<header>
+				<h1>{calendarWindow.day}. desember</h1>
+			</header>
+			<section>
+				<DynamicInputRootComponent
+					components={components}
+					id={calendarWindow.id}
+					editorMode={editorMode}
+					save={save}
+				/>
+			</section>
+		</div>
+	)
 }
 
 export default CalendarWindow

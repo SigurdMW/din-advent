@@ -11,20 +11,20 @@ type GetPaymentsInput = {
 }
 
 export default async function getPayments(
-  { where, orderBy, skip = 0, take }: GetPaymentsInput,
-  ctx: { session?: SessionContext } = {}
+	{ where, orderBy, skip = 0, take }: GetPaymentsInput,
+	ctx: { session?: SessionContext } = {}
 ) {
   ctx.session!.authorize()
   const userId = ctx.session?.userId
 
   const payments = await db.payment.findMany({
-    where: {
-      ...where,
-      userId,
-    },
-    orderBy,
-    take,
-    skip,
+  	where: {
+  		...where,
+  		userId,
+  	},
+  	orderBy,
+  	take,
+  	skip,
   })
 
   const count = await db.payment.count()
@@ -32,8 +32,8 @@ export default async function getPayments(
   const nextPage = hasMore ? { take, skip: skip + take! } : null
 
   return {
-    payments,
-    nextPage,
-    hasMore,
+  	payments,
+  	nextPage,
+  	hasMore,
   }
 }

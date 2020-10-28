@@ -1,5 +1,5 @@
 import { SessionContext } from "blitz"
-import db, { FindManyCalendarArgs } from "db"
+import db, { Role, FindManyCalendarArgs } from "db"
 
 type GetCalendarsInput = {
   where?: FindManyCalendarArgs["where"]
@@ -12,22 +12,17 @@ type GetCalendarsInput = {
 }
 
 export default async function getCalendars(
-  { where, orderBy, cursor, take, skip }: GetCalendarsInput,
-  ctx: { session?: SessionContext } = {}
+	{ where, orderBy, cursor, take, skip }: GetCalendarsInput,
+	ctx: { session?: SessionContext } = {}
 ) {
   ctx.session!.authorize()
   const userId = ctx.session?.userId
-
+  const data = await ctx.session?.getPrivateData()
+  const roles = data && data.roles ? data.roles : ([] as Role[])
+  const calendarIds = roles.map((r) => r.calendarId)
   const calendars = await db.calendar.findMany({
-    where: {
-      ...where,
-      userId,
-    },
-    orderBy,
-    cursor,
-    take,
-    skip,
+  	where: { OR: [{ id: { in: calendarIds } }, { userId: userId }] },
+  	orderBy,
   })
-
   return calendars
 }

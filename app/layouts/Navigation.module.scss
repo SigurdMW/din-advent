@@ -2,12 +2,13 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1em 2em;
+  padding: 1em 1em;
   color: #fff;
+  position: relative;
 
   & a {
     color: inherit;
-    text-decoration: underline;
+    text-decoration: none;
   }
 }
 

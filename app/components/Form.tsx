@@ -1,6 +1,7 @@
 import React, { ReactNode, PropsWithoutRef } from "react"
 import { Form as FinalForm, FormProps as FinalFormProps } from "react-final-form"
 import * as z from "zod"
+import Alert from "./Alert"
 export { FORM_ERROR } from "final-form"
 export { Field } from "react-final-form"
 
@@ -14,59 +15,74 @@ type FormProps<FormValues> = {
    */
   disabled?: boolean
   onSubmit: FinalFormProps<FormValues>["onSubmit"]
+  handleSubmitError?: (err: string) => ReactNode
   initialValues?: FinalFormProps<FormValues>["initialValues"]
   schema?: z.ZodType<any, any>
 } & Omit<PropsWithoutRef<JSX.IntrinsicElements["form"]>, "onSubmit">
 
 export function Form<FormValues extends Record<string, unknown>>({
-  children,
-  submitText,
-  disabled = false,
-  schema,
-  initialValues,
-  onSubmit,
-  ...props
+	children,
+	submitText,
+	disabled = false,
+	schema,
+	initialValues,
+	onSubmit,
+	handleSubmitError,
+	...props
 }: FormProps<FormValues>) {
-  return (
-    <FinalForm<FormValues>
-      initialValues={initialValues}
-      validate={(values) => {
-        if (!schema) return
-        try {
-          schema.parse(values)
-        } catch (error) {
-          return error.formErrors.fieldErrors
-        }
-      }}
-      onSubmit={onSubmit}
-      render={({ handleSubmit, submitting, submitError, valid }) => (
-        <form onSubmit={handleSubmit} className="form" {...props}>
-          {/* Form fields supplied as children are rendered here */}
-          {children}
+	return (
+		<FinalForm<FormValues>
+			initialValues={initialValues}
+			validate={(values) => {
+				if (!schema) return
+				try {
+					schema.parse(values)
+				} catch (error) {
+					return error.formErrors.fieldErrors
+				}
+			}}
+			onSubmit={onSubmit}
+			render={({
+				handleSubmit,
+				submitting,
+				submitError,
+				valid,
+				hasValidationErrors,
+				dirtySinceLastSubmit,
+			}) => {
+				return (
+					<form onSubmit={handleSubmit} className="form" {...props}>
+						{/* Form fields supplied as children are rendered here */}
+						{children}
 
-          {submitError && (
-            <div role="alert" style={{ color: "red" }}>
-              {submitError}
-            </div>
-          )}
+						{!dirtySinceLastSubmit && submitError && (
+							<>
+								{handleSubmitError ? (
+									<>{handleSubmitError(submitError)}</>
+								) : (
+									<Alert type="danger">{submitError}</Alert>
+								)}
+							</>
+						)}
 
-          <button
-            type="submit"
-            disabled={submitting || disabled || !valid}
-            className="da-button da-btn-large da-golden-btn"
-          >
-            {submitText}
-          </button>
+						<button
+							type="submit"
+							disabled={submitting || disabled || hasValidationErrors}
+							className="da-button da-golden-btn"
+						>
+							{submitText}
+						</button>
 
-          <style global jsx>{`
-            .form > * + * {
-              margin-top: 1rem;
-            }
-          `}</style>
-        </form>
-      )}
-    />
-  )
+						<style global jsx>{`
+              .form > * + * {
+                margin-top: 1rem;
+              }
+            `}</style>
+					</form>
+				)
+			}}
+		/>
+	)
 }
 
 export default Form
