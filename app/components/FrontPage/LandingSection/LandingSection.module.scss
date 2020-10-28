@@ -1,11 +1,16 @@
 $navBarHeight: 96px;
 $padding: 10em;
+$paddingMobile: 4em;
 
 .hero {
 	background: radial-gradient(#633491, #361067);
 	padding-top: calc(#{$navBarHeight} + #{$padding});
 	padding-bottom: 2em;
 	margin-top: -$navBarHeight;
+
+	@media (max-width: 650px) {
+		padding-top: calc(#{$navBarHeight} + #{$paddingMobile});
+	}
 }
 
 .heroContent {
