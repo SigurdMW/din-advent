@@ -34,7 +34,7 @@ const items = [
 	{
 		icon: mailIcon,
 		title: "Del kalender",
-		text: "Du kan når som helst dele kalenderen ved hjelp av en delingslink som blir tilgjengelig etter betaling. Denne linken kan du dele med en eller flere personer."
+		text: "Du kan når som helst dele kalenderen ved hjelp av en e-post eller delingslink som blir tilgjengelig etter betaling. Denne linken kan du dele med en eller flere personer."
 	}
 ]
 
