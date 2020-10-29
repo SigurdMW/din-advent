@@ -5,6 +5,7 @@ import Button from "app/components/Button"
 import Modal from "app/components/Modal"
 import Spinner from "app/components/Spinner"
 import CalendarBackgroundSection from "./CalendarBackgroundSection"
+import ChangeNameForm from "./ChangeNameForm"
 
 const CalendarSettingsModal = ({ calendarId, isOpen = false, onClose }) => {
 	const router = useRouter()
@@ -29,10 +30,11 @@ const CalendarSettingsModal = ({ calendarId, isOpen = false, onClose }) => {
 				label="Innstillinger"
 				header={<h2>Innstillinger</h2>}
 			>
+				<ChangeNameForm calendarId={calendarId} />
 				<hr className="da-divider da-divider--white-bg" />
 				<CalendarBackgroundSection calendarId={calendarId} />
 				<hr className="da-divider da-divider--white-bg" />
-				<Button type="subtle" onClick={handleDeleteCalendar}>
+				<Button type="secondary" onClick={handleDeleteCalendar}>
           Slett kalender
 				</Button>
 			</Modal>

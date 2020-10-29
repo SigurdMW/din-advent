@@ -18,10 +18,16 @@ const AdminsPage: BlitzPage = () => {
 					</Link>
 				</li>
 				<li>
+					<Link href="/admins/userinfo">
+						<a>Få brukerinfo</a>
+					</Link>
+				</li>
+				<li>
 					<Link href="/admins/statistics">
 						<a>Statistikk</a>
 					</Link>
 				</li>
+				
 			</ul>
 		</div>
 	)
