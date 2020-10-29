@@ -47,6 +47,7 @@ export function Form<FormValues extends Record<string, unknown>>({
 				submitting,
 				submitError,
 				valid,
+				dirty,
 				hasValidationErrors,
 				dirtySinceLastSubmit,
 			}) => {
@@ -67,7 +68,7 @@ export function Form<FormValues extends Record<string, unknown>>({
 
 						<button
 							type="submit"
-							disabled={submitting || disabled || hasValidationErrors}
+							disabled={submitting || disabled || hasValidationErrors || !dirty}
 							className="da-button da-golden-btn"
 						>
 							{submitText}

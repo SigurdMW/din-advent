@@ -5,19 +5,24 @@ import AuthLayout from "app/layouts/AuthLayout"
 import classes from "./calendar.module.scss"
 import Spinner from "app/components/Spinner"
 
-const CalendarItem = ({ calendar, userId }) => (
-	<li key={calendar.id} className={classes.listItem}>
-		<Link href="/calendars/[calendarId]" as={`/calendars/${calendar.id}`}>
-			<a className={classes.calendarItem}>
-				<h2 title={calendar.name}>{calendar.name}</h2>
-				<p>
-          Laget {userId === calendar.userId ? " av deg " : ""}{" "}
-					{new Date(calendar.createdAt.toString()).toLocaleDateString()}
-				</p>
-			</a>
-		</Link>
-	</li>
-)
+const CalendarItem = ({ calendar, userId }) => {
+	const createdByMe = userId === calendar.userId
+	const emailFirstPart = calendar.user.email.split("@")[0]
+	const displayName = calendar.user.name || emailFirstPart
+	return (
+		<li key={calendar.id} className={classes.listItem}>
+			<Link href="/calendars/[calendarId]" as={`/calendars/${calendar.id}`}>
+				<a className={classes.calendarItem}>
+					<h2 title={calendar.name}>{calendar.name}</h2>
+					<p>
+			Laget av <span>{createdByMe ? "deg " : displayName}</span>{" "}
+						{new Date(calendar.createdAt.toString()).toLocaleDateString()}
+					</p>
+				</a>
+			</Link>
+		</li>
+	)
+}
 
 export const CalendarsList = () => {
 	const [calendars] = useQuery(getCalendars, { orderBy: { id: "desc" } })

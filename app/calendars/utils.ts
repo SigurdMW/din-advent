@@ -49,7 +49,7 @@ export const authAndValidatePlanLimit = async (ctx: { session?: SessionContext }
 
   const shareKeys = await db.shareKey.findMany({ where: { createdBy: userId } })
   if (userPublicData.plan === Plan.starter && shareKeys.length >= 1) throw new ExceededPlanError()
-  if (userPublicData.plan === Plan.basic && shareKeys.length >= 5) throw new ExceededPlanError()
+  if (userPublicData.plan === Plan.basic && shareKeys.length >= 10) throw new ExceededPlanError()
   return userId
 }
 

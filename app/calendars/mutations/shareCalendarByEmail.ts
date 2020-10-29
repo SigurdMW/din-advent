@@ -18,6 +18,16 @@ export default async function shareCalendarByEmail(
 	if (calendar.userId !== userId) throw new AuthenticationError()
 
 	const user = await db.user.findOne({ where: { email } })
+	const invites = await db.userInvite.findMany({ where: {
+		calendarId,
+		createdBy: userId,
+		email
+	}})
+
+	if (invites.length > 0) {
+		throw new ValidationError("Kunne ikke dele med bruker.")
+	}
+
 	if (!user) {
 		await createUserInvite({
 			userId,
@@ -28,6 +38,16 @@ export default async function shareCalendarByEmail(
 		return
 	}
 	if (user.id === userId) throw new ValidationError("Mente du virkelig å dele med deg selv?")
+	const roles = await db.role.findMany({
+		where: {
+			userId: user.id,
+			calendarId,
+			role: "reader"
+		}
+	})
+	if (roles.length > 0) {
+		throw new ValidationError("Kunne ikke dele med bruker.")
+	}
 	await grantCalendarAccess({
 		user,
 		role: "reader",
