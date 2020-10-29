@@ -32,14 +32,12 @@ export const CalendarRenderer = ({ calendarId }) => {
           Kalenderinnstillinger {settingsSvg}
 				</button>
 			</div>
-			<div className={classes.calendar}>
-				<Calendar calendar={calendar} />
-				<CalendarSettingsModal
-					isOpen={openSettingModal}
-					onClose={() => setOpenSettingsModal(false)}
-					calendarId={calendarId}
-				/>
-			</div>
+			<Calendar calendar={calendar} />
+			<CalendarSettingsModal
+				isOpen={openSettingModal}
+				onClose={() => setOpenSettingsModal(false)}
+				calendarId={calendarId}
+			/>
 		</>
 	)
 }

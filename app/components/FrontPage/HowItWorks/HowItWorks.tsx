@@ -51,7 +51,7 @@ export const HowItWorks = () => (
 		<Container>
 			<h2>Hvordan fungerer det?</h2>
 			<div className={classes.row}>
-				{items.map((item) => <WorksItem {...item} />)}
+				{items.map((item) => <WorksItem key={item.title} {...item} />)}
 			</div>
 		</Container>
 	</div>
