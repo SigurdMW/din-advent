@@ -1,6 +1,6 @@
 import React, { Suspense } from "react"
 import { useQuery, useParam, BlitzPage } from "blitz"
-import Layout from "app/layouts/Layout"
+import ShareLayout from "app/layouts/ShareLayout"
 import getSharedCalendar from "app/shared/queries/getSharedCalendar"
 import { Calendar } from "app/components/Calendar"
 import Spinner from "app/components/Spinner"
@@ -20,6 +20,6 @@ const SharedCalendarPage: BlitzPage = () => {
 	)
 }
 
-SharedCalendarPage.getLayout = (page) => <Layout title="Kalender - Din Advent">{page}</Layout>
+SharedCalendarPage.getLayout = (page) => <ShareLayout title="Delt kalender - Din Advent">{page}</ShareLayout>
 
 export default SharedCalendarPage

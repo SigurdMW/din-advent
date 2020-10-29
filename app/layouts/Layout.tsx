@@ -3,43 +3,34 @@ import Navigation from "./Navigation"
 
 const GAKey = process.env.NEXT_PUBLIC_GA_KEY
 
-const Layout = ({ title, children }) => (
+const Layout = ({ title, children, hideHeader = false }) => (
 	<>
 		<Head>
 			<title>{title || "Din Advent"}</title>
-			<link rel="icon" href="/favicon.ico" />
 			<meta charSet="utf-8" />
 			<meta httpEquiv="X-UA-Compatible" content="IE=edge" />
 			<meta name="viewport" content="width=device-width,initial-scale=1.0" />
 			<link
-				rel="stylesheet"
-				href="https://cdn.materialdesignicons.com/2.5.94/css/materialdesignicons.min.css"
-				media="all"
-			/>
-			<link
-				href="https://fonts.googleapis.com/css?family=Lobster|Roboto:400,900,900i&display=swap"
+				href="https://fonts.googleapis.com/css?family=Roboto:400,900,900i&display=swap"
 				rel="stylesheet"
 			/>
+			<link rel="icon" href="/favicons/favicon.ico" />
 			<link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png" />
 			<link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png" />
 			<link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png" />
 			<link rel="manifest" href="/favicons/site.webmanifest" />
 			<meta name="msapplication-TileColor" content="#da532c" />
-			<meta name="theme-color" content="#512B84" />
+			<meta name="theme-color" content="#361067" />
 			<meta property="og:title" content={title || "Din Advent - Digital julekalender"} />
-			{/* <meta
-        property="og:image"
-        content="https://cdn.sanity.io/images/82cwwg7j/production/f9d39ef9172bfed82eeb82a42892ee9f881c887e-600x600.png"
-      /> */}
+			<meta
+				property="og:image"
+				content="/devices.png"
+			/>
 			<meta
 				property="og:description"
-				content="Med Din Advent kan du opprette og dele digitale julekalendere til noen du vil glede. Det er enkelt, morsomt og klimanøytralt."
+				content="Med Din Advent kan du gi noen du bryr deg om en spennende adventstid. Opprett gratis bruker i dag for å komme i gang! Skulle du like tjenesten, kan du se hvilken pakke som passer deg."
 			/>
 			<meta property="og:type" content="website" />
-			<meta
-				name="description"
-				content="Med Din Advent kan du opprette og dele digitale julekalendere til noen du vil glede. Det er enkelt, morsomt og klimanøytralt."
-			/>
 			{GAKey && (
 				<>
 					<script async src={"https://www.googletagmanager.com/gtag/js?id=" + GAKey}></script>
@@ -55,7 +46,7 @@ const Layout = ({ title, children }) => (
 		</Head>
 
 		<div className="site">
-			<Navigation />
+			{!hideHeader && <Navigation />}
 			<main className="site-content">{children}</main>
 			<div className="da-footer">
 				<div>
