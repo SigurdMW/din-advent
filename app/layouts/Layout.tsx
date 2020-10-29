@@ -24,7 +24,7 @@ const Layout = ({ title, children, hideHeader = false }) => (
 			<meta property="og:title" content={title || "Din Advent - Digital julekalender"} />
 			<meta
 				property="og:image"
-				content="/devices.png"
+				content="https://www.dinadvent.no/devices.png"
 			/>
 			<meta
 				property="og:description"
