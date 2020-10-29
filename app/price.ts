@@ -18,7 +18,7 @@ export const pricePlanAndFeatures: Record<Plan, PricingItemData> = {
 	[Plan.starter]: {
 		plan: Plan.starter,
 		price: price[Plan.starter],
-		features: ["1 delt kalender", "For deg som vil gjøre noe hyggelig for en annen person", ...sharedFeatures],
+		features: ["1 delt kalender", "For deg som vil gjøre noe hyggelig for en annen", ...sharedFeatures],
 		name: "En kalender",
 	},
 	[Plan.basic]: {
