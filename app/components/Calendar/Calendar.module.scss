@@ -1,4 +1,5 @@
-$listItemGap: 12px;
+$listItemGap: 71px;
+$listItemGapMobile: 25px;
 
 a.calendarItem {
   display: block;
@@ -31,14 +32,17 @@ a.calendarItem {
   flex-wrap: wrap;
 
   @media (max-width: 600px) {
-    flex-flow: column;
+	flex-flow: column;
+	margin: 0 -#{$listItemGapMobile};
   }
 }
 
 .overflow {
-  width: 100%;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch; /* Lets it scroll lazy */
+	max-width: 1620px;
+	width: 100%;
+	margin: 0 auto;
+	overflow: hidden;
+  	-webkit-overflow-scrolling: touch; /* Lets it scroll lazy */
 }
 
 .windowList {
@@ -47,21 +51,31 @@ a.calendarItem {
   display: flex;
   margin: 0 -#{$listItemGap};
   flex-wrap: wrap;
-  min-width: 1250px;
+  justify-content: center;
+
+  @media (max-width: 600px) {
+		margin: 0 -#{$listItemGapMobile};
+	}
 
   & li {
-    padding: $listItemGap;
-    width: 16.66666666667%;
+    padding: 2em $listItemGap;
+	
+	@media (max-width: 600px) {
+		padding: 2em #{$listItemGapMobile};
+	}
   }
 }
 
 .calendar {
-  padding: 0 1em;
+  padding: 0;
   background: no-repeat center center;
   background-size: cover;
 
   & h1 {
-    text-align: center;
+        text-align: center;
+		padding: 32px 16px;
+		max-width: 750px;
+		margin: 0 auto;
   }
 }
 
@@ -69,11 +83,17 @@ a.calendarItem {
   color: inherit;
   font-family: "Lobster";
   text-decoration: none;
-  padding: 4em 1em;
+  padding: 43px 1em;
+  font-size: 2em;
   text-align: center;
   display: block;
-  border: 1px solid;
-  min-width: 200px;
+  border: 2px dashed;
+  border-radius: 3px;
+  width: 150px;
+
+  &:hover {
+	  text-decoration: none;
+  }
 
   &:visited {
     color: inherit;

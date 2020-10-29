@@ -2,6 +2,7 @@ $listItemGap: 12px;
 
 .share {
   text-align: center;
+  margin-bottom: 2em;
 }
 
 a.calendarItem {
@@ -39,44 +40,6 @@ a.calendarItem {
   @media (max-width: 600px) {
     flex-flow: column;
   }
-}
-
-.overflow {
-  width: 100%;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch; /* Lets it scroll lazy */
-}
-
-.windowList {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  margin: 0 -#{$listItemGap};
-  flex-wrap: wrap;
-  min-width: 1250px;
-
-  & li {
-    padding: $listItemGap;
-    width: 16.66666666667%;
-  }
-}
-
-.calendar {
-  padding: 0 1em;
-
-  & h1 {
-    text-align: center;
-  }
-}
-
-.window {
-  font-family: "Lobster";
-  text-decoration: none;
-  padding: 4em 1em;
-  text-align: center;
-  display: block;
-  border: 1px solid;
-  min-width: 200px;
 }
 
 .iconButton {
