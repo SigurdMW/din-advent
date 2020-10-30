@@ -1,7 +1,7 @@
 import { sendEmail } from "app/email"
-import db, { UserInviteCreateInput, User } from "db"
+import db, { UserInviteCreateInput, User, Role } from "db"
 import { Plan } from "app/interfaces/Payment"
-import { ExceededPlanError, NotFoundError, PaymentRequiredError } from "app/utils/errors"
+import { AuthorizationError, ExceededPlanError, NotFoundError, PaymentRequiredError } from "app/utils/errors"
 import { SessionContext } from "blitz"
 
 export type AvailableRoles =
@@ -51,6 +51,26 @@ export const authAndValidatePlanLimit = async (ctx: { session?: SessionContext }
   if (userPublicData.plan === Plan.starter && shareKeys.length >= 1) throw new ExceededPlanError()
   if (userPublicData.plan === Plan.basic && shareKeys.length >= 10) throw new ExceededPlanError()
   return userId
+}
+
+export const allowedEditCalendar = async ({ calendarId, ctx }: {calendarId: number, ctx: { session?: SessionContext } }) => {
+	ctx.session!.authorize()
+	  const userId = ctx.session?.userId
+	  if (!userId || !ctx.session) throw new Error("Missing userId")
+	  const calendar = await db.calendar.findOne({ where: { id: calendarId }})
+	  if (!calendar) throw new NotFoundError()
+	  if (userId === calendar.userId) return
+	const privateData = await ctx.session.getPrivateData()
+	const roles = privateData.roles
+	if (!roles || Array.isArray(roles)) {
+		throw new AuthorizationError("Du har ikke tilgang til å redigere denne kalenderen")
+	}
+	const relevantRoles = (roles as Role[]).filter((r) => r.calendarId === calendarId).map((r) => r.role)
+	const allowed = relevantRoles.includes("editor") || relevantRoles.includes("admin")
+	if (!allowed) {
+		throw new AuthorizationError("Du har ikke tilgang til å redigere denne kalenderen")
+	}
+	return
 }
 
 export const grantCalendarAccess = async ({

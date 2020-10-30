@@ -6,6 +6,7 @@ import classes from "./calendar.module.scss"
 import Calendar from "app/components/Calendar"
 import Spinner from "app/components/Spinner"
 import CalendarSettingsModal from "app/calendars/components/CalendarSettingsModal"
+import getCalendarRoles from "app/calendars/queries/getCalendarRoles"
 
 const settingsSvg = (
 	<svg height="512" viewBox="0 0 24 24" width="512">
@@ -15,29 +16,38 @@ const settingsSvg = (
 
 export const CalendarRenderer = ({ calendarId }) => {
 	const [calendar] = useQuery(getCalendar, { where: { id: calendarId } })
+	const [calendarRoles] = useQuery(getCalendarRoles, { calendarId })
 	const [openSettingModal, setOpenSettingsModal] = useState(false)
+
+	const allowedToEdit = calendarRoles.includes("admin") || calendarRoles.includes("editor")
 
 	return (
 		<>
-			<div className={classes.share}>
-				<Link href={`/calendars/${calendarId}/share`}>
-					<a>Del kalender</a>
-				</Link>{" "}
-        |
-				<button
-					className={classes.iconButton}
-					title="Innstillinger for kalender"
-					onClick={() => setOpenSettingsModal(true)}
-				>
-          Kalenderinnstillinger {settingsSvg}
-				</button>
-			</div>
+			{allowedToEdit && 
+				<>
+					<div className={classes.share}>
+						<Link href={`/calendars/${calendarId}/share`}>
+							<a>Del kalender</a>
+						</Link>{" "}
+				|
+						<button
+							className={classes.iconButton}
+							title="Innstillinger for kalender"
+							onClick={() => setOpenSettingsModal(true)}
+						>
+							Kalenderinnstillinger {settingsSvg}
+						</button>
+					</div>
+				</>
+			}
 			<Calendar calendar={calendar} />
-			<CalendarSettingsModal
-				isOpen={openSettingModal}
-				onClose={() => setOpenSettingsModal(false)}
-				calendarId={calendarId}
-			/>
+			{allowedToEdit &&
+				<CalendarSettingsModal
+					isOpen={openSettingModal}
+					onClose={() => setOpenSettingsModal(false)}
+					calendarId={calendarId}
+				/>
+			}
 		</>
 	)
 }

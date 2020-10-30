@@ -1,18 +1,15 @@
 import { SessionContext } from "blitz"
 import db, { CalendarWindowUpdateArgs } from "db"
+import { allowedEditCalendar } from "../utils"
 
-type UpdateCalendarWindowInput = {
-  where: CalendarWindowUpdateArgs["where"]
-  data: CalendarWindowUpdateArgs["data"]
-}
 
 export default async function updateWindow(
-	{ where, data }: UpdateCalendarWindowInput,
+	{ windowId, calendarId, data }: { windowId: number, calendarId: number, data: CalendarWindowUpdateArgs["data"] },
 	ctx: { session?: SessionContext } = {}
 ) {
   ctx.session!.authorize()
-
-  const window = await db.calendarWindow.update({ where, data })
+  await allowedEditCalendar({ calendarId, ctx })
+  const window = await db.calendarWindow.update({ where: { id: windowId }, data })
 
   return window
 }
