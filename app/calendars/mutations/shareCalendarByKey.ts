@@ -1,6 +1,6 @@
 import { SessionContext } from "blitz"
 import db from "db"
-import { authAndValidatePlanLimit } from "../utils"
+import { allowedEditCalendar, authAndValidatePlanLimit } from "../utils"
 
 type CreateShareKeyInput = {
   calendarId: number
@@ -11,6 +11,7 @@ export default async function shareCalendarByKey(
 	ctx: { session?: SessionContext } = {}
 ) {
 	const userId = await authAndValidatePlanLimit(ctx)
+	await allowedEditCalendar({ calendarId, ctx })
 
 	const shareKey = await db.shareKey.create({
 		data: {

@@ -1,8 +1,8 @@
-import { AuthenticationError, NotFoundError, ValidationError } from "app/utils/errors"
+import { ValidationError } from "app/utils/errors"
 import { ShareByEmailFunctionArgsType, ShareByEmailFunctionArgs } from "../validations"
 import { SessionContext } from "blitz"
 import db from "db"
-import { authAndValidatePlanLimit, createUserInvite, grantCalendarAccess } from "../utils"
+import { allowedEditCalendar, authAndValidatePlanLimit, createUserInvite, grantCalendarAccess } from "../utils"
 
 export default async function shareCalendarByEmail(
 	{ email, calendarId }: ShareByEmailFunctionArgsType,
@@ -10,12 +10,7 @@ export default async function shareCalendarByEmail(
 ) {
 	ShareByEmailFunctionArgs.parse({ email, calendarId })
 	const userId = await authAndValidatePlanLimit(ctx)
-
-	const calendar = await db.calendar.findOne({ where: { id: calendarId } })
-	if (!calendar) throw new NotFoundError()
-
-	// Only the user that created the calendar
-	if (calendar.userId !== userId) throw new AuthenticationError()
+	await allowedEditCalendar({ calendarId, ctx })
 
 	const user = await db.user.findOne({ where: { email } })
 	const invites = await db.userInvite.findMany({ where: {

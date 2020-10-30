@@ -9,8 +9,8 @@ export default async function createCalendar(
 ) {
   ctx.session!.authorize()
   const userId = ctx.session!.userId
-  const numCalendars = await db.calendar.findMany({ where: { userId }})
-  if (numCalendars.length > 50) throw new Error("Du kan ikke lage flere kalendere")
+  const numCalendars = await db.calendar.count({ where: { userId }})
+  if (numCalendars > 50) throw new Error("Du kan ikke lage flere kalendere")
   const calendar = await db.calendar.create({
   	data: {
   		name: data.name,
