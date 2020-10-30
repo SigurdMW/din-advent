@@ -5,20 +5,11 @@ import CalendarWindow from "app/components/CalendarWindow"
 import getSharedCalendarWindow from "app/shared/queries/getSharedCalendarWindow"
 import NotAllowedView from "app/components/NotAllowedView"
 import Spinner from "app/components/Spinner"
+import { allowedToViewCalendarWindow } from "app/utils/allowedToViewCalendarWindow"
 
 const GetWindow = ({ day, sharedId }) => {
 	const [window] = useQuery(getSharedCalendarWindow, { day, sharedId })
 	return <CalendarWindow calendarWindow={window} editorMode={false} />
-}
-
-const allowedToViewCalendarWindow = (day?: number) => {
-	if (!day) return false
-	const date = new Date()
-	if (date.getMonth() === 11) {
-		const currentDay = date.getDate()
-		return day <= currentDay
-	}
-	return false
 }
 
 const ShowWindowPage: BlitzPage = () => {

@@ -9,6 +9,8 @@ import updateWindow from "app/calendars/mutations/updateWindow"
 import { CalendarWindowUpdateInput } from "db"
 import Spinner from "app/components/Spinner"
 import getCalendarRoles from "app/calendars/queries/getCalendarRoles"
+import { allowedToViewCalendarWindow } from "app/utils/allowedToViewCalendarWindow"
+import NotAllowedView from "app/components/NotAllowedView"
 
 // Modal.setAppElement("#__next")
 
@@ -18,6 +20,7 @@ const GetWindow = ({ day, calendarId }) => {
 	const { user } = useCurrentUser()
 
 	const allowedToEdit = calendarRoles.includes("admin") || calendarRoles.includes("editor")
+	const allowedToView = allowedToViewCalendarWindow(day)
 
 	const saveWindow = async (v: CalendarWindowUpdateInput) => {
 		const newWindow = await updateWindow({
@@ -29,6 +32,9 @@ const GetWindow = ({ day, calendarId }) => {
 	}
 
 	if (!user) return null
+	if (!allowedToEdit && !allowedToView) {
+		return <NotAllowedView day={day} />
+	}
 	return (
 		<>
 			<CalendarWindow calendarWindow={window} editorMode={allowedToEdit} save={saveWindow} />
