@@ -27,7 +27,7 @@ export const CalendarRenderer = ({ calendarId }) => {
 				<>
 					<div className={classes.share}>
 						<Link href={`/calendars/${calendarId}/share`}>
-							<a>Del kalender</a>
+							<a>Deling og samarbeid</a>
 						</Link>{" "}
 				|
 						<button

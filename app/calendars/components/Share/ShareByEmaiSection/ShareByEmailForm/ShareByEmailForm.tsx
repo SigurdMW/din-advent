@@ -6,6 +6,7 @@ import LabeledTextField from "app/components/LabeledTextField"
 import Button from "app/components/Button"
 import { ErrorName } from "app/utils/errors"
 import ShareError from "../../ShareError"
+import AddRole from "./AddRole"
 
 interface ShareByEmailFormProps {
   calendarId: number
@@ -31,7 +32,7 @@ export const ShareByEmailForm: FC<ShareByEmailFormProps> = ({ calendarId, onShar
 				submitText="Del"
 				schema={ShareByEmailInput}
 				disabled={false}
-				initialValues={{ email: undefined }}
+				initialValues={{ email: undefined, role: [] }}
 				handleSubmitError={(name: ErrorName) => {
 					return <ShareError errorType={name} />
 				}}
@@ -62,6 +63,7 @@ export const ShareByEmailForm: FC<ShareByEmailFormProps> = ({ calendarId, onShar
 					placeholder="Skriv e-postadressen du vil dele med"
 					id="emailshare"
 				/>
+				<AddRole />
 			</Form>
 		</>
 	)
