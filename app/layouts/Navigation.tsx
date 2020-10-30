@@ -71,8 +71,8 @@ export const NavigationContent = () => {
 						<li>
 							<button
 								onClick={async () => {
+									await Router.push("/logout")
 									await logout()
-									Router.push("/logout")
 								}}
 							>
                 Logg ut
@@ -99,7 +99,7 @@ export const Navigation = () => (
 			<div className="show-mobile">
 				<Link href="/">
 					<a>
-						<img src="/da-logo-small.png" className={classes.logo} alt="Startside for Din Advent" />
+						<img src="/da-logo-small-no-bg.png" className={classes.logo} alt="Startside for Din Advent" />
 					</a>
 				</Link>
 			</div>

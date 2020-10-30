@@ -21,7 +21,10 @@ export default async function getCalendars(
   const roles = data && data.roles ? data.roles : ([] as Role[])
   const calendarIds = roles.map((r) => r.calendarId)
   const calendars = await db.calendar.findMany({
-  	where: { OR: [{ id: { in: calendarIds } }, { userId: userId }] },
+	  where: { OR: [{ id: { in: calendarIds } }, { userId: userId }] },
+	  include: {
+		  user: true
+	  },
   	orderBy,
   })
   return calendars

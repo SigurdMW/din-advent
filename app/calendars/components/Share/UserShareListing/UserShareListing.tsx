@@ -15,7 +15,7 @@ const UserShareListing: FC<UserShareListingProps> = ({ roles, onDelete }) => {
 	const handleDeleteRole = async (user: RoleWithUser) => {
 		if (
 			window.confirm(
-				"Er du sikker på at du vil slette deling med " + (user.user.name || user.user.email) + "?"
+				"Er du sikker på at du vil slette deling med " + (user.user.name || "") + user.user.email + "?"
 			)
 		) {
 			await deleteRole({ id: user.id })
@@ -37,7 +37,7 @@ const UserShareListing: FC<UserShareListingProps> = ({ roles, onDelete }) => {
 								</Button>
 							}
 						>
-							<div style={{ padding: "8px 0" }}>Delt med {role.user.name || role.user.email}</div>
+							<div style={{ padding: "8px 0" }}>Delt med {role.user.name ? `${role.user.name} (${role.user.email})` : role.user.email}</div>
 						</ShareItem>
 					))}
 				</ul>

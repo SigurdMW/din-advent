@@ -29,15 +29,18 @@ const ActionButton = ({ plan }: { plan: Plan }) => {
 }
 
 export const PricingPlans = () => (
-	<div className={`${classes.pricing} ${classes.pricingPalden}`}>
-		{Object.values(pricePlanAndFeatures).map((item, i) => (
-			<PricingItem key={i} item={item} featured={i === 1}>
-				<Suspense fallback={<LoginToBuy plan={item.plan} />}>
-					<ActionButton plan={item.plan} />
-				</Suspense>
-			</PricingItem>
-		))}
-	</div>
+	<>
+		<div className={`${classes.pricing} ${classes.pricingPalden}`}>
+			{Object.values(pricePlanAndFeatures).map((item, i) => (
+				<PricingItem key={i} item={item} featured={i === 1}>
+					<Suspense fallback={<LoginToBuy plan={item.plan} />}>
+						<ActionButton plan={item.plan} />
+					</Suspense>
+				</PricingItem>
+			))}
+		</div>
+		<p style={{ maxWidth: "700px", textAlign: "center", margin: "0 auto" }}>Bedrift eller har du bare andre behov? <Link href="/contact"><a>Ta kontakt med oss!</a></Link></p>
+	</>
 )
 
 export default PricingPlans
