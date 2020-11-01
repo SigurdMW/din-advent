@@ -19,8 +19,7 @@ const GetWindow = ({ day, calendarId }) => {
 	const [calendarRoles] = useQuery(getCalendarRoles, { calendarId })
 	const { user } = useCurrentUser()
 
-	const allowedToEdit = calendarRoles.includes("admin") || calendarRoles.includes("editor")
-	const allowedToView = allowedToViewCalendarWindow(day)
+	const allowedToEdit = calendarRoles.includes("admin") || calendarRoles.includes("editor") || calendarRoles.includes("editor/" + day as any)
 
 	const saveWindow = async (v: CalendarWindowUpdateInput) => {
 		const newWindow = await updateWindow({
@@ -33,8 +32,9 @@ const GetWindow = ({ day, calendarId }) => {
 	}
 
 	if (!user) return null
-	if (!allowedToEdit && !allowedToView) {
-		return <NotAllowedView day={day} />
+	if (!allowedToEdit) {
+		const allowedToView = allowedToViewCalendarWindow(day)
+		if (!allowedToView) return <NotAllowedView day={day} /> 
 	}
 	return (
 		<>
@@ -51,6 +51,7 @@ const ShowWindowPage: BlitzPage = () => {
 	if (!day || !calendarId) {
 		return null
 	}
+	
 	return (
 		<Suspense fallback={<Spinner />}>
 			<GetWindow day={day} calendarId={calendarId} />
