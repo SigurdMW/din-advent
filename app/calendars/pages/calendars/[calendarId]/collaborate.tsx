@@ -3,13 +3,14 @@ import { useParam, BlitzPage, useQuery } from "blitz"
 import AuthLayout from "app/layouts/AuthLayout"
 import Spinner from "app/components/Spinner"
 import InviteCollaborateSection from "app/calendars/components/Collaborate/InviteCollaborateSection"
-import getCalendarCollaborators, { EmailAndInvite, UserAndRoles } from "app/calendars/queries/getCalendarCollaborators"
+import getCalendarCollaborators from "app/calendars/queries/getCalendarCollaborators"
 import ShareItem from "app/calendars/components/Share/ShareItem"
 import Button from "app/components/Button"
 import Tag from "app/components/Tag"
 import { getRoleText } from "app/utils/roles"
 import deleteRoles from "app/calendars/mutations/deleteRoles"
 import deleteInvites from "app/calendars/mutations/deleteInvites"
+import { EmailAndInvite, UserAndRoles } from "app/interfaces/Collaborate"
 
 const GetCollaboratePage = ({ calendarId }) => {
 	const [{ users, invites }, { mutate, refetch }] = useQuery(getCalendarCollaborators, {

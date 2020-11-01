@@ -1,22 +1,8 @@
-import { AvailableRoles } from './../utils';
+import { EmailAndInvite, UserAndRoles } from "app/interfaces/Collaborate"
 import { NotFoundError, AuthorizationError } from "app/utils/errors"
 import { SessionContext } from "blitz"
-import db, { User, Role, UserInvite } from "db"
+import db from "db"
 import { allowedEditCalendar } from "../utils"
-
-interface InviteWithRole extends Omit<UserInvite, "role"> {
-	role: AvailableRoles
-}
-
-export interface EmailAndInvite {
-	email: string
-	invites: InviteWithRole[]
-}
-
-export interface UserAndRoles {
-	user: User,
-	roles: Role[]
-}
 
 interface ColabReturn {
 	users: UserAndRoles[]
