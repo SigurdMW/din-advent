@@ -7,6 +7,10 @@ import Calendar from "app/components/Calendar"
 import Spinner from "app/components/Spinner"
 import CalendarSettingsModal from "app/calendars/components/CalendarSettingsModal"
 import getCalendarRoles from "app/calendars/queries/getCalendarRoles"
+import Alert from "app/components/Alert"
+import { getRoleText } from "app/utils/roles"
+import Tag from "app/components/Tag"
+import Container from "app/components/Container"
 
 const settingsSvg = (
 	<svg height="512" viewBox="0 0 24 24" width="512">
@@ -20,10 +24,12 @@ export const CalendarRenderer = ({ calendarId }) => {
 	const [openSettingModal, setOpenSettingsModal] = useState(false)
 
 	const allowedToEdit = calendarRoles.includes("admin") || calendarRoles.includes("editor")
+	const otherEditRights = calendarRoles.filter((r) => r !== "reader").length > 0
+
 
 	return (
 		<>
-			{allowedToEdit && 
+			{allowedToEdit ? (
 				<>
 					<div className={classes.share}>
 						<Link href={`/calendars/${calendarId}/share`}>
@@ -41,7 +47,18 @@ export const CalendarRenderer = ({ calendarId }) => {
 						</button>
 					</div>
 				</>
-			}
+			) : (
+				<>
+					{otherEditRights &&
+						<Container>
+							<Alert type="info">
+								Du har følgende rettigheter for denne kalenderen:<br/>
+								{calendarRoles.map((r) => <Tag key={r}>{getRoleText(r)}</Tag>)}
+							</Alert>
+						</Container>
+					}
+				</>
+			)}
 			<Calendar calendar={calendar} />
 			{allowedToEdit &&
 				<CalendarSettingsModal

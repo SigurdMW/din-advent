@@ -7,6 +7,7 @@ $listItemGap: 12px;
 
 a.calendarItem {
   display: block;
+  position: relative;
   background-color: #fff;
   color: #000;
   padding: 1em;
@@ -20,6 +21,14 @@ a.calendarItem {
     text-align: center;
     font-size: 1.35em;
   }
+}
+
+.itemSvg {
+	width: 25px;
+	height: auto;
+	position: absolute;
+	top: 10px;
+    right: 10px;
 }
 
 .listItem {

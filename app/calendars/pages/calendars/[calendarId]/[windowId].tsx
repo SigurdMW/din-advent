@@ -9,6 +9,8 @@ import updateWindow from "app/calendars/mutations/updateWindow"
 import { CalendarWindowUpdateInput } from "db"
 import Spinner from "app/components/Spinner"
 import getCalendarRoles from "app/calendars/queries/getCalendarRoles"
+import { allowedToViewCalendarWindow } from "app/utils/allowedToViewCalendarWindow"
+import NotAllowedView from "app/components/NotAllowedView"
 
 // Modal.setAppElement("#__next")
 
@@ -17,7 +19,7 @@ const GetWindow = ({ day, calendarId }) => {
 	const [calendarRoles] = useQuery(getCalendarRoles, { calendarId })
 	const { user } = useCurrentUser()
 
-	const allowedToEdit = calendarRoles.includes("admin") || calendarRoles.includes("editor")
+	const allowedToEdit = calendarRoles.includes("admin") || calendarRoles.includes("editor") || calendarRoles.includes("editor/" + day as any)
 
 	const saveWindow = async (v: CalendarWindowUpdateInput) => {
 		const newWindow = await updateWindow({
@@ -30,6 +32,10 @@ const GetWindow = ({ day, calendarId }) => {
 	}
 
 	if (!user) return null
+	if (!allowedToEdit) {
+		const allowedToView = allowedToViewCalendarWindow(day)
+		if (!allowedToView) return <NotAllowedView day={day} /> 
+	}
 	return (
 		<>
 			<CalendarWindow calendarWindow={window} editorMode={allowedToEdit} save={saveWindow} />
@@ -45,6 +51,7 @@ const ShowWindowPage: BlitzPage = () => {
 	if (!day || !calendarId) {
 		return null
 	}
+	
 	return (
 		<Suspense fallback={<Spinner />}>
 			<GetWindow day={day} calendarId={calendarId} />

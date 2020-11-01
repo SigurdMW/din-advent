@@ -82,7 +82,7 @@ export const allowedEditCalendarWindow = async ({ calendarId, day, ctx }: { cale
 	  if (userId === calendar.userId) return
 	const privateData = await ctx.session.getPrivateData()
 	const roles = privateData.roles
-	if (!roles || Array.isArray(roles)) {
+	if (!roles || !Array.isArray(roles)) {
 		throw new AuthorizationError("Du har ikke tilgang til å redigere denne kalenderen")
 	}
 	const relevantRoles = (roles as Role[]).filter((r) => r.calendarId === calendarId).map((r) => r.role)
