@@ -59,7 +59,7 @@ export const allowedEditCalendar = async ({ calendarId, ctx }: {calendarId: numb
 	  if (!userId || !ctx.session) throw new Error("Missing userId")
 	  const calendar = await db.calendar.findOne({ where: { id: calendarId }})
 	  if (!calendar) throw new NotFoundError()
-	  if (userId === calendar.userId) return
+	  if (userId === calendar.userId) return userId
 	const privateData = await ctx.session.getPrivateData()
 	const roles = privateData.roles
 	if (!roles || Array.isArray(roles)) {
@@ -67,6 +67,26 @@ export const allowedEditCalendar = async ({ calendarId, ctx }: {calendarId: numb
 	}
 	const relevantRoles = (roles as Role[]).filter((r) => r.calendarId === calendarId).map((r) => r.role)
 	const allowed = relevantRoles.includes("editor") || relevantRoles.includes("admin")
+	if (!allowed) {
+		throw new AuthorizationError("Du har ikke tilgang til å redigere denne kalenderen")
+	}
+	return userId
+}
+
+export const allowedEditCalendarWindow = async ({ calendarId, day, ctx }: { calendarId: number, day: number, ctx: { session?: SessionContext }}) => {
+	ctx.session!.authorize()
+	  const userId = ctx.session?.userId
+	  if (!userId || !ctx.session) throw new Error("Missing userId")
+	  const calendar = await db.calendar.findOne({ where: { id: calendarId }})
+	  if (!calendar) throw new NotFoundError()
+	  if (userId === calendar.userId) return
+	const privateData = await ctx.session.getPrivateData()
+	const roles = privateData.roles
+	if (!roles || Array.isArray(roles)) {
+		throw new AuthorizationError("Du har ikke tilgang til å redigere denne kalenderen")
+	}
+	const relevantRoles = (roles as Role[]).filter((r) => r.calendarId === calendarId).map((r) => r.role)
+	const allowed = relevantRoles.includes("editor") || relevantRoles.includes("admin") || relevantRoles.includes("editor/" + day)
 	if (!allowed) {
 		throw new AuthorizationError("Du har ikke tilgang til å redigere denne kalenderen")
 	}
@@ -128,15 +148,40 @@ export const createUserInvite = async ({ calendarId, email, userId, role }: Crea
 		},
 	})
 	const user = await db.user.findOne({ where: { id: userId } })
-	const displayName = user?.name || user?.email
-	const messageAndTitle = `${displayName} har delt en kalender med deg`
-	await sendEmail({
-		to: email,
-		subject: `${messageAndTitle} - Din Advent`,
-		html: `
-			<h1>${messageAndTitle}!</h1>
-			<p>${displayName} ønsker å dele en kalender med deg. For å få tilgang til kalenderen, må du opprette en bruker og logge inn på Din Advent. Det gjør du her:</p>
-			<p><a href="${process.env.BASE_URL}signup">Opprett bruker på Din Advent</a></p>
-			<p><strong>NB!</strong> Det er viktig at du benytter denne e-postadressen når du oppretter brukeren for å få tilgang til den delte kalenderen.</p>`,
+	return user
+}
+
+export const giveCollaboratorAccess = async ({ user, calendarId, createdBy, roles, sendMail }: { user: User, roles: AvailableRoles[], calendarId: number, createdBy: number, sendMail: boolean }) => {
+	roles.forEach(async (role) => {
+		await db.role.create({
+			data: {
+				calendar: {
+					connect: { id: calendarId },
+				},
+				role,
+				user: {
+					connect: { id: user.id },
+				},
+				createdByUser: {
+					connect: { id: createdBy },
+				},
+			},
+		})
 	})
+
+	if (sendMail) {
+		const createdByUser = await db.user.findOne({ where: { id: createdBy } })
+		if (!createdByUser) throw new NotFoundError()
+
+		const displayName = createdByUser.name || createdByUser.email
+		const messageAndTitle = `${displayName} har invitert deg til samarbeid`
+		await sendEmail({
+			to: user.email,
+			subject: `${messageAndTitle} - Din Advent`,
+			html: `
+				<h1>${messageAndTitle}!</h1>
+				<p>${displayName} har invitert deg til å samarbeide. Logg deg inn på dinadvent.no for å se kalenderen. Du finner den under "Dine kalendere":</p>
+				<p><a href="${process.env.BASE_URL}login">Logg inn på Din Advent</a></p>`,
+		})
+	}
 }

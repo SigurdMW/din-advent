@@ -11,7 +11,7 @@ interface UserShareListingProps {
 
 const UserShareListing: FC<UserShareListingProps> = ({ invites, onDelete }) => {
 	const handleDeleteInvite = async (invite: UserInvite) => {
-		if (window.confirm("Er du sikker på at du vil slette invitasjonen til " + invite.email + "?")) {
+		if (window.confirm("Er du sikker på at du vil slette invitasjonen til " + invite.email + "? Handlingen kan ikke slettes.")) {
 			await deleteUserInvite({ id: invite.id })
 			onDelete(invite.id)
 		}

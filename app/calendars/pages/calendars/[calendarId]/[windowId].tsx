@@ -23,6 +23,7 @@ const GetWindow = ({ day, calendarId }) => {
 		const newWindow = await updateWindow({
 			windowId: window.id,
 			calendarId,
+			day: window.day,
 			data: v,
 		})
 		mutate(newWindow)

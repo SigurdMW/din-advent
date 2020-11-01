@@ -15,7 +15,7 @@ const UserShareListing: FC<UserShareListingProps> = ({ roles, onDelete }) => {
 	const handleDeleteRole = async (user: RoleWithUser) => {
 		if (
 			window.confirm(
-				"Er du sikker på at du vil slette deling med " + (user.user.name || "") + user.user.email + "?"
+				"Er du sikker på at du vil slette deling med " + (user.user.name || "") + " " + user.user.email + "? Handlingen kan ikke angres."
 			)
 		) {
 			await deleteRole({ id: user.id })
