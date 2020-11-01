@@ -28,8 +28,10 @@ export const CalendarRenderer = ({ calendarId }) => {
 					<div className={classes.share}>
 						<Link href={`/calendars/${calendarId}/share`}>
 							<a>Del kalender</a>
-						</Link>{" "}
-				|
+						</Link>{" "}|{" "}
+						<Link href={`/calendars/${calendarId}/collaborate`}>
+							<a>Samarbeid</a>
+						</Link>{" "}|{" "}
 						<button
 							className={classes.iconButton}
 							title="Innstillinger for kalender"

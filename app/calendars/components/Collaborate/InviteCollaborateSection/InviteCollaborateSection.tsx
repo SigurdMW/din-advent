@@ -1,14 +1,14 @@
 import Button from "app/components/Button"
 import Modal from "app/components/Modal"
 import React, { FC, useState } from "react"
-import ShareByEmailForm from "./ShareByEmailForm"
+import InviteCollaborateForm from "./InviteCollaborateForm"
 
-interface ShareByEmailSectionProps {
+interface InviteCollaborateSectionProps {
   calendarId: number
   onShared: () => Promise<any>
 }
 
-export const ShareByEmailSection: FC<ShareByEmailSectionProps> = ({ calendarId, onShared }) => {
+export const InviteCollaborateSection: FC<InviteCollaborateSectionProps> = ({ calendarId, onShared }) => {
 	const [isOpen, setIsOpen] = useState(false)
 	return (
 		<>
@@ -16,10 +16,10 @@ export const ShareByEmailSection: FC<ShareByEmailSectionProps> = ({ calendarId, 
         		Legg til med e-post
 			</Button>
 			<Modal isOpen={isOpen} requestClose={() => setIsOpen(false)} label="Del med e-post">
-				<ShareByEmailForm calendarId={calendarId} onShared={onShared} />
+				<InviteCollaborateForm calendarId={calendarId} onShared={onShared} />
 			</Modal>
 		</>
 	)
 }
 
-export default ShareByEmailSection
+export default InviteCollaborateSection

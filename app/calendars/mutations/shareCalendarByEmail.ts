@@ -2,10 +2,11 @@ import { ValidationError } from "app/utils/errors"
 import { ShareByEmailFunctionArgsType, ShareByEmailFunctionArgs } from "../validations"
 import { SessionContext } from "blitz"
 import db from "db"
-import { allowedEditCalendar, authAndValidatePlanLimit, createUserInvite, grantCalendarAccess } from "../utils"
+import { allowedEditCalendar, authAndValidatePlanLimit, AvailableRoles, createUserInvite, grantCalendarAccess } from "../utils"
+import { sendEmail } from "app/email"
 
 export default async function shareCalendarByEmail(
-	{ email, calendarId }: ShareByEmailFunctionArgsType,
+	{ email, role, calendarId }: ShareByEmailFunctionArgsType & { role: AvailableRoles },
 	ctx: { session?: SessionContext } = {}
 ) {
 	ShareByEmailFunctionArgs.parse({ email, calendarId })
@@ -24,11 +25,22 @@ export default async function shareCalendarByEmail(
 	}
 
 	if (!user) {
-		await createUserInvite({
+		const theUser = await createUserInvite({
 			userId,
 			email,
 			calendarId,
-			role: "reader",
+			role
+		})
+		const displayName = theUser?.name || theUser?.email
+		const messageAndTitle = `${displayName} har delt en kalender med deg`
+		await sendEmail({
+			to: email,
+			subject: `${messageAndTitle} - Din Advent`,
+			html: `
+				<h1>${messageAndTitle}!</h1>
+				<p>${displayName} ønsker å dele en kalender med deg. For å få tilgang til kalenderen, må du opprette en bruker og logge inn på Din Advent. Det gjør du her:</p>
+				<p><a href="${process.env.BASE_URL}signup">Opprett bruker på Din Advent</a></p>
+				<p><strong>NB!</strong> Det er viktig at du benytter denne e-postadressen når du oppretter brukeren for å få tilgang til den delte kalenderen.</p>`,
 		})
 		return
 	}
@@ -37,7 +49,7 @@ export default async function shareCalendarByEmail(
 		where: {
 			userId: user.id,
 			calendarId,
-			role: "reader"
+			role
 		}
 	})
 	if (roles.length > 0) {
@@ -45,7 +57,7 @@ export default async function shareCalendarByEmail(
 	}
 	await grantCalendarAccess({
 		user,
-		role: "reader",
+		role,
 		calendarId,
 		createdBy: userId,
 	})
