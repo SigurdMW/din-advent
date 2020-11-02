@@ -3,6 +3,7 @@ import { CalendarWindowUpdateInput } from "db"
 export enum DynamicInputTypes {
   richtext = "richtext",
   confetti = "confetti",
+  snow = "snow"
 }
 
 interface DynamicInputCommon<T> {
@@ -24,7 +25,11 @@ interface Confetti extends DynamicInputCommon<{}> {
   type: DynamicInputTypes.confetti
 }
 
-export type DynamicComponent = RichText | Confetti
+interface Snow extends DynamicInputCommon<{}> {
+	type: DynamicInputTypes.snow
+}
+
+export type DynamicComponent = RichText | Confetti | Snow
 
 export interface DynamicInput {
   components: Array<DynamicComponent>

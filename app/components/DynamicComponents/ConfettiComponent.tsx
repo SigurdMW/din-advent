@@ -5,7 +5,6 @@ import Toggle from "app/components/Toggle"
  * Confetti particle class
  * thanks to https://jsfiddle.net/hcxabsgh/
  *
- * ALT: https://jsfiddle.net/hcxabsgh/
  */
 class ConfettiParticle {
   public color: number = 0
