@@ -30,7 +30,7 @@ const CalendarItem = ({ calendar, userId }) => {
 			Laget av <span>{createdByMe ? "deg " : displayName}</span>{" "}
 						{new Date(calendar.createdAt.toString()).toLocaleDateString()}
 					</p>
-					<span className="da-button da-golden-btn">Gå til kalender</span>
+					<span className={"da-button da-golden-btn "+classes.span}>Gå til kalender</span>
 				</a>
 			</Link>
 		</li>
