@@ -7,35 +7,54 @@ $listItemGap: 12px;
 
 a.calendarItem {
   display: block;
+  width: 100%;
   position: relative;
   background-color: #fff;
   color: #000;
-  padding: 1em;
+  padding: 20px;
   border: 1px solid rgba(255, 255, 255, 0.4);
   text-decoration: none;
   border-radius: 3px;
   box-shadow: 0 8px 6px -6px black;
   overflow: hidden;
 
-  & h2 {
-    text-align: center;
-    font-size: 1.35em;
+  h2 {
+	font-size: 22px;
+	margin: 20px 0 10px;
+  }
+
+  p {
+	font-size: 16px;
+	margin: 0 0 20px;
+  }
+
+  span {
+	  width: 100%;
+	  text-align: center;
   }
 }
 
 .itemSvg {
-	width: 25px;
+	width: 20px;
 	height: auto;
 	position: absolute;
-	top: 10px;
-    right: 10px;
+	top: 20px;
+	right: 20px;
+	
+	svg {
+		path {
+			fill: #e4e4e4;
+		}
+	}
 }
 
 .listItem {
   padding: $listItemGap;
 
   @media (min-width: 600px) {
-    max-width: 33.33333%;
+	display: flex;
+	max-width: 33.33333%;
+	flex-grow: 1;
   }
 }
 

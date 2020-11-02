@@ -1,4 +1,4 @@
-import React, { Suspense } from "react"
+import React, { Suspense, useState } from "react"
 import { Link, useQuery, BlitzPage, useSession } from "blitz"
 import getCalendars from "app/calendars/queries/getCalendars"
 import AuthLayout from "app/layouts/AuthLayout"
@@ -30,32 +30,46 @@ const CalendarItem = ({ calendar, userId }) => {
 			Laget av <span>{createdByMe ? "deg " : displayName}</span>{" "}
 						{new Date(calendar.createdAt.toString()).toLocaleDateString()}
 					</p>
+					<span className="da-button da-golden-btn">Gå til kalender</span>
 				</a>
 			</Link>
 		</li>
 	)
 }
 
+type FilterType = "" | "createdbyme" | "sharedwithme"
+
 export const CalendarsList = () => {
 	const [calendars] = useQuery(getCalendars, { orderBy: { id: "desc" } })
+	const [filter, setFilter] = useState<FilterType>("")
 	const session = useSession()
 	const userId = session.userId
+	const showCreatedByMe = filter === "createdbyme"
 
 	return (
 		<>
 			{calendars.length ? (
 				<>
 					<hr className="da-divider" />
-					<p>Dine kalendere:</p>
+					<div style={{ display: "flex", alignItems: "center" }}>
+						<p style={{ display: "flex", flexGrow: 1 }}>Dine kalendere:</p>
+						{calendars.length > 1 &&
+							<select onChange={(e) => setFilter(e.target.value as FilterType)} style={{ width: "auto" }} className="select--small">
+								<option value="">Vis alle</option>
+								<option value="createdbyme">Laget av meg</option>
+								<option value="sharedwithme">Delt med meg</option>
+							</select>
+						}
+					</div>
 					<ul className={classes.list}>
-						{calendars.map((calendar) => (
-							<CalendarItem calendar={calendar} userId={session.userId} key={calendar.id} />
+						{calendars.filter((c) => filter ? showCreatedByMe ? c.userId === userId : c.userId !== userId : true).map((calendar) => (
+							<CalendarItem calendar={calendar} userId={userId} key={calendar.id} />
 						))}
 					</ul>
 				</>
 			) : (
 				<p>
-          Du har ingen kalendere ennå.{" "}
+          			Du har ingen kalendere ennå.{" "}
 					<Link href="/calendars/new">
 						<a>Opprett kalender</a>
 					</Link>
