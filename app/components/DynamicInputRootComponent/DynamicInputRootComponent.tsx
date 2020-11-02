@@ -13,6 +13,7 @@ import DynamicComponentFrame from "../DynamicComponentFrame"
 import classes from "./DynamicInputRootComponent.module.scss"
 import { ConfettiComponent } from "../DynamicComponents/ConfettiComponent"
 import RichTextComponent from "../DynamicComponents/RichTextComponent"
+import SnowComponent from "../DynamicComponents/SnowComponent"
 
 const translations: ComponentTranslations = {
 	richtext: {
@@ -21,6 +22,9 @@ const translations: ComponentTranslations = {
 	confetti: {
 		name: "Konfettiregn",
 	},
+	snow: {
+		name: "Snøfall"
+	}
 }
 
 const componentEmptyState: ComponentEmptyState = {
@@ -34,6 +38,10 @@ const componentEmptyState: ComponentEmptyState = {
 		type: DynamicInputTypes.confetti,
 		props: {},
 	},
+	snow: {
+		type: DynamicInputTypes.snow,
+		props: {},
+	}
 }
 
 /**
@@ -62,6 +70,8 @@ export const DynamicInputRootComponent = ({
 			// To only allow 1 confetti per calendar window
 			if (c.type === DynamicInputTypes.confetti) {
 				setRestrictAdd([...restrictAdd, DynamicInputTypes.confetti])
+			} else if (c.type === DynamicInputTypes.snow) {
+				setRestrictAdd([...restrictAdd, DynamicInputTypes.snow])
 			}
 		})
 		if (JSON.stringify(localComponents) !== JSON.stringify(components)) {
@@ -117,6 +127,8 @@ export const DynamicInputRootComponent = ({
 			)
 		case DynamicInputTypes.confetti:
 			return <ConfettiComponent editorMode={editorMode} />
+		case DynamicInputTypes.snow:
+			return <SnowComponent editorMode={editorMode} />
 		default:
 			return null
 		}

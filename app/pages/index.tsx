@@ -6,6 +6,7 @@ import FullWidthLayout from "app/layouts/FullWidthLayout"
 import HowItWorks from "app/components/FrontPage/HowItWorks"
 import CTAButton from "app/components/FrontPage/CTAButton"
 import PriceSection from "app/components/FrontPage/PriceSection"
+import SnowComponent from "app/components/DynamicComponents/SnowComponent"
 
 /*
  * This file is just for a pleasant getting started page for your new app.
@@ -17,6 +18,7 @@ const Home: BlitzPage = () => (
 		<LandingSection />
 		<HowItWorks />
 		<PriceSection />
+		<SnowComponent editorMode={false} />
 
 		<div className={classes.smallSection}>
 			<div>
