@@ -1,5 +1,5 @@
 import React, { Suspense } from "react"
-import { useParam, BlitzPage, useQuery } from "blitz"
+import { useParam, BlitzPage, useQuery, Link } from "blitz"
 import AuthLayout from "app/layouts/AuthLayout"
 import Spinner from "app/components/Spinner"
 import InviteCollaborateSection from "app/calendars/components/Collaborate/InviteCollaborateSection"
@@ -134,6 +134,10 @@ const GetCollaboratePage = ({ calendarId }) => {
 					</ul>
 				</>
 			}
+			<br/>
+			<Link href={`/calendars/${calendarId}`}>
+				<a>Tilbake til kalender</a>
+			</Link>
 		</div>
 	)
 }

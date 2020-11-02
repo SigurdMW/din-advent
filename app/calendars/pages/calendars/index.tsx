@@ -1,9 +1,10 @@
-import React, { Suspense, useState } from "react"
+import React, { Suspense, useEffect, useState } from "react"
 import { Link, useQuery, BlitzPage, useSession } from "blitz"
 import getCalendars from "app/calendars/queries/getCalendars"
 import AuthLayout from "app/layouts/AuthLayout"
 import classes from "./calendar.module.scss"
 import Spinner from "app/components/Spinner"
+import { Calendar, User } from "db"
 
 const ShareIcon = (
 	<svg x="0px" y="0px" viewBox="0 0 512 512">
@@ -16,10 +17,12 @@ const ShareIcon = (
 	</svg>
 )
 
-const CalendarItem = ({ calendar, userId }) => {
+const CalendarItem = ({ calendar, userId }: { calendar: Calendar & { user: User, lastUpdateBy: User | null }, userId: number }) => {
 	const createdByMe = userId === calendar.userId
 	const emailFirstPart = calendar.user.email.split("@")[0]
 	const displayName = calendar.user.name || emailFirstPart
+	const lastEditByUser = calendar.lastUpdateById ? calendar.lastUpdateById === userId : true
+	const lastEditUser = calendar.lastUpdateBy
 	return (
 		<li key={calendar.id} className={classes.listItem}>
 			<Link href="/calendars/[calendarId]" as={`/calendars/${calendar.id}`}>
@@ -27,10 +30,11 @@ const CalendarItem = ({ calendar, userId }) => {
 					<h2 title={calendar.name}>{calendar.name}</h2>
 					{!createdByMe && <div className={classes.itemSvg} title={"Kalender delt med deg av " + displayName}>{ShareIcon}</div>}
 					<p>
-			Laget av <span>{createdByMe ? "deg " : displayName}</span>{" "}
+						Laget av <span>{createdByMe ? "deg " : displayName}</span>{" "}
 						{new Date(calendar.createdAt.toString()).toLocaleDateString()}
+						{(!lastEditByUser && lastEditUser) && <span>, sist redigert av {lastEditUser.name ? lastEditUser.name : lastEditUser.email} </span>}
 					</p>
-					<span className={"da-button da-golden-btn "+classes.span}>Gå til kalender</span>
+					<span className={"da-button da-golden-btn " + classes.span}>Gå til kalender</span>
 				</a>
 			</Link>
 		</li>
@@ -40,11 +44,24 @@ const CalendarItem = ({ calendar, userId }) => {
 type FilterType = "" | "createdbyme" | "sharedwithme"
 
 export const CalendarsList = () => {
-	const [calendars] = useQuery(getCalendars, { orderBy: { id: "desc" } })
+	const [calendars, { refetch }] = useQuery(getCalendars, { orderBy: { updatedAt: "desc" } })
 	const [filter, setFilter] = useState<FilterType>("")
 	const session = useSession()
 	const userId = session.userId
 	const showCreatedByMe = filter === "createdbyme"
+
+	useEffect(() => {
+		let timer;
+		try {
+			const time = 1000 * 60 * 2 // refetch every 2 minutes
+			timer = setInterval(refetch, time)
+		} catch (e) {
+			// do nothing
+		}
+		return () => {
+			if (timer) clearInterval(timer)
+		}
+	}, [])
 
 	return (
 		<>
@@ -69,7 +86,7 @@ export const CalendarsList = () => {
 				</>
 			) : (
 				<p>
-          			Du har ingen kalendere ennå.{" "}
+					Du har ingen kalendere ennå.{" "}
 					<Link href="/calendars/new">
 						<a>Opprett kalender</a>
 					</Link>

@@ -90,7 +90,7 @@ export const allowedEditCalendarWindow = async ({ calendarId, day, ctx }: { cale
 	if (!allowed) {
 		throw new AuthorizationError("Du har ikke tilgang til å redigere denne kalenderen")
 	}
-	return
+	return userId
 }
 
 export const grantCalendarAccess = async ({

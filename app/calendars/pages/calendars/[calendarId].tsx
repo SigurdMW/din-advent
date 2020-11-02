@@ -1,7 +1,6 @@
 import React, { Suspense, useState } from "react"
 import { useQuery, useParam, BlitzPage, Link } from "blitz"
 import getCalendar from "app/calendars/queries/getCalendar"
-import Layout from "app/layouts/Layout"
 import classes from "./calendar.module.scss"
 import Calendar from "app/components/Calendar"
 import Spinner from "app/components/Spinner"
@@ -11,6 +10,7 @@ import Alert from "app/components/Alert"
 import { getRoleText } from "app/utils/roles"
 import Tag from "app/components/Tag"
 import Container from "app/components/Container"
+import FullWidthLayout from "app/layouts/FullWidthLayout"
 
 const settingsSvg = (
 	<svg height="512" viewBox="0 0 24 24" width="512">
@@ -37,14 +37,12 @@ export const CalendarRenderer = ({ calendarId }) => {
 						</Link>{" "}|{" "}
 						<Link href={`/calendars/${calendarId}/collaborate`}>
 							<a>Samarbeid</a>
-						</Link>{" "}|{" "}
+						</Link>{" "}|
 						<button
 							className={classes.iconButton}
 							title="Innstillinger for kalender"
 							onClick={() => setOpenSettingsModal(true)}
-						>
-							Kalenderinnstillinger {settingsSvg}
-						</button>
+						>Innstillinger {settingsSvg}</button>
 					</div>
 				</>
 			) : (
@@ -81,6 +79,6 @@ const ShowCalendarPage: BlitzPage = () => {
 	)
 }
 
-ShowCalendarPage.getLayout = (page) => <Layout title="Kalender - Din Advent">{page}</Layout>
+ShowCalendarPage.getLayout = (page) => <FullWidthLayout title="Kalender - Din Advent">{page}</FullWidthLayout>
 
 export default ShowCalendarPage
