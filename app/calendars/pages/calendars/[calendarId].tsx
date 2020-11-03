@@ -1,12 +1,16 @@
 import React, { Suspense, useState } from "react"
 import { useQuery, useParam, BlitzPage, Link } from "blitz"
 import getCalendar from "app/calendars/queries/getCalendar"
-import Layout from "app/layouts/Layout"
 import classes from "./calendar.module.scss"
 import Calendar from "app/components/Calendar"
 import Spinner from "app/components/Spinner"
 import CalendarSettingsModal from "app/calendars/components/CalendarSettingsModal"
 import getCalendarRoles from "app/calendars/queries/getCalendarRoles"
+import Alert from "app/components/Alert"
+import { getRoleText } from "app/utils/roles"
+import Tag from "app/components/Tag"
+import Container from "app/components/Container"
+import FullWidthLayout from "app/layouts/FullWidthLayout"
 
 const settingsSvg = (
 	<svg height="512" viewBox="0 0 24 24" width="512">
@@ -20,26 +24,39 @@ export const CalendarRenderer = ({ calendarId }) => {
 	const [openSettingModal, setOpenSettingsModal] = useState(false)
 
 	const allowedToEdit = calendarRoles.includes("admin") || calendarRoles.includes("editor")
+	const otherEditRights = calendarRoles.filter((r) => r !== "reader").length > 0
+
 
 	return (
 		<>
-			{allowedToEdit && 
+			{allowedToEdit ? (
 				<>
 					<div className={classes.share}>
 						<Link href={`/calendars/${calendarId}/share`}>
 							<a>Del kalender</a>
-						</Link>{" "}
-				|
+						</Link>{" "}|{" "}
+						<Link href={`/calendars/${calendarId}/collaborate`}>
+							<a>Samarbeid</a>
+						</Link>{" "}|
 						<button
 							className={classes.iconButton}
 							title="Innstillinger for kalender"
 							onClick={() => setOpenSettingsModal(true)}
-						>
-							Kalenderinnstillinger {settingsSvg}
-						</button>
+						>Innstillinger {settingsSvg}</button>
 					</div>
 				</>
-			}
+			) : (
+				<>
+					{otherEditRights &&
+						<Container>
+							<Alert type="info">
+								Du har følgende rettigheter for denne kalenderen:<br/>
+								{calendarRoles.map((r) => <Tag key={r}>{getRoleText(r)}</Tag>)}
+							</Alert>
+						</Container>
+					}
+				</>
+			)}
 			<Calendar calendar={calendar} />
 			{allowedToEdit &&
 				<CalendarSettingsModal
@@ -62,6 +79,6 @@ const ShowCalendarPage: BlitzPage = () => {
 	)
 }
 
-ShowCalendarPage.getLayout = (page) => <Layout title="Kalender - Din Advent">{page}</Layout>
+ShowCalendarPage.getLayout = (page) => <FullWidthLayout title="Kalender - Din Advent">{page}</FullWidthLayout>
 
 export default ShowCalendarPage

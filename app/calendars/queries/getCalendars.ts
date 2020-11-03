@@ -23,7 +23,8 @@ export default async function getCalendars(
   const calendars = await db.calendar.findMany({
 	  where: { OR: [{ id: { in: calendarIds } }, { userId: userId }] },
 	  include: {
-		  user: true
+		  user: true,
+		  lastUpdateBy: true
 	  },
   	orderBy,
   })

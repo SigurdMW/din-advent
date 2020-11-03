@@ -1,0 +1,203 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "CreateField",
+      "model": "User",
+      "field": "calendarLastUpdates",
+      "type": "Calendar",
+      "arity": "List"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "User",
+          "field": "calendarLastUpdates"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "User",
+          "field": "calendarLastUpdates"
+        },
+        "directive": "relation"
+      },
+      "argument": "",
+      "value": "\"CalendarLastUpdateBy\""
+    },
+    {
+      "tag": "CreateField",
+      "model": "User",
+      "field": "calendarWindowLastUpdates",
+      "type": "CalendarWindow",
+      "arity": "List"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "User",
+          "field": "calendarWindowLastUpdates"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "User",
+          "field": "calendarWindowLastUpdates"
+        },
+        "directive": "relation"
+      },
+      "argument": "",
+      "value": "\"CalendarWindowLastUpdateBy\""
+    },
+    {
+      "tag": "CreateField",
+      "model": "Calendar",
+      "field": "lastUpdateBy",
+      "type": "User",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Calendar",
+          "field": "lastUpdateBy"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Calendar",
+          "field": "lastUpdateBy"
+        },
+        "directive": "relation"
+      },
+      "argument": "",
+      "value": "\"CalendarLastUpdateBy\""
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Calendar",
+          "field": "lastUpdateBy"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[lastUpdateById]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Calendar",
+          "field": "lastUpdateBy"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[id]"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Calendar",
+      "field": "lastUpdateById",
+      "type": "Int",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateField",
+      "model": "CalendarWindow",
+      "field": "lastUpdateBy",
+      "type": "User",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "CalendarWindow",
+          "field": "lastUpdateBy"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "CalendarWindow",
+          "field": "lastUpdateBy"
+        },
+        "directive": "relation"
+      },
+      "argument": "",
+      "value": "\"CalendarWindowLastUpdateBy\""
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "CalendarWindow",
+          "field": "lastUpdateBy"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[lastUpdateById]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "CalendarWindow",
+          "field": "lastUpdateBy"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[id]"
+    },
+    {
+      "tag": "CreateField",
+      "model": "CalendarWindow",
+      "field": "lastUpdateById",
+      "type": "Int",
+      "arity": "Optional"
+    }
+  ]
+}

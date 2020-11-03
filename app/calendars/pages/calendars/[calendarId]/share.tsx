@@ -67,7 +67,7 @@ const GetSharePage = ({ calendarId }) => {
 
 			<h2>Delinger</h2>
 			{hasNoShares && <p>Du har ikke delt denne kalenderen enda.</p>}
-			<UserShareListing roles={roles} onDelete={handleDeleteRole} />
+			<UserShareListing roles={roles.filter((r) => r.role === "reader")} onDelete={handleDeleteRole} />
 			<ShareLinkListing shareLinks={shareKeys} onDelete={handleDeleteLink} />
 			<UserInviteListing invites={userInvites} onDelete={handleDeleteInvite} />
 
