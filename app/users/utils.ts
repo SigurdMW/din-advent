@@ -59,6 +59,8 @@ export const getPrivateData = async (id: User["id"]): Promise<PrivateData> => {
 
 export const getPublicData = (user: User, source: string) => ({
 	id: user.id,
+	userId: user.id,
+	roles: [user.role],
 	role: user.role,
 	plan: user.plan,
 	email: user.email,
