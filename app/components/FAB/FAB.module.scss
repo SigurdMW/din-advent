@@ -1,0 +1,17 @@
+.fab {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 60px;
+	width: 60px;
+	border-radius: 50%;
+	background-color: #fff;
+	border: 2px solid #B97F24;
+
+	button {
+		background-color: transparent;
+		border: none;
+		height: 60px;
+		width: 60px;
+	}
+}
