@@ -70,9 +70,7 @@ export const UploadImage: FC<UploadImageProps> = ({ onSubmit }) => {
 				)}
 			</div>
 			{error && <Alert type="danger">{error}</Alert>}
-			<Button type="secondary" disabled={!isValid || isLoading}>
-        Ja, lagre
-			</Button>
+			<Button type="secondary" disabled={!isValid || isLoading} buttonType="submit">Ja, lagre</Button>
 		</form>
 	)
 }

@@ -1,4 +1,4 @@
-import { createOrUpdateUser, getPrivateData } from "app/users/utils"
+import { createOrUpdateUser, getPrivateData, getPublicData } from "app/users/utils"
 import { passportAuth } from "blitz"
 import FacebookStrategy from "passport-facebook"
 import GoogleStrategy from "passport-google-oauth20"
@@ -16,7 +16,8 @@ const getCallbackUrl = (providerName: string) => {
 const { FACEBOOK_APP_ID, FACEBOOK_APP_SECRET, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = process.env
 
 const auth = async (req, res) => {
-	const returnTo = req.query.returnTo || "/"
+	const afterLoginUrl = "/calendars"
+	const returnTo = req.query.returnTo || afterLoginUrl
 
 	// const session = await getSessionContext(req, res)
 	// // console.log(session)
@@ -31,7 +32,7 @@ const auth = async (req, res) => {
 	// })
 
 	return passportAuth({
-		successRedirectUrl: "/",
+		successRedirectUrl: afterLoginUrl,
 		errorRedirectUrl: "/error",
 		strategies: [
 			new FacebookStrategy(
@@ -48,13 +49,7 @@ const auth = async (req, res) => {
 						return done(new Error("Facebook OAuth response doesn't have email."))
 					}
 					const user = await createOrUpdateUser({ email, name: profile.displayName, active: true })
-					const publicData = {
-						userId: user.id,
-						roles: [user.role],
-						source: "facebook",
-						email,
-						plan: user.plan,
-					}
+					const publicData = getPublicData(user, "facebook")
 					const privateData = await getPrivateData(user.id)
 					done(null, { publicData, privateData, redirectUrl: returnTo })
 				}
@@ -72,13 +67,7 @@ const auth = async (req, res) => {
 						return done(new Error("Google OAuth response doesn't have email."))
 					}
 					const user = await createOrUpdateUser({ email, name: profile.displayName, active: true })
-					const publicData = {
-						userId: user.id,
-						roles: [user.role],
-						source: "google",
-						email,
-						plan: user.plan,
-					}
+					const publicData = getPublicData(user, "google")
 					const privateData = await getPrivateData(user.id)
 					done(null, { publicData, privateData, redirectUrl: returnTo })
 				}

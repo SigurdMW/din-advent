@@ -15,7 +15,7 @@ const LoginRequestPage: BlitzPage = () => {
 				setIsLoggingIn(true)
 				try {
 					await login({ request: requestId })
-					router.push("/")
+					router.push("/calendars")
 				} catch (error) {
 					setError(error.toString())
 				} finally {

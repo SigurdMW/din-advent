@@ -1,16 +1,12 @@
-import { SessionContext } from "blitz"
-import db, { User } from "db"
+import { getPrivateData, getPublicData } from "app/users/utils"
+import { SessionContext, PublicData } from "blitz"
+import { User } from "db"
 
 export default async function createSession(user: User, ctx: { session?: SessionContext } = {}) {
-	const roles = await db.role.findMany({ where: { userId: user.id } })
+	const privateData = await getPrivateData(user.id)
+	const publicData = getPublicData(user, "email") as PublicData
 	await ctx.session!.create(
-		{
-			userId: user.id,
-			roles: [user.role],
-		},
-		{
-			updated: Date.now(),
-			roles,
-		}
+		publicData,
+		privateData
 	)
 }
