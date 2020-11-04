@@ -1,4 +1,4 @@
-import { createOrUpdateUser, getPrivateData } from "app/users/utils"
+import { createOrUpdateUser, getPrivateData, getPublicData } from "app/users/utils"
 import { passportAuth } from "blitz"
 import FacebookStrategy from "passport-facebook"
 import GoogleStrategy from "passport-google-oauth20"
@@ -48,13 +48,7 @@ const auth = async (req, res) => {
 						return done(new Error("Facebook OAuth response doesn't have email."))
 					}
 					const user = await createOrUpdateUser({ email, name: profile.displayName, active: true })
-					const publicData = {
-						userId: user.id,
-						roles: [user.role],
-						source: "facebook",
-						email,
-						plan: user.plan,
-					}
+					const publicData = getPublicData(user, "facebook")
 					const privateData = await getPrivateData(user.id)
 					done(null, { publicData, privateData, redirectUrl: returnTo })
 				}
@@ -72,13 +66,7 @@ const auth = async (req, res) => {
 						return done(new Error("Google OAuth response doesn't have email."))
 					}
 					const user = await createOrUpdateUser({ email, name: profile.displayName, active: true })
-					const publicData = {
-						userId: user.id,
-						roles: [user.role],
-						source: "google",
-						email,
-						plan: user.plan,
-					}
+					const publicData = getPublicData(user, "google")
 					const privateData = await getPrivateData(user.id)
 					done(null, { publicData, privateData, redirectUrl: returnTo })
 				}
