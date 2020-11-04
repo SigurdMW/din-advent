@@ -1,5 +1,6 @@
 import db, { User, UserCreateInput } from "db"
 import { logger } from "app/utils/logger"
+import { PrivateData } from "blitz"
 
 export const createOrUpdateUser = async ({ email, name, active, role }: UserCreateInput) => {
 	const user = await db.user.upsert({
@@ -47,7 +48,7 @@ const createRoleFromUserInvite = async ({ email, id }: User) => {
 	return
 }
 
-export const getPrivateData = async (id: User["id"]) => {
+export const getPrivateData = async (id: User["id"]): Promise<PrivateData> => {
 	const roles = await db.role.findMany({ where: { userId: id } })
 	const updated = Date.now()
 	return {
@@ -55,3 +56,11 @@ export const getPrivateData = async (id: User["id"]) => {
 		updated,
 	}
 }
+
+export const getPublicData = (user: User, source: string) => ({
+	id: user.id,
+	role: user.role,
+	plan: user.plan,
+	email: user.email,
+	source
+})
