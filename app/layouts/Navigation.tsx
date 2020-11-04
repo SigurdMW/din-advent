@@ -73,6 +73,7 @@ export const NavigationContent = () => {
 								onClick={async () => {
 									await Router.push("/logout")
 									await logout()
+									if (window) window.location.reload()
 								}}
 							>
                 Logg ut

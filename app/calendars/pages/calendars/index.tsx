@@ -31,8 +31,12 @@ const CalendarItem = ({ calendar, userId }: { calendar: Calendar & { user: User,
 					{!createdByMe && <div className={classes.itemSvg} title={"Kalender delt med deg av " + displayName}>{ShareIcon}</div>}
 					<p>
 						Laget av <span>{createdByMe ? "deg " : displayName}</span>{" "}
-						{new Date(calendar.createdAt.toString()).toLocaleDateString()}
-						{(!lastEditByUser && lastEditUser) && <span>, sist redigert av {lastEditUser.name ? lastEditUser.name : lastEditUser.email} </span>}
+						{calendar.createdAt.toLocaleDateString()}
+						{(!lastEditByUser && lastEditUser) && 
+							<span>, sist redigert av {lastEditUser.name ? lastEditUser.name : lastEditUser.email}{" "}
+								{calendar.updatedAt.toLocaleString()}
+							</span>
+						}
 					</p>
 					<span className={"da-button da-golden-btn " + classes.span}>Gå til kalender</span>
 				</a>

@@ -16,7 +16,8 @@ const getCallbackUrl = (providerName: string) => {
 const { FACEBOOK_APP_ID, FACEBOOK_APP_SECRET, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = process.env
 
 const auth = async (req, res) => {
-	const returnTo = req.query.returnTo || "/"
+	const afterLoginUrl = "/calendars"
+	const returnTo = req.query.returnTo || afterLoginUrl
 
 	// const session = await getSessionContext(req, res)
 	// // console.log(session)
@@ -31,7 +32,7 @@ const auth = async (req, res) => {
 	// })
 
 	return passportAuth({
-		successRedirectUrl: "/",
+		successRedirectUrl: afterLoginUrl,
 		errorRedirectUrl: "/error",
 		strategies: [
 			new FacebookStrategy(
