@@ -79,7 +79,7 @@ export const allowedEditCalendarWindow = async ({ calendarId, day, ctx }: { cale
 	  if (!userId || !ctx.session) throw new Error("Missing userId")
 	  const calendar = await db.calendar.findOne({ where: { id: calendarId }})
 	  if (!calendar) throw new NotFoundError()
-	  if (userId === calendar.userId) return
+	  if (userId === calendar.userId) return userId
 	const privateData = await ctx.session.getPrivateData()
 	const roles = privateData.roles
 	if (!roles || !Array.isArray(roles)) {
