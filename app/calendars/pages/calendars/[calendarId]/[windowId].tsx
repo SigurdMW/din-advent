@@ -1,4 +1,4 @@
-import React, { Suspense } from "react"
+import React, { Suspense, useState } from "react"
 import { useParam, BlitzPage, useQuery, Link } from "blitz"
 import AuthLayout from "app/layouts/AuthLayout"
 import getWindow from "app/calendars/queries/getWindow"
@@ -11,6 +11,7 @@ import Spinner from "app/components/Spinner"
 import getCalendarRoles from "app/calendars/queries/getCalendarRoles"
 import { allowedToViewCalendarWindow } from "app/utils/allowedToViewCalendarWindow"
 import NotAllowedView from "app/components/NotAllowedView"
+import PreviewEditFab from "app/calendars/components/PreviewEditFab"
 
 // Modal.setAppElement("#__next")
 
@@ -18,6 +19,7 @@ const GetWindow = ({ day, calendarId }) => {
 	const [window, { mutate }] = useQuery(getWindow, { where: { calendarId, day } })
 	const [calendarRoles] = useQuery(getCalendarRoles, { calendarId })
 	const { user } = useCurrentUser()
+	const [previewMode, setPreviewMode] = useState(false)
 
 	const allowedToEdit = calendarRoles.includes("admin") || calendarRoles.includes("editor") || calendarRoles.includes("editor/" + day as any)
 
@@ -38,7 +40,8 @@ const GetWindow = ({ day, calendarId }) => {
 	}
 	return (
 		<>
-			<CalendarWindow calendarWindow={window} editorMode={allowedToEdit} save={saveWindow} />
+			<CalendarWindow calendarWindow={window} editorMode={!previewMode} save={saveWindow} />
+			{allowedToEdit && <PreviewEditFab defaultPreview={previewMode} onChange={(val) => setPreviewMode(val)} />}
 			<Link href={`/calendars/${calendarId}`}>Tilbake til kalenderen</Link>
 		</>
 	)

@@ -11,6 +11,7 @@ import { getRoleText } from "app/utils/roles"
 import Tag from "app/components/Tag"
 import Container from "app/components/Container"
 import FullWidthLayout from "app/layouts/FullWidthLayout"
+import PreviewEditFab from "app/calendars/components/PreviewEditFab"
 
 const settingsSvg = (
 	<svg height="512" viewBox="0 0 24 24" width="512">
@@ -22,42 +23,49 @@ export const CalendarRenderer = ({ calendarId }) => {
 	const [calendar] = useQuery(getCalendar, { where: { id: calendarId } })
 	const [calendarRoles] = useQuery(getCalendarRoles, { calendarId })
 	const [openSettingModal, setOpenSettingsModal] = useState(false)
+	const [previewMode, setPreviewMode] = useState(false)
 
 	const allowedToEdit = calendarRoles.includes("admin") || calendarRoles.includes("editor")
 	const otherEditRights = calendarRoles.filter((r) => r !== "reader").length > 0
 
 
 	return (
-		<>
-			{allowedToEdit ? (
+		<div style={{ position: "relative" }}>
+			{!previewMode && 
 				<>
-					<div className={classes.share}>
-						<Link href={`/calendars/${calendarId}/share`}>
-							<a>Del kalender</a>
-						</Link>{" "}|{" "}
-						<Link href={`/calendars/${calendarId}/collaborate`}>
-							<a>Samarbeid</a>
-						</Link>{" "}|
-						<button
-							className={classes.iconButton}
-							title="Innstillinger for kalender"
-							onClick={() => setOpenSettingsModal(true)}
-						>Innstillinger {settingsSvg}</button>
-					</div>
+					{allowedToEdit ? (
+						<>
+							<div className={classes.share}>
+								<Link href={`/calendars/${calendarId}/share`}>
+									<a>Del kalender</a>
+								</Link>{" "}|{" "}
+								<Link href={`/calendars/${calendarId}/collaborate`}>
+									<a>Samarbeid</a>
+								</Link>{" "}|
+								<button
+									className={classes.iconButton}
+									title="Innstillinger for kalender"
+									onClick={() => setOpenSettingsModal(true)}
+								>Innstillinger {settingsSvg}</button>
+							</div>
+						</>
+					) : (
+						<>
+							{otherEditRights &&
+								<Container>
+									<Alert type="info">
+										Du har følgende rettigheter for denne kalenderen:<br/>
+										{calendarRoles.map((r) => <Tag key={r}>{getRoleText(r)}</Tag>)}
+									</Alert>
+								</Container>
+							}
+						</>
+					)}
 				</>
-			) : (
-				<>
-					{otherEditRights &&
-						<Container>
-							<Alert type="info">
-								Du har følgende rettigheter for denne kalenderen:<br/>
-								{calendarRoles.map((r) => <Tag key={r}>{getRoleText(r)}</Tag>)}
-							</Alert>
-						</Container>
-					}
-				</>
-			)}
+			}
+			
 			<Calendar calendar={calendar} />
+			{allowedToEdit && <PreviewEditFab defaultPreview={previewMode} onChange={(val) => setPreviewMode(val)} />}
 			{allowedToEdit &&
 				<CalendarSettingsModal
 					isOpen={openSettingModal}
@@ -65,7 +73,7 @@ export const CalendarRenderer = ({ calendarId }) => {
 					calendarId={calendarId}
 				/>
 			}
-		</>
+		</div>
 	)
 }
 
