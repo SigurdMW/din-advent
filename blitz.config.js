@@ -58,18 +58,18 @@ module.exports = withSourceMaps({
 			SENTRY_DSN &&
 		SENTRY_ORG &&
 		SENTRY_PROJECT &&
-		SENTRY_AUTH_TOKEN // &&
-		// RENDER_GIT_COMMIT &&
-		// NODE_ENV === "production"
+		SENTRY_AUTH_TOKEN &&
+		RENDER_GIT_COMMIT &&
+		NODE_ENV === "production"
 	  ) {
 			config.plugins.push(
-		  new SentryWebpackPlugin({
+				new SentryWebpackPlugin({
 					include: ".next",
 					ignore: ["node_modules"],
 					stripPrefix: ["webpack://_N_E/"],
 					urlPrefix: `~/_next`,
 					release: RENDER_GIT_COMMIT
-		  })
+				})
 			)
 	  }
   
