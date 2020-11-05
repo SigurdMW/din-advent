@@ -15,7 +15,6 @@ type FormProps<FormValues> = {
    */
   disabled?: boolean
   onSubmit: FinalFormProps<FormValues>["onSubmit"]
-  handleSubmitError?: (err: string) => ReactNode
   initialValues?: FinalFormProps<FormValues>["initialValues"]
   schema?: z.ZodType<any, any>
 } & Omit<PropsWithoutRef<JSX.IntrinsicElements["form"]>, "onSubmit">
@@ -27,7 +26,6 @@ export function Form<FormValues extends Record<string, unknown>>({
 	schema,
 	initialValues,
 	onSubmit,
-	handleSubmitError,
 	...props
 }: FormProps<FormValues>) {
 	return (
@@ -57,13 +55,7 @@ export function Form<FormValues extends Record<string, unknown>>({
 						{children}
 
 						{!dirtySinceLastSubmit && submitError && (
-							<>
-								{handleSubmitError ? (
-									<>{handleSubmitError(submitError)}</>
-								) : (
-									<Alert type="danger">{submitError}</Alert>
-								)}
-							</>
+							<Alert type={submitError.type || "danger"}>{submitError.message || submitError || "Noe gikk feil :/ Vennligst prøv igjen og gi oss beskjed om feilen gjentar seg."}</Alert>
 						)}
 
 						<button

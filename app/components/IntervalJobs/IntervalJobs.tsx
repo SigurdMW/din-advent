@@ -1,21 +1,7 @@
-import { useCurrentUser } from "app/hooks/useCurrentUser"
-import React, { Suspense, useEffect } from "react" 
+import React, { Suspense } from "react" 
 
 const CurrentUser = () => {
-	const { refetch } = useCurrentUser()
-
-	useEffect(() => {
-		let timer
-		try {
-			const time = 1000 * 60 * 1 // refetch user info every minute
-			timer = setInterval(refetch, time)
-		} catch (e) {
-			// do nothing
-		}
-		return () => {
-			if (timer) clearInterval(timer)
-		}
-	}, [])
+	// do nothing for now
 	return null
 }
 

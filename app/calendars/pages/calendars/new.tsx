@@ -23,7 +23,7 @@ const NewCalendarPage: BlitzPage = () => {
 						const calendarId = await createCalendar({ data: { name: values.name } })
 						router.push("/calendars/[calendarId]", `/calendars/${calendarId}`)
 					} catch (error) {
-						alert("Error creating calendar " + JSON.stringify(error, null, 2))
+						throw error
 					} finally {
 						setIsCreating(false)
 					}

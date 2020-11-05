@@ -1,8 +1,8 @@
 import React, { ReactNode, useState } from "react"
 import Button from "app/components/Button"
 import shareCalendarByKey from "app/calendars/mutations/shareCalendarByKey"
-import ShareError from "../ShareError"
 import Modal from "app/components/Modal"
+import { Alert } from "app/components/Alert"
 
 export const ShareByLinkSection = ({ calendarId, onShared }) => {
 	const [isCreatingShareKey, setIsCreatingShareKey] = useState(false)
@@ -17,7 +17,7 @@ export const ShareByLinkSection = ({ calendarId, onShared }) => {
 			if (onShared) await onShared()
 			setIsOpen(false)
 		} catch (e) {
-			setShareError(<ShareError errorType={e.name} />)
+			setShareError(e && e.message ? e.message : "Noe gikk galt :/")
 		} finally {
 			setIsCreatingShareKey(false)
 		}
@@ -39,7 +39,9 @@ export const ShareByLinkSection = ({ calendarId, onShared }) => {
             Opprett delingslink
 					</Button>
 				</div>
-				{shareError && shareError}
+				{shareError && 
+					<Alert type="danger">{shareError}</Alert>
+				}
 			</Modal>
 		</>
 	)

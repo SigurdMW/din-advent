@@ -12,4 +12,11 @@ if (process.env.NODE_ENV === "production") {
 	prisma = globalThis["prisma"]
 }
 
+// prisma.$use(async (params, next) => {
+// 	if (params.action === "create" && params.model == "Calendar") {
+// 		const calendar = await next(params)
+// 	}
+// 	return next(params);
+// });
+
 export default prisma

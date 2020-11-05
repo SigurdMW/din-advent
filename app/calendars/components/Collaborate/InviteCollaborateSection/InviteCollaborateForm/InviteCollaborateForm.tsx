@@ -5,7 +5,6 @@ import LabeledTextField from "app/components/LabeledTextField"
 import Button from "app/components/Button"
 import { ErrorName } from "app/utils/errors"
 import AddRole from "./AddRole"
-import ShareError from "app/calendars/components/Share/ShareError"
 import newCollaborator from "app/calendars/mutations/newCollaborator"
 import { AvailableRoles } from "app/calendars/utils"
 
@@ -34,9 +33,6 @@ export const InviteCollaborateForm: FC<InviteCollaborateFormProps> = ({ calendar
 				schema={NewCollaboratorInput}
 				disabled={false}
 				initialValues={{ email: undefined, roles: undefined }}
-				handleSubmitError={(name: ErrorName) => {
-					return <ShareError errorType={name} />
-				}}
 				onSubmit={async (values, form) => {
 					try {
 						const roles = values.roles as AvailableRoles[]
@@ -46,7 +42,10 @@ export const InviteCollaborateForm: FC<InviteCollaborateFormProps> = ({ calendar
 						setTimeout(form.reset)
 					} catch (error) {
 						return {
-							[FORM_ERROR]: error.name ? error.name : ErrorName.GeneralError,
+							[FORM_ERROR]: {
+								type: error.name === ErrorName.ValidationError ? "warning" : "danger",
+								message: error && error.message ? error.message : "Noe gikk galt :/"
+							}
 						}
 					}
 				}}

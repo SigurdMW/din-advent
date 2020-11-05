@@ -1,6 +1,6 @@
 import { AuthenticationError, NotFoundError } from "app/utils/errors"
 import { SessionContext } from "blitz"
-import db, { FindOneCalendarArgs, Role } from "db"
+import db, { FindOneCalendarArgs } from "db"
 
 type GetCalendarInput = {
   where: FindOneCalendarArgs["where"]
@@ -17,15 +17,17 @@ export default async function getCalendar(
   const userId = ctx.session?.userId
   if (!ctx.session || !userId) throw new AuthenticationError()
 
-  const data = await ctx.session.getPrivateData()
-  const roles = (data && data.roles ? data.roles : []) as Role[]
-  const calendarIds = roles.map((r) => r.calendarId)
-  const hasRole = calendarIds.includes(where.id)
   const calendar = await db.calendar.findOne({ where })
-
   if (!calendar) throw new NotFoundError()
-  const shouldHaveAccess = hasRole || userId === calendar.userId
-  if (!shouldHaveAccess) throw new NotFoundError()
+  if (userId === calendar.userId) return calendar
+ 
+  const roles = await db.role.count({
+	  where: {
+		  userId,
+		  calendarId: where.id
+	  }
+  })
 
+  if (roles === 0) throw new NotFoundError() 
   return calendar
 }
