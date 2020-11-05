@@ -8,7 +8,7 @@ export default async function getCurrentUser(_ = null, ctx: { session?: SessionC
 
 	const data = await ctx.session.getPrivateData()
 	const diff = Date.now() - data.updated
-	const thresholdInSeconds = 3 * 60
+	const thresholdInSeconds = 1 * 60 // every minute
 	const shouldRefreshRoles = !data.hasOwnProperty("roles") || diff / 1000 > thresholdInSeconds
 
 	if (shouldRefreshRoles) {

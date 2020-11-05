@@ -1,4 +1,4 @@
-import { AppProps, Link, useRouter } from "blitz"
+import { AppProps, Link, useRouter, useSession } from "blitz"
 import { ErrorBoundary } from "react-error-boundary"
 import { queryCache } from "react-query"
 import LoginForm from "app/auth/components/LoginForm"
@@ -8,13 +8,26 @@ import ArticleLayout from "app/layouts/ArticleLayout"
 import { Router } from "blitz"
 import React, { useEffect } from "react"
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css"
+import Sentry from "integrations/sentry"
 
 export default function App({ Component, pageProps }: AppProps) {
+	const session = useSession()
 	const getLayout = Component.getLayout || ((page) => page)
+	const router = useRouter()
+
+	useEffect(() => {
+		if (session.userId) {
+			Sentry.setUser({ id: session.userId.toString() })
+		}
+	}, [session])
 
 	return (
 		<ErrorBoundary
 			FallbackComponent={RootErrorFallback}
+			onError={(error, componentStack) => {
+				Sentry.captureException(error, { contexts: { react: { componentStack } } })
+			}}
+			resetKeys={[router.asPath]}
 			onReset={() => {
 				// This ensures the Blitz useQuery hooks will automatically refetch
 				// data any time you reset the error boundary
