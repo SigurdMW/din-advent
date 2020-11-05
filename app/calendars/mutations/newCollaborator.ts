@@ -1,7 +1,7 @@
 import { NewCollaboratorInput, ShareByEmailFunctionArgsType } from "../validations"
 import { SessionContext } from "blitz"
 import db from "db"
-import { allowedEditCalendar, authAndValidatePlanLimit, AvailableRoles, createUserInvite, giveCollaboratorAccess } from "../utils"
+import { allowedEditCalendar, AvailableRoles, createUserInvite, giveCollaboratorAccess } from "../utils"
 import { sendEmail } from "app/email"
 
 export default async function shareCalendarByEmail(
@@ -9,8 +9,8 @@ export default async function shareCalendarByEmail(
 	ctx: { session?: SessionContext } = {}
 ) {
 	NewCollaboratorInput.parse({ email, roles })
-	const userId = await authAndValidatePlanLimit(ctx)
-	await allowedEditCalendar({ calendarId, ctx })
+	// const userId = await authAndValidatePlanLimit(ctx) no limit on collaborators until we find the correct pricing
+	const userId = await allowedEditCalendar({ calendarId, ctx })
 
 	const userWithRole = await db.user.findOne({ where: { email } })
 	if (!userWithRole) {

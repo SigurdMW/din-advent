@@ -22,7 +22,10 @@ const CalendarForm = ({ initialValues, onSubmit, submitText, disabled }: Calenda
 					await onSubmit(values)
 				} catch (error) {
 					return {
-						[FORM_ERROR]: "Beklager, en feil oppsto. Vennligst prøv igjen. - " + error.toString(),
+						[FORM_ERROR]: {
+							type: "danger", 
+							message: error && error.message ? error.message : "Beklager, en feil oppsto. Vennligst prøv igjen.",
+						}
 					}
 				}
 			}}

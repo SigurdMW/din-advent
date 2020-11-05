@@ -57,7 +57,7 @@ export const CalendarsList = () => {
 	useEffect(() => {
 		let timer;
 		try {
-			const time = 1000 * 60 * 2 // refetch every 2 minutes
+			const time = 1000 * 60 * 1 // refetch every 1 minutes
 			timer = setInterval(refetch, time)
 		} catch (e) {
 			// do nothing

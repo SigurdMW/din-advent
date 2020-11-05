@@ -31,7 +31,10 @@ export const LoginForm = (props: LoginFormProps) => {
 						props.onSuccess && props.onSuccess(values.email)
 					} catch (error) {
 						return {
-							[FORM_ERROR]: "Beklager, en feil oppsto. Vennligst prøv igjen. - " + error.toString(),
+							[FORM_ERROR]: {
+								type: "danger", 
+								message: error && error.message ? error.message : "Beklager, en feil oppsto. Vennligst prøv igjen."
+							}
 						}
 					}
 				}}

@@ -45,7 +45,7 @@ export default async function shareCalendarByEmail(
 		})
 		return
 	}
-	if (user.id === userId) throw new ValidationError("Mente du virkelig å dele med deg selv?")
+	if (user.id === userId) throw new ValidationError("Du har allerede tilgang til denne kalenderen :)")
 	const roles = await db.role.findMany({
 		where: {
 			userId: user.id,
@@ -53,9 +53,7 @@ export default async function shareCalendarByEmail(
 			role
 		}
 	})
-	if (roles.length > 0) {
-		throw new ValidationError("Kunne ikke dele med bruker.")
-	}
+	if (roles.length > 0) return
 	await grantCalendarAccess({
 		user,
 		role,

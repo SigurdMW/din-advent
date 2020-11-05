@@ -41,7 +41,12 @@ const SignupPage: BlitzPage = () => {
 							// This error comes from Prisma
 							return { email: "Oi, noe gikk galt!" }
 						} else {
-							return { [FORM_ERROR]: error.toString() }
+							return {
+								[FORM_ERROR]: {
+									type: "danger", 
+									message: error && error.message ? error.message : "Beklager, en feil oppsto. Vennligst prøv igjen."
+								}
+							}
 						}
 					}
 				}}

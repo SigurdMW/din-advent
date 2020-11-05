@@ -144,7 +144,7 @@ const GetCollaboratePage = ({ calendarId }) => {
 
 const CalendarCollaboratePage: BlitzPage = () => {
 	const calendarId = useParam("calendarId", "number")
-
+	if (!calendarId) return null
 	return (
 		<Suspense fallback={<Spinner />}>
 			<GetCollaboratePage calendarId={calendarId} />

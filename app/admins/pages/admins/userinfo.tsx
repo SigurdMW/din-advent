@@ -1,7 +1,6 @@
 import React, { Suspense, useState } from "react"
 import { Link, BlitzPage, useQuery } from "blitz"
 import ArticleLayout from "app/layouts/ArticleLayout"
-import createAdmin from "app/admins/mutations/createAdmin"
 import LabeledTextField from "app/components/LabeledTextField"
 import Form, { FORM_ERROR } from "app/components/Form"
 import { AdminInput, AdminInputType } from "app/admins/validations"
@@ -24,7 +23,10 @@ const UserInfoForm = ({ onSubmit }: UserInfoProps) => {
 					await onSubmit(values)
 				} catch (error) {
 					return {
-						[FORM_ERROR]: "Beklager, en feil oppsto. Vennligst prøv igjen. - " + error.toString(),
+						[FORM_ERROR]: {
+							type: "danger",
+							message: error && error.message ? error.message : "Beklager, en feil oppsto. Vennligst prøv igjen."
+						}
 					}
 				}
 			}}

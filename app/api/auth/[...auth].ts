@@ -50,8 +50,8 @@ const auth = async (req, res) => {
 					}
 					const user = await createOrUpdateUser({ email, name: profile.displayName, active: true })
 					const publicData = getPublicData(user, "facebook")
-					const privateData = await getPrivateData(user.id)
-					done(null, { publicData, privateData, redirectUrl: returnTo })
+					// const privateData = await getPrivateData(user.id)
+					done(null, { publicData, redirectUrl: returnTo })
 				}
 			),
 			new GoogleStrategy(
@@ -68,8 +68,8 @@ const auth = async (req, res) => {
 					}
 					const user = await createOrUpdateUser({ email, name: profile.displayName, active: true })
 					const publicData = getPublicData(user, "google")
-					const privateData = await getPrivateData(user.id)
-					done(null, { publicData, privateData, redirectUrl: returnTo })
+					// const privateData = await getPrivateData(user.id)
+					done(null, { publicData, redirectUrl: returnTo })
 				}
 			),
 		],
