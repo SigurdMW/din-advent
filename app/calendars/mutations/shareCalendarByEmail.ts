@@ -36,10 +36,11 @@ export default async function shareCalendarByEmail(
 		await sendEmail({
 			to: email,
 			subject: `${messageAndTitle} - Din Advent`,
+			heading: messageAndTitle + "!",
 			html: `
-				<h1>${messageAndTitle}!</h1>
-				<p>${displayName} ønsker å dele en kalender med deg. For å få tilgang til kalenderen, må du opprette en bruker og logge inn på Din Advent. Det gjør du her:</p>
-				<p><a href="${process.env.BASE_URL}signup">Opprett bruker på Din Advent</a></p>
+				<p>Hei,</p>
+				<p>${displayName} har delt en kalender med deg. For å få tilgang til kalenderen må du opprette en gratis bruker på Din Advent og logge inn. Det gjør du her:</p>
+				<p><a href="${process.env.BASE_URL}signup">Opprett gratis bruker på Din Advent</a></p>
 				<p><strong>NB!</strong> Det er viktig at du benytter denne e-postadressen når du oppretter brukeren for å få tilgang til den delte kalenderen.</p>`,
 		})
 		return

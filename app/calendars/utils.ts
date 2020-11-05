@@ -121,8 +121,8 @@ export const grantCalendarAccess = async ({
 	await sendEmail({
 		to: user.email,
 		subject: `${messageAndTitle} - Din Advent`,
+		heading: messageAndTitle + "!",
 		html: `
-			<h1>${messageAndTitle}!</h1>
 			<p>${displayName} har delt en kalender med deg. Logg deg inn på dinadvent.no for å se kalenderen. Du finner den under "Dine kalendere":</p>
 			<p><a href="${process.env.BASE_URL}login">Logg inn på Din Advent</a></p>`,
 	})
@@ -178,9 +178,9 @@ export const giveCollaboratorAccess = async ({ user, calendarId, createdBy, role
 		await sendEmail({
 			to: user.email,
 			subject: `${messageAndTitle} - Din Advent`,
+			heading: messageAndTitle,
 			html: `
-				<h1>${messageAndTitle}!</h1>
-				<p>${displayName} har invitert deg til å samarbeide. Logg deg inn på dinadvent.no for å se kalenderen. Du finner den under "Dine kalendere":</p>
+				<p>${displayName} har invitert deg til å samarbeide med deg! Logg deg inn på dinadvent.no for å se kalenderen. Du finner den under "Dine kalendere":</p>
 				<p><a href="${process.env.BASE_URL}login">Logg inn på Din Advent</a></p>`,
 		})
 	}

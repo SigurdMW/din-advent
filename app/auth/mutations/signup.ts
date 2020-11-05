@@ -2,6 +2,7 @@ import axios from "axios"
 import { SignupInput, SignupInputType } from "app/auth/validations"
 import { createLoginRequest } from "../utils"
 import { createOrUpdateUser } from "app/users/utils"
+import { sendEmail } from "app/email"
 
 export default async function signup(input: SignupInputType) {
 	// This throws an error if input is invalid
@@ -19,7 +20,17 @@ export default async function signup(input: SignupInputType) {
 			throw new Error("Ugyldig recaptcha verdi.")
 		}
 		const user = await createOrUpdateUser({ email })
-		await createLoginRequest(user)
+		const request = await createLoginRequest(user)
+		const link = process.env.BASE_URL + "auth/" + request.loginToken
+		await sendEmail({
+			to: user.email,
+			subject: "Bekreft bruker - Din Advent",
+			heading: "Velkommen!",
+			html: `
+				<p>Velkommen som bruker av Din Advent! Trykk på linken for å bekrefte din bruker og logge inn:</p>
+				<p><a href="${link}">Bekreft bruker og logg inn</a></p>
+				<p>${link}</p>`,
+		})
 		return
 	} catch (e) {
 		// Fail silently if the user already exist

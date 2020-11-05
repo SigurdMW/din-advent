@@ -1,4 +1,5 @@
 import mailgun from "mailgun.js"
+import { emailTemplate } from "./emailTemplate"
 
 const { MAILGUN_API_KEY, MAILGUN_DOMAIN, MAILGUN_URL } = process.env
 
@@ -18,12 +19,19 @@ interface EmailConfig {
   from?: string
   subject: string
   html: string
+  heading?: string
 }
 
-export const sendEmail = async (email: EmailConfig) =>
-	mailgunClient.messages.create(MAILGUN_DOMAIN, {
-		from: email.from || "Din Advent <noreply@dinadvent.no>",
-		to: email.to,
-		subject: email.subject,
-		html: email.html,
+export const sendEmail = async ({ from, to, subject, html, heading }: EmailConfig) => {
+	return mailgunClient.messages.create(MAILGUN_DOMAIN, {
+		from: from || "Din Advent <noreply@dinadvent.no>",
+		to,
+		subject,
+		html: emailTemplate({
+			title: subject,
+			heading: heading || subject,
+			body: html
+		}),
 	})
+}
+	
