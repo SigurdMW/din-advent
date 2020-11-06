@@ -22,6 +22,7 @@ export class PaymentRequiredError extends Error {
   ) {
   	super(message)
   }
+
   get _clearStack() {
   	return true
   }
@@ -35,6 +36,7 @@ export class ExceededPlanError extends Error {
   ) {
   	super(message)
   }
+  
   get _clearStack() {
   	return true
   }

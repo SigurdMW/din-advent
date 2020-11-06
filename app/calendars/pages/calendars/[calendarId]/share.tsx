@@ -81,6 +81,7 @@ const GetSharePage = ({ calendarId }) => {
 
 const CalendarSharePage: BlitzPage = () => {
 	const calendarId = useParam("calendarId", "number")
+	if (!calendarId) return null
 
 	return (
 		<Suspense fallback={<Spinner />}>

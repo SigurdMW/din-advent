@@ -20,7 +20,10 @@ const AdminForm = ({ onSubmit }: AdminFormProps) => {
 					await onSubmit(values)
 				} catch (error) {
 					return {
-						[FORM_ERROR]: "Beklager, en feil oppsto. Vennligst prøv igjen. - " + error.toString(),
+						[FORM_ERROR]: {
+							type: "danger",
+							message: error.message || "Noe gikk feil"
+						}
 					}
 				}
 			}}

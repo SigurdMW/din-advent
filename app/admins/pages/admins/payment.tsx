@@ -30,7 +30,10 @@ const AdminPayment: BlitzPage = () => {
 						setUpgraded(values)
 					} catch (error) {
 						return {
-							[FORM_ERROR]: "Beklager, en feil oppsto. Vennligst prøv igjen. - " + error.toString(),
+							[FORM_ERROR]: {
+								type: "danger",
+								message: error && error.message ? error.message : "Noe fikk galt."
+							}
 						}
 					}
 				}}

@@ -4,8 +4,6 @@ import Form, { FORM_ERROR } from "app/components/Form"
 import { ShareByEmailInput, ShareByEmailInputType } from "app/calendars/validations"
 import LabeledTextField from "app/components/LabeledTextField"
 import Button from "app/components/Button"
-import { ErrorName } from "app/utils/errors"
-import ShareError from "../../ShareError"
 
 interface ShareByEmailFormProps {
   calendarId: number
@@ -32,9 +30,6 @@ export const ShareByEmailForm: FC<ShareByEmailFormProps> = ({ calendarId, onShar
 				schema={ShareByEmailInput}
 				disabled={false}
 				initialValues={{ email: undefined }}
-				handleSubmitError={(name: ErrorName) => {
-					return <ShareError errorType={name} />
-				}}
 				onSubmit={async (values, form) => {
 					try {
 						await shareCalendarByEmail({ ...values, role: "reader", calendarId })
@@ -43,8 +38,8 @@ export const ShareByEmailForm: FC<ShareByEmailFormProps> = ({ calendarId, onShar
 						setTimeout(form.reset)
 					} catch (error) {
 						return {
-							[FORM_ERROR]: error.name ? error.name : ErrorName.GeneralError,
-						}
+							[FORM_ERROR]: {type: "danger", message: error && error.message ? error.message : "Noe gikk galt" }
+						} 
 					}
 				}}
 			>
