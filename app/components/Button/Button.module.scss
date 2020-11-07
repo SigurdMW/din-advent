@@ -1,0 +1,90 @@
+.button {
+	display: inline-flex;
+	padding: 10px 20px;
+	border-radius: 3px;
+	font-size: 16px;
+	letter-spacing: 1px;
+	cursor: pointer;
+	border: none;
+	align-items: center;
+	justify-content: center;
+
+	svg {
+		width: 1.3em;
+		height: auto;
+		color: inherit;
+		margin-right: 8px;
+
+		path,
+		circle {
+			fill: currentColor;
+		}
+	}
+}
+
+a.button {
+	text-decoration: none;
+}
+
+.large {
+	font-size: 20px;
+}
+
+.primary {
+	background-color: #b97f24;
+	//   background: linear-gradient(to right, #875d1a, #8c6e3c);
+	border: none;
+	color: white;
+  
+	&:hover {
+	  background: linear-gradient(to right, #d49228, #d9a95d);
+	  border: none;
+	  color: white;
+	}
+  
+	&:active {
+	  background: linear-gradient(to right, #875d1a, #8c6e3c);
+	  border: none;
+	  color: white;
+	}
+}
+
+.secondary {
+	background: #eaeaea;
+	color: #522888;
+	border: none;
+  
+	&:hover {
+	  background: #ffffff;
+	  color: #522888;
+	}
+  
+	&:active {
+	  background: #c7c7c7;
+	  color: #522888;
+	}
+}
+
+.subtle {
+	background-color: transparent;
+	color: #fff;
+	border: 1px solid #fff;
+}
+
+.green {
+	background-color: #2BA51C;
+	color: white;
+
+	&:hover {
+		background-color: darken(#2BA51C, 20);
+	}
+}
+
+.purple {
+	background-color: #66369D;
+	color: white;
+
+	&:hover {
+		background-color: darken(#66369D, 20);
+	}
+}
