@@ -43,14 +43,18 @@ h2 {
 	font-size: 32px;
 }
 
+h2, h3, h4, h5, h6 {
+	font-weight: normal;
+}
+
 a {
-  color: #fff;
+  color: inherit;
   text-decoration: underline;
 
   &:focus,
   &:active,
   &:visited {
-    color: #fff;
+    color: inherit;
     text-decoration: underline;
   }
 }
@@ -69,7 +73,7 @@ a {
 
 .da-button {
   display: inline-block;
-  padding: 10px 1em;
+  padding: 10px 20px;
   border-radius: 3px;
   font-size: 16px;
   letter-spacing: 1px;
