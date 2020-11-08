@@ -60,19 +60,17 @@ export const CalendarRenderer = ({ calendarId }) => {
 					</>
 				}
 			</HeroBanner>
-			<WhiteSection>
-				<div style={{ position: "relative" }}>
-					<Calendar calendar={calendar} />
-					{allowedToEdit && <PreviewEditFab defaultPreview={previewMode} onChange={(val) => setPreviewMode(val)} />}
-					{allowedToEdit &&
-						<CalendarSettingsModal
-							isOpen={openSettingModal}
-							onClose={() => setOpenSettingsModal(false)}
-							calendarId={calendarId}
-						/>
-					}
-				</div>
-			</WhiteSection>
+			<div style={{ position: "relative" }}>
+				<Calendar calendar={calendar} />
+				{allowedToEdit && <PreviewEditFab defaultPreview={previewMode} onChange={(val) => setPreviewMode(val)} />}
+				{allowedToEdit &&
+					<CalendarSettingsModal
+						isOpen={openSettingModal}
+						onClose={() => setOpenSettingsModal(false)}
+						calendarId={calendarId}
+					/>
+				}
+			</div>
 		</>
 	)
 }

@@ -4,14 +4,11 @@ import ShareLayout from "app/layouts/ShareLayout"
 import getSharedCalendar from "app/shared/queries/getSharedCalendar"
 import Calendar from "app/components/Calendar"
 import Spinner from "app/components/Spinner"
-import WhiteSection from "app/calendars/components/WhiteSection"
 
 export const SharedCalendarRenderer = ({ sharedId }) => {
 	const [calendar] = useQuery(getSharedCalendar, { sharedId })
 	return (
-		<WhiteSection>
-			<Calendar calendar={calendar} isShare={true} />
-		</WhiteSection>
+		<Calendar calendar={calendar} isShare={true} />
 	)
 }
 
