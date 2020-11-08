@@ -19,6 +19,7 @@ interface CustomModalProps {
 const customStyles = {
 	overlay: {
 		backgroundColor: "rgba(0, 0, 0, 0.8)",
+		zIndex: 9999
 	},
 	content: {
 		top: "50%",
@@ -31,6 +32,8 @@ const customStyles = {
 		maxWidth: "600px",
 		maxHeight: "100%",
 		width: "100%",
+		position: "relative",
+		zIndex: "9999"
 	},
 }
 
