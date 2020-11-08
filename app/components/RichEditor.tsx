@@ -18,6 +18,7 @@ const editorOptions = {
 		"image",
 		"history",
 		"embedded",
+		"colorPicker"
 	],
 	inline: {
 		inDropdown: false,
@@ -40,7 +41,7 @@ const editorOptions = {
 				)
 			}
 		},
-		previewImage: false,
+		previewImage: true,
 		inputAccept: "image/gif,image/jpeg,image/jpg,image/png,image/svg",
 		alt: { present: false, mandatory: false },
 		defaultSize: {
@@ -59,6 +60,13 @@ const editorOptions = {
 			width: "auto",
 		},
 	},
+	colorPicker: {
+		icon: "/icons/color-wheel.svg",		
+		className: classes.colorPicker,
+		component: undefined,
+		popupClassName: undefined,
+		colors: ["rgba(0,0,0,0)", "rgb(255,255,255)", "rgb(0,0,0)", "rgb(255,0,0)", "rgb(255,255,0)", "rgb(0,0,255)", "rgb(255, 165,0)", "rgb(0,128,0)"],
+	  },
 }
 
 const Editor: any = dynamic(
