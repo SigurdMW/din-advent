@@ -15,6 +15,21 @@
     flex-grow: 1;
     padding: 0 1em;
   }
+
+  & img {
+	  max-width: 100px;
+	  max-height: 100px;
+  }
+}
+
+.preview {
+	display: flex;
+	align-items: center;
+	width: 100%;
+
+	p {
+		flex-grow: 1;
+	}
 }
 
 .input {

@@ -80,13 +80,14 @@ a.calendarItem {
 }
 
 .window {
-  color: #B97F24;
+	color: inherit;
   text-decoration: none;
   padding: 35px 1em;
   font-size: 2em;
   text-align: center;
   display: block;
-  border: 3px dashed #B97F24;
+  border: 3px dashed;
+  border-color: inherit;
   border-radius: 15px;
   width: 122px;
   font-weight: 500;
@@ -96,10 +97,10 @@ a.calendarItem {
   }
 
   &:visited {
-    color: #B97F24;
+    color: inherit;
   }
 
   &:active {
-    color: #B97F24;
+    color: inherit;
   }
 }

@@ -2,6 +2,7 @@ import React, { FC } from "react"
 import { Link, useRouter } from "blitz"
 import classes from "./Calendar.module.scss"
 import { CalendarCreateWithoutUserInput } from "db"
+import WhiteSection from "app/calendars/components/WhiteSection"
 
 interface CalendarProps {
 	isShare?: boolean
@@ -18,7 +19,7 @@ export const Calendar: FC<CalendarProps> = ({ calendar, isShare = false }) => {
 
 	const getStyle = () => {
 		const bg = bgImage ? { backgroundImage: `url(${bgImage})` } : {}
-		const color = colorTheme ? { color: colorTheme === "light" ? "#000" : "#fff" } : {}
+		const color = colorTheme ? { color: colorTheme === "light" ? "#000" : "#fff" } : { color: "#B97F24" }
 		return {
 			...bg,
 			...color,
@@ -26,27 +27,29 @@ export const Calendar: FC<CalendarProps> = ({ calendar, isShare = false }) => {
 	}
 
 	return (
-		<div className={classes.calendar} style={getStyle()}>
-			{isShare &&
-				<h1>
-					{calendar.name}
-				</h1>
-			}
-			<div className={classes.overflow}>
-				<ul className={classes.windowList}>
-					{new Array(24).fill(0).map((c, i) => {
-						const day = i + 1
-						return (
-							<li key={day}>
-								<Link href={windowPath(day)}>
-									<a className={classes.window}>{day}</a>
-								</Link>
-							</li>
-						)
-					})}
-				</ul>
+		<WhiteSection style={getStyle()} className={classes.calendar}>
+			<div>
+				{isShare &&
+					<h1>
+						{calendar.name}
+					</h1>
+				}
+				<div className={classes.overflow}>
+					<ul className={classes.windowList}>
+						{new Array(24).fill(0).map((c, i) => {
+							const day = i + 1
+							return (
+								<li key={day}>
+									<Link href={windowPath(day)}>
+										<a className={classes.window}>{day}</a>
+									</Link>
+								</li>
+							)
+						})}
+					</ul>
+				</div>
 			</div>
-		</div>
+		</WhiteSection>
 	)
 }
 export default Calendar
