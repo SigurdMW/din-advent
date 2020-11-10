@@ -7,6 +7,12 @@ export default async function getNumberOfCalendars(
 	ctx: { session?: SessionContext } = {}
 ) {
   ctx.session!.authorize("admin")
-  const calendars = await db.calendar.findMany({ select: { id: true } })
-  return calendars.length
+  const calendars = await db.calendar.count({ where: {
+	  user: {
+		  role: {
+			  notIn: "admin"
+		  }
+	  }
+  } })
+  return calendars
 }

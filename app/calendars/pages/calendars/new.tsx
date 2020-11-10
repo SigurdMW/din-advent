@@ -2,14 +2,15 @@ import React, { useState } from "react"
 import { Link, useRouter, BlitzPage } from "blitz"
 import createCalendar from "app/calendars/mutations/createCalendar"
 import CalendarForm from "app/calendars/components/CalendarForm"
-import AuthLayout from "app/layouts/AuthLayout"
+import HeroBanner from "app/components/HeroBanner"
+import FullWidthLayout from "app/layouts/FullWidthLayout"
 
 const NewCalendarPage: BlitzPage = () => {
 	const [isCreating, setIsCreating] = useState(false)
 	const router = useRouter()
 
 	return (
-		<>
+		<HeroBanner>
 			<h1>Opprett ny kalender</h1>
 			<p>Navnet på kalenderen er synlig for den du deler den med. Du kan endre navnet senere.</p>
 
@@ -37,12 +38,12 @@ const NewCalendarPage: BlitzPage = () => {
 					<a>Tilbake til dine kalendere</a>
 				</Link>
 			</p>
-		</>
+		</HeroBanner>
 	)
 }
 
 NewCalendarPage.getLayout = (page) => (
-	<AuthLayout title="Opprett kalender - Din Advent">{page}</AuthLayout>
+	<FullWidthLayout title="Opprett kalender - Din Advent">{page}</FullWidthLayout>
 )
 
 export default NewCalendarPage

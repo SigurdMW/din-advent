@@ -13,7 +13,6 @@ import Container from "app/components/Container"
 import FullWidthLayout from "app/layouts/FullWidthLayout"
 import PreviewEditFab from "app/calendars/components/PreviewEditFab"
 import HeroBanner from "app/components/HeroBanner"
-import WhiteSection from "app/calendars/components/WhiteSection"
 import { cooperateIcon, settingsSvg, shareIcon } from "app/components/icons"
 import Button from "app/components/Button"
 

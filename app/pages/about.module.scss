@@ -1,0 +1,28 @@
+.overflow {
+	overflow: hidden;
+}
+
+.us {
+	display: flex;
+	margin: 0 -40px;
+	flex-wrap: wrap;
+
+	img {
+		width: 100%;
+		border-radius: 15px;
+	}
+}
+
+.col {
+	width: 33.3333333%;
+	padding: 1em 40px;
+	text-align: center;
+
+	@media (max-width: 773px) {
+		width: 50%;
+	 }
+
+	 @media (max-width: 520px) {
+		width: 100%;
+	 }
+}

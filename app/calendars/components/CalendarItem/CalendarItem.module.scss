@@ -7,12 +7,13 @@ a.item {
 	padding: 20px;
 	border: 2px solid #B97F24;
 	text-decoration: none;
-	border-radius: 5px;
+	border-radius: 16px;
 	box-shadow: 2px 4px 14px -3px rgba(0, 0, 0, 0.3);
 	overflow: hidden;
   
 	h2 {
-	  font-size: 22px;
+	  font-size: 1em;
+	  font-weight: bold;
 	  margin: 20px 0 10px;
 	  color: rgb(82, 40, 136);
 	}
