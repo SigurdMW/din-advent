@@ -15,14 +15,9 @@
 		width: calc(100% + 114px);
 		position: absolute;
 		top: 8px;
-		left: -26px;
+		left: 7px;
 
-		@media (max-width: 1300px) {
-			width: 100%;
-			top: 67px;
-		}
-
-		@media (max-width: 1300px) {
+		@media (max-width: 1321px) {
 			width: 100%;
 			top: 67px;
 		}
