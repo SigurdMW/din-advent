@@ -74,7 +74,7 @@ a {
 .da-button {
   display: inline-block;
   padding: 10px 20px;
-  border-radius: 3px;
+  border-radius: 5px;
   font-size: 16px;
   letter-spacing: 1px;
   cursor: pointer;
@@ -270,4 +270,23 @@ select {
 .editorToolbar,
 .editorToolbar > * {
   box-sizing: initial;
+}
+
+table {
+	border-collapse: collapse;
+	width: 100%;
+
+	td, th {
+		border: 1px solid #dddddd;
+		text-align: left;
+		padding: 8px;
+	  }
+	  
+	  tr:nth-child(even) {
+		background-color: rba(0, 0, 0, .3);
+	  }
+}
+
+.ReactModal__Body--open {
+	overflow: hidden;
 }

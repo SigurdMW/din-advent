@@ -36,6 +36,19 @@ const CalendarForm = ({ initialValues, onSubmit, submitText, disabled }: Calenda
 				placeholder="Navn..."
 				id="calendarformfield"
 			/>
+			{/* <Field name="background">
+				{({ input }) => (
+					<UploadImage onSubmit={input.onChange} />
+					// <SelectImage 
+					// 	file={input.value}
+					// 	onChange={input.onChange}
+					// 	id="newcalendarimage"
+					// 	isValid={true}
+					// 	uploadText="Kalenderen din ser finere ut med et bakgrunnsbilde! Vil du legge til nå?"
+					// 	hasImageText="Flott! Vi legger til dette bildet som bakgrunnsbilde på din kalender:"
+					// />
+				)}
+			</Field> */}
 		</Form>
 	)
 }

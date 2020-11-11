@@ -51,16 +51,13 @@ export const CalendarBackgroundSection = ({ calendarId }) => {
 
 	return (
 		<>
+			<label htmlFor="bgimage">Bakgrunnsbilde for kalender</label>
 			{backgroundImage && (
 				<>
-					<label htmlFor="bgimage" className={classes.label}>
-            Ditt bakgrunnsbilde
-					</label>
+					<label htmlFor="bgimage" className={classes.label}>Ditt bakgrunnsbilde</label>
 					<div className={classes.urlContainer}>
 						<img src={backgroundImage} className={classes.img} alt="kalenderbakgrunn" />
-						<Button type="secondary" onClick={handleRemove}>
-              Fjern bilde
-						</Button>
+						<Button type="secondary" onClick={handleRemove}>Fjern bilde</Button>
 					</div>
 				</>
 			)}

@@ -8,7 +8,7 @@ export const LandingSection = () => {
 		<HeroBanner>
 			<div className={classes.heroContent}>
 				<div className={classes.heroImage}>
-					<img src="devices.png" alt="stearinlys og julestemning" />
+					<img src="promo-lossy-2x.png" alt="stearinlys og julestemning" />
 				</div>
 				<div className={classes.heroText}>
 					<div className="hero-text">

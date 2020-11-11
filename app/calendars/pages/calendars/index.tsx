@@ -8,6 +8,7 @@ import FullWidthLayout from "app/layouts/FullWidthLayout"
 import Container from "app/components/Container"
 import CalendarItem from "app/calendars/components/CalendarItem"
 import WhiteSection from "app/calendars/components/WhiteSection"
+import Button from "app/components/Button"
 
 type FilterType = "" | "createdbyme" | "sharedwithme"
 
@@ -45,18 +46,20 @@ export const CalendarsList = () => {
 					}
 				</div>
 				{calendars.length ? (
-					<ul className={classes.list}>
-						{calendars.filter((c) => filter ? showCreatedByMe ? c.userId === userId : c.userId !== userId : true).map((calendar) => (
-							<li className={classes.listItem} key={calendar.id}>
-								<CalendarItem calendar={calendar} userId={userId} />
-							</li>
-						))}
-					</ul>
+					<div style={{ overflowX: "hidden" }}>
+						<ul className={classes.list}>
+							{calendars.filter((c) => filter ? showCreatedByMe ? c.userId === userId : c.userId !== userId : true).map((calendar) => (
+								<li className={classes.listItem} key={calendar.id}>
+									<CalendarItem calendar={calendar} userId={userId} />
+								</li>
+							))}
+						</ul>
+					</div>
 				) : (
 					<p>
 						Du har ingen kalendere ennå.{" "}
-						<Link href="/calendars/new">
-							<a>Opprett kalender</a>
+						<Link href="/calendars/new" passHref>
+							<Button type="primary" anchor={true}>Opprett kalender</Button>
 						</Link>
 					</p>
 				)}
