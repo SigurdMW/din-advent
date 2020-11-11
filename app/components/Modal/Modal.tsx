@@ -29,11 +29,14 @@ const customStyles = {
 		marginRight: "-50%",
 		transform: "translate(-50%, -50%)",
 		overflowY: "auto",
-		maxWidth: "600px",
+		maxWidth: "500px",
 		maxHeight: "100%",
 		width: "100%",
 		position: "relative",
-		zIndex: "9999"
+		zIndex: "9999",
+		borderRadius: "15px",
+		border: "2px solid #B97F24",
+		padding: "30px"
 	},
 }
 
