@@ -27,6 +27,8 @@ const stripe = new Stripe(STRIPE_KEY, {
 
 export const createPaymentRequest = async ({ plan, userId }: { plan: Plan; userId: number }) => {
 	const amountInOre = price[plan] * 100
+	const user = await db.user.findOne({ where: { id: userId } })
+	if (!user) throw new NotFoundError()
 	const session = await stripe.checkout.sessions.create({
 		success_url: BASE_URL + "payments/success?sessionId={CHECKOUT_SESSION_ID}",
 		cancel_url: BASE_URL + "payments/cancel",
@@ -40,6 +42,7 @@ export const createPaymentRequest = async ({ plan, userId }: { plan: Plan; userI
 			},
 		],
 		mode: "payment",
+		customer_email: user.email
 	})
 	await db.payment.create({
 		data: {
