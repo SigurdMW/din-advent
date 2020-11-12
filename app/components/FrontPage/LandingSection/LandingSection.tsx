@@ -27,7 +27,8 @@ export const LandingSection = () => {
 				strings: toList,
 				typeSpeed: 120,
 				backSpeed: 100,
-				backDelay: 2000
+				backDelay: 2500,
+				loop: true
 			})
 		}
 		return () => {

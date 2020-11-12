@@ -38,8 +38,12 @@
 	& h1 {
 		min-height: 106px;
 
-		@media (max-width: 560px) {
+		@media (max-width: 540px) {
 			min-height: 159px;
+		}
+
+		@media (max-width: 393px) {
+			min-height: 212px;
 		}
 	}
 
