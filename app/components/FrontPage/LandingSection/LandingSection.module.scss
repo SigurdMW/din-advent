@@ -17,7 +17,7 @@
 		top: 8px;
 		left: 7px;
 
-		@media (max-width: 1321px) {
+		@media (max-width: 1555px) {
 			width: 100%;
 			top: 67px;
 		}
@@ -35,7 +35,21 @@
 .heroText {
 	padding-right: 1em;
 
+	& h1 {
+		min-height: 106px;
+
+		@media (max-width: 540px) {
+			min-height: 159px;
+		}
+
+		@media (max-width: 393px) {
+			min-height: 212px;
+		}
+	}
+
 	p {
 		margin-bottom: 30px;
 	}
 }
+
+// consider https://github.com/SigurdMW/julekalender/blob/master/src/components/FancyWord/index.js

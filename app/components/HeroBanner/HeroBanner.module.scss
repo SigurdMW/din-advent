@@ -12,3 +12,7 @@ $paddingMobile: 4em;
 		padding-top: calc(#{$navBarHeight} + #{$paddingMobile});
 	}
 }
+
+.wideContainer {
+	max-width: 1330px;
+}
