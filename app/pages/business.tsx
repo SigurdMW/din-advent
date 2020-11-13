@@ -3,11 +3,10 @@ import React from "react"
 import classes from "./index.module.scss"
 import LandingSection from "app/components/FrontPage/LandingSection"
 import FullWidthLayout from "app/layouts/FullWidthLayout"
-import HowItWorks from "app/components/FrontPage/HowItWorks"
 import CTAButton from "app/components/FrontPage/CTAButton"
 import PriceSection from "app/components/FrontPage/PriceSection"
 import CollaborateSection from "app/components/FrontPage/CollaborateSection"
-import { WorkItem } from "app/components/FrontPage/HowItWorks/HowItWorks"
+import HowItWorks, { WorkItem } from "app/components/FrontPage/HowItWorks/HowItWorks"
 import { calendarIcon, mailIcon, plusIcon } from "app/components/icons"
 
 /*
