@@ -12,6 +12,45 @@
   }
 }
 
+.mobileMenuBtn {
+	color: #fff;
+	border: none;
+	background-color: transparent;
+
+	svg {
+		width: 30px;
+		height: auto;
+		
+		path {
+			fill: currentColor;
+		}
+	}
+}
+
+.hide {
+	display: none !important;
+}
+
+.mobileMenu {
+	display: flex; 
+	flex-direction: column;
+	position: relative; 
+	z-index: 1;
+	background-color: #361067; 
+	padding: 1em 0;
+
+	a, button {
+		text-decoration: none;
+		display: block;
+		padding: 1em;
+		background-color: transparent;
+		border: none;
+		font-size: 1em;
+		color: #fff;
+		text-align: left;
+	}
+}
+
 .logo {
   height: 26px;
   width: auto;
@@ -20,6 +59,10 @@
 .right {
   display: flex;
   align-items: center;
+
+  @media (max-width: 500px) {
+	flex-direction: column;
+  }
 
   & a,
   button {

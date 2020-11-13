@@ -25,6 +25,7 @@ $desktopBreakpoint: 720px;
 
 .col {
 	padding: 0 30px;
+	flex: 1 1 0px;
 
 	@media (max-width: $desktopBreakpoint) {
 		padding: 0;
