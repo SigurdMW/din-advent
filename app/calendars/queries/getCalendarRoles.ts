@@ -1,7 +1,6 @@
 import { AuthenticationError, NotFoundError } from "app/utils/errors"
 import { SessionContext } from "blitz"
-import db, { Role } from "db"
-import { AvailableRoles } from "../utils"
+import db from "db"
 
 export default async function getCalendarRoles(
 	{ calendarId }: { calendarId: number },
@@ -15,9 +14,15 @@ export default async function getCalendarRoles(
   if (!calendar) throw new NotFoundError()
 
   try {
-  	const data = await ctx.session.getPrivateData()
-  	const roles = data.roles as Role[]
-  	const userRoles: AvailableRoles[] = roles && Array.isArray(roles) ? roles.filter((f) => f.calendarId === calendarId).map((r) => r.role) as AvailableRoles[] : []
+  	const roles = await db.role.findMany({
+		  where: {
+			  calendarId, userId
+		  },
+		  select: {
+			  role: true
+		  }
+  	})
+  	const userRoles = roles.map((r) => r.role)
   	if (calendar.userId === userId) {
   		userRoles.push("admin")
   	}
