@@ -22,7 +22,7 @@ export const CalendarRenderer = ({ calendarId }) => {
 	const [openSettingModal, setOpenSettingsModal] = useState(false)
 	const [previewMode, setPreviewMode] = useState(false)
 
-	const allowedToEdit = calendarRoles.includes("admin") || calendarRoles.includes("editor")
+	const allowedToEdit = calendarRoles.includes("admin") || calendarRoles.includes("editor*")
 	const otherEditRights = calendarRoles.filter((r) => r !== "reader").length > 0
 
 	return (
