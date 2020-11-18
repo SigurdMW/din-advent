@@ -1,9 +1,10 @@
-import React, { Suspense } from "react"
-import classes from "./Navigation.module.scss"
+import React, { FC, Suspense, useEffect, useState } from "react"
+import classes from "app/layouts/Navigation.module.scss"
 import { useCurrentUser } from "app/hooks/useCurrentUser"
 import { Link, Router } from "blitz"
 import logout from "app/auth/mutations/logout"
 import ProfileDropdown from "app/components/ProfileDropdown"
+import { menuIcon } from "app/components/icons"
 
 const ProfilePicture = () => {
 	return (
@@ -38,6 +39,9 @@ const ProfilePicture = () => {
 
 const AnonHeader = () => (
 	<>
+		<Link href="/business">
+			<a>Bedrift</a>
+		</Link>
 		<Link href="/pricing">
 			<a>Priser</a>
 		</Link>
@@ -50,67 +54,110 @@ const AnonHeader = () => (
 	</>
 )
 
-export const NavigationContent = () => {
+const Logout = () => (
+	<button
+		onClick={async () => {
+			await Router.push("/logout")
+			await logout()
+			if (window) window.location.reload()
+		}}
+	>
+	Logg ut
+	</button>
+)
+
+export const NavigationContent: FC<{ width: number }> = ({ width, children }) => {
 	const { user } = useCurrentUser()
 
 	if (user) {
 		return (
 			<>
+				<Link href="/business">
+					<a>Bedrift</a>
+				</Link>
 				<Link href="/pricing">
 					<a>Priser</a>
 				</Link>
 				<Link href="/calendars">
 					<a className="button small">Dine kalendere</a>
 				</Link>{" "}
-				<ProfileDropdown triggerContent={<ProfilePicture />}>
-					<span style={{ fontSize: "0.8em" }}>Hei{user.name ? ", " + user.name : ""}!</span>
-					<ul>
-						<li>
-							<Link href="/profile">Din profil</Link>
-						</li>
-						<li>
-							<button
-								onClick={async () => {
-									await Router.push("/logout")
-									await logout()
-									if (window) window.location.reload()
-								}}
-							>
-                Logg ut
-							</button>
-						</li>
-					</ul>
-				</ProfileDropdown>
+				{width > 600 && (
+					<ProfileDropdown triggerContent={<ProfilePicture />}>
+						<span style={{ fontSize: "0.8em" }}>Hei{user.name ? ", " + user.name : ""}!</span>
+						<ul>
+							<li>
+								<Link href="/profile">Din profil</Link>
+							</li>
+							<li>
+								<Logout />
+							</li>
+						</ul>
+					</ProfileDropdown>
+				)}
+				{children}
 			</>
 		)
 	}
 	return <AnonHeader />
 }
 
-export const Navigation = () => (
-	<div className={classes.navbar}>
-		<div className={classes.left}>
-			<div className="show-desktop">
-				<Link href="/">
-					<a>
-						<img src="/da-logo.svg" className={classes.logo} alt="Startside for Din Advent" />
-					</a>
-				</Link>
+export const Navigation = () => {
+	const [toggleMenu, setToggleMenu] = useState(false)
+	const [loading, setLoading] = useState(true)
+	const [windowWidth, setWindowWidth] = useState(601)
+
+	useEffect(() => {
+		const handleResize = () => {
+			if (window)	setWindowWidth(window.innerWidth)
+	  	}
+			
+		handleResize();
+		setLoading(false)
+		window.addEventListener("resize", handleResize);
+		
+		return () => window.removeEventListener("resize", handleResize);
+	}, [])
+
+	return (
+		<>
+			<div className={classes.navbar}>
+				<div className={classes.left}>
+					{windowWidth > 600 ? (
+						<Link href="/">
+							<a>
+								<img src="/da-logo.svg" className={classes.logo} alt="Startside for Din Advent" />
+							</a>
+						</Link>
+					) : (
+						<Link href="/">
+							<a>
+								<img src="/da-logo-small-no-bg.png" className={classes.logo} alt="Startside for Din Advent" />
+							</a>
+						</Link>
+					)}
+				</div>
+				{windowWidth > 600 ? (
+					<div className={`${classes.right} ${!toggleMenu ? classes.toggle : ""}`}>
+						<Suspense fallback={<AnonHeader />}>
+							<NavigationContent width={windowWidth} />
+						</Suspense>
+					</div>
+				) : (
+					<button className={classes.mobileMenuBtn} onClick={() => setToggleMenu(!toggleMenu)}>{menuIcon}</button>
+				)}
 			</div>
-			<div className="show-mobile">
-				<Link href="/">
-					<a>
-						<img src="/da-logo-small-no-bg.png" className={classes.logo} alt="Startside for Din Advent" />
-					</a>
-				</Link>
-			</div>
-		</div>
-		<div className={classes.right}>
-			<Suspense fallback={<AnonHeader />}>
-				<NavigationContent />
-			</Suspense>
-		</div>
-	</div>
-)
+			{(windowWidth <= 600 && toggleMenu) && (
+				<div className={`${classes.mobileMenu} ${loading ? classes.hide : ""}`} onClick={() => setToggleMenu(false)}>
+					<Suspense fallback={<AnonHeader />}>
+						<NavigationContent width={windowWidth}>
+							<Link href="/profile">Din profil</Link>
+							<Logout />
+						</NavigationContent>
+					</Suspense>
+				</div>
+			)}
+		</>
+	)
+}
 
 export default Navigation

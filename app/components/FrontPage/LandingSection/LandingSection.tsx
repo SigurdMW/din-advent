@@ -1,23 +1,10 @@
 import HeroBanner from "app/components/HeroBanner"
-import React, { useEffect, useRef } from "react"
+import React, { FC, ReactNode, useEffect, useRef } from "react"
 import CTAButton from "../CTAButton"
 import classes from "./LandingSection.module.scss"
 import Typed from "typed.js"
 
-const toList = [
-	"bestevennen din",
-	"samboeren",
-	"kona",
-	"ektemannen",
-	"en god kollega",
-	"mamma",
-	"pappa",
-	"sønnen din",
-	"datteren din",
-	"noen du er glad i"
-]
-
-export const LandingSection = () => {
+export const LandingSection: FC<{ toList: string[] }> = ({ toList, children }) => {
 	const ref = useRef(null)
 
 	useEffect(() => {
@@ -45,7 +32,7 @@ export const LandingSection = () => {
 				<div className={classes.heroText}>
 					<div className="hero-text">
 						<h1>Gi en digital julekalender til <span ref={ref}></span></h1>
-						<p>Med Din Advent kan du gi noen du bryr deg om en spennende adventstid. Opprett gratis bruker i dag for å komme i gang! Skulle du like tjenesten, kan du se hvilken pakke som passer deg.</p>
+						{children}
 						<div className="hero-actions">
 							<CTAButton />
 						</div>
