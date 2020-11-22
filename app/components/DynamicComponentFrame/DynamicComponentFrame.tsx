@@ -5,7 +5,7 @@ const DynamicComponentFrame = ({ children, remove, editMode }) => {
 	if (editMode) {
 		return (
 			<div className={classes.frame}>
-				<button onClick={remove} className={classes.remove}>
+				<button onClick={remove} className={classes.remove} title="Fjern deenne innholdsseksjonen" aria-label="Fjern deenne innholdsseksjonen">
           X
 				</button>
 				{children}

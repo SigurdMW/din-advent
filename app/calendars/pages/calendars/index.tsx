@@ -74,8 +74,8 @@ const CalendarsPage: BlitzPage = () => (
 			<h1>Dine kalendere</h1>
 			<p>Lag en ny kalender eller se kalendere som du har tilgang til her.</p>
 			<br/>
-			<Link href="/calendars/new">
-				<a className="da-button da-golden-btn">Ny kalender</a>
+			<Link href="/calendars/new" passHref>
+				<Button type="green" anchor={true}>Ny kalender</Button>				
 			</Link>
 		</HeroBanner>
 
