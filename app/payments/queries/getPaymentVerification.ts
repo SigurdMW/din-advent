@@ -11,7 +11,7 @@ export default async function getPaymentVerification(
 
   try {
   	const payment = await verifyPayment({ sessionId, userId })
-  	const user = await db.user.findOne({ where: { id: userId } })
+	  const user = await db.user.findOne({ where: { id: userId } })
   	await ctx.session?.setPublicData({ plan: user!.plan })
   	return payment
   } catch (e) {

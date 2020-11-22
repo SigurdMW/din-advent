@@ -7,6 +7,7 @@ import CTAButton from "app/components/FrontPage/CTAButton"
 import PriceSection from "app/components/FrontPage/PriceSection"
 import { calendarIcon, mailIcon, plusIcon } from "app/components/icons"
 import HowItWorks, { WorkItem } from "app/components/FrontPage/HowItWorks/HowItWorks"
+import CollaborateSection from "app/components/FrontPage/CollaborateSection"
 
 /*
  * This file is just for a pleasant getting started page for your new app.
@@ -51,6 +52,7 @@ const Home: BlitzPage = () => (
 		</LandingSection>
 		<HowItWorks items={items} />
 		<PriceSection />
+		<CollaborateSection />
 
 		<div className={classes.smallSection}>
 			<div>
