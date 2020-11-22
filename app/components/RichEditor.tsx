@@ -95,6 +95,7 @@ const RichEditor = ({ editorState, onChange }) => {
 			toolbarClassName="editorToolbar"
 			wrapperClassName={classes.wrapper}
 			editorClassName={classes.editor}
+			placeholder="Skriv noe her..."
 			onEditorStateChange={setLocalEditorState}
 		/>
 	)

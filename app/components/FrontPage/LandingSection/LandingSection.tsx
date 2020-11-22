@@ -1,5 +1,5 @@
 import HeroBanner from "app/components/HeroBanner"
-import React, { FC, ReactNode, useEffect, useRef } from "react"
+import React, { FC, useEffect, useRef } from "react"
 import CTAButton from "../CTAButton"
 import classes from "./LandingSection.module.scss"
 import Typed from "typed.js"

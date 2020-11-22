@@ -1,14 +1,15 @@
 import { useCurrentUser } from "app/hooks/useCurrentUser"
 import { Link } from "blitz"
 import React, { Suspense } from "react"
+import Button from "../Button"
 
 const AnonAction = () => (
 	<>
-		<Link href="/signup">
-			<a className="da-button da-golden-btn" style={{ margin: "0 1em 1em 0" }}>Opprett gratis bruker</a>
+		<Link href="/signup" passHref>
+			<Button type="green" anchor={true} style={{ margin: "0 1em 1em 0" }}>Kom i gang</Button>
 		</Link>
 		<Link href="/pricing">
-			<a className="da-button da-button-subtle">Se priser</a>
+			<a>Se priser</a>
 		</Link>
 	</>
 )
@@ -18,8 +19,8 @@ const CTABtn = () => {
 
 	if (user) {
 		return (
-			<Link href="/calendars">
-				<a className="da-button da-btn-large da-golden-btn">Gå til dine kalendere</a>
+			<Link href="/calendars" passHref>
+				<Button type="green" anchor={true} style={{ margin: "0 1em 1em 0" }}>Gå til dine kalendere</Button>
 			</Link>
 		)
 	}

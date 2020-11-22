@@ -29,10 +29,11 @@ interface Snow extends DynamicInputCommon<{}> {
 	type: DynamicInputTypes.snow
 }
 
+// type DropSome<T> = Omit<T, "onChange" | "editorMode">
 export type DynamicComponent = RichText | Confetti | Snow
 
 export interface DynamicInput {
-  components: Array<DynamicComponent>
+  components: Array<DynamicComponent> // TODO: this should be without editorMode and onChange that are purely frontend
   id: number
   save?: (v: CalendarWindowUpdateInput) => Promise<void>
   editorMode: boolean
