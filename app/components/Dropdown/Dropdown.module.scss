@@ -2,6 +2,7 @@ $arrowHeight: 10px;
 
 .container {
   position: relative;
+  display: inline-block;
 }
 
 .dropdown {
@@ -14,6 +15,7 @@ $arrowHeight: 10px;
   color: #000;
   border-radius: 3px;
   min-width: 180px;
+  box-shadow: 5px 4px 9px rgba(0,0,0,0.5);
 
   & ul {
     list-style: none;
@@ -33,6 +35,10 @@ $arrowHeight: 10px;
 
 button.button {
   padding: 0 !important;
+  border: none;
+  background-color: transparent;
+  color: inherit;
+  font: inherit;
 }
 
 .closed {
