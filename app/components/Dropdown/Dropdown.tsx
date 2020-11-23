@@ -1,10 +1,12 @@
 import { FC, ReactNode, useRef, useState } from "react"
-import classes from "./ProfileDropdown.module.scss"
-import useClickOutside from "./useClickOutside"
+import useClickOutside from "../utils/useClickOutside"
+import classes from "./Dropdown.module.scss"
 
-export const ProfileDropdown: FC<{ triggerContent: ReactNode }> = ({
+export const Dropdown: FC<{ triggerContent: ReactNode, id: string, className?: string }> = ({
 	children,
 	triggerContent,
+	id,
+	className = ""
 }) => {
 	const buttonEl = useRef(null)
 	const dropdownEl = useRef(null)
@@ -16,23 +18,29 @@ export const ProfileDropdown: FC<{ triggerContent: ReactNode }> = ({
 		}
 	})
 
+	const buttonId = id + "-button"
+	const dropdownId = id + "-dropdown"
+
 	return (
-		<div className={classes.container} onKeyDown={(e) => e.key === "Escape" && setIsOpen(false)}>
+		<div className={`${classes.container} ${className}`} onKeyDown={(e) => e.key === "Escape" && setIsOpen(false)}>
 			<button
 				type="button"
 				onClick={() => setIsOpen(!isOpen)}
 				ref={buttonEl}
-				id="profilebutton"
+				id={buttonId}
 				className={classes.button}
+				aria-controls={dropdownId}
+				aria-expanded={isOpen}
 			>
 				{triggerContent}
 			</button>
 
 			<div
 				ref={dropdownEl}
-				id="profiledropdown"
+				id={dropdownId}
 				className={`${classes.dropdown} ${isOpen ? "" : classes.closed}`}
 				onClick={() => setIsOpen(false)}
+				aria-hidden={!isOpen}
 			>
 				{children}
 				<div className={classes.arrow}></div>
@@ -41,4 +49,4 @@ export const ProfileDropdown: FC<{ triggerContent: ReactNode }> = ({
 	)
 }
 
-export default ProfileDropdown
+export default Dropdown
