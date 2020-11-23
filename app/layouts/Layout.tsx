@@ -11,7 +11,7 @@ const Layout = ({ title, children, hideHeader = false }) => (
 			<meta httpEquiv="X-UA-Compatible" content="IE=edge" />
 			<meta name="viewport" content="width=device-width,initial-scale=1.0" />
 			<link
-				href="https://fonts.googleapis.com/css?family=Roboto:400,900,900i&display=swap"
+				href="https://fonts.googleapis.com/css?family=Roboto:400,900,900i%26display=swap"
 				rel="stylesheet"
 			/>
 			<link rel="icon" href="/favicons/favicon.ico" />
@@ -56,6 +56,19 @@ const Layout = ({ title, children, hideHeader = false }) => (
 				<div className="da-footer-trademark">Made with ❤ in Drammen</div>
 			</div>
 		</div>
+		<script type="text/javascript" dangerouslySetInnerHTML={{__html: `
+			var Tawk_API=Tawk_API ||{ }
+			var Tawk_LoadStart= new Date();
+			(function(){
+				var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+				s1.async=true;
+				s1.src='https://embed.tawk.to/5fbbe9d5920fc91564c9d900/default';
+				s1.charset='UTF-8';
+				s1.setAttribute('crossorigin','*');
+				s0.parentNode.insertBefore(s1,s0);
+			})();
+		`}}>
+		</script>
 	</>
 )
 
