@@ -34,13 +34,13 @@ const Layout = ({ title, children, hideHeader = false }) => (
 			{GAKey && (
 				<>
 					<script async src={"https://www.googletagmanager.com/gtag/js?id=" + GAKey}></script>
-					<script>{`
-				window.dataLayer = window.dataLayer || [];
-				function gtag(){dataLayer.push(arguments);}
-				gtag('js', new Date());
-
-				gtag('config', '${GAKey}');
-			`}</script>
+					<script dangerouslySetInnerHTML={{__html: `
+						window.dataLayer = window.dataLayer || [];
+						function gtag(){dataLayer.push(arguments);}
+						gtag('js', new Date());
+		
+						gtag('config', '${GAKey}');
+					`}}></script>
 				</>
 			)}
 		</Head>
