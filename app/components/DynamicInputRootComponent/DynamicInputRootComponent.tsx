@@ -1,6 +1,5 @@
 import {
 	ComponentEmptyState,
-	ComponentTranslations,
 	DynamicComponent,
 	DynamicInput,
 	DynamicInputTypes,
@@ -14,18 +13,7 @@ import classes from "./DynamicInputRootComponent.module.scss"
 import { ConfettiComponent } from "../DynamicComponents/ConfettiComponent"
 import RichTextComponent from "../DynamicComponents/RichTextComponent"
 import SnowComponent from "../DynamicComponents/SnowComponent"
-
-const translations: ComponentTranslations = {
-	richtext: {
-		name: "Riktekst",
-	},
-	confetti: {
-		name: "Konfettiregn",
-	},
-	snow: {
-		name: "Snøfall"
-	}
-}
+import AddComponent from "./AddComponent"
 
 const componentEmptyState: ComponentEmptyState = {
 	richtext: {
@@ -61,7 +49,6 @@ export const DynamicInputRootComponent = ({
 	const [isSaving, setIsSaving] = useState(false)
 	const [localComponents, setLocalComponents] = useState(components)
 	const [isDirty, setIsDirty] = useState(false)
-	const [selected, setSelected] = useState<keyof ComponentEmptyState | undefined>(undefined)
 	const [restrictAdd, setRestrictAdd] = useState<DynamicInputTypes[]>([])
 
 	useEffect(() => {
@@ -99,9 +86,9 @@ export const DynamicInputRootComponent = ({
 		}
 	}
 
-	//   const handleDiscard = () => {
-	//     setLocalComponents(components)
-	//   }
+	// const handleDiscard = () => {
+	// 	setLocalComponents(components)
+	// }
 
 	const getComponent = (component: DynamicComponent, index: number) => {
 		const onChange = (c) => {
@@ -138,7 +125,7 @@ export const DynamicInputRootComponent = ({
 		setLocalComponents(localComponents.filter((c, i) => i !== index))
 	}
 
-	const addComponent = () => {
+	const addComponent = (selected: DynamicInputTypes) => {
 		if (!selected) return
 		const newComp = componentEmptyState[selected] as any
 		setLocalComponents([...localComponents, newComp])
@@ -153,27 +140,11 @@ export const DynamicInputRootComponent = ({
 	const getAvailableComponents = () => {
 		return Object.keys(DynamicInputTypes).filter(
 			(key: DynamicInputTypes) => !restrictAdd.includes(key)
-		)
+		) as DynamicInputTypes[]
 	}
 
 	const editorContent = (
 		<>
-			<div className={classes.addComponent}>
-				<select
-					value={selected}
-					onChange={(e) => setSelected(e.target.value as keyof ComponentEmptyState)}
-				>
-					<option value="">Velg innhold å legge til</option>
-					{getAvailableComponents().map((key) => (
-						<option value={key} key={key}>
-							{translations[key].name}
-						</option>
-					))}
-				</select>
-				<button disabled={!selected} onClick={addComponent} className="da-button da-golden-btn">
-          Legg til
-				</button>
-			</div>
 			<div className={classes.actions}>
 				<button
 					onClick={handleSave}
@@ -182,8 +153,12 @@ export const DynamicInputRootComponent = ({
 				>
           Lagre
 				</button>
+				<AddComponent 
+					components={getAvailableComponents()}
+					onSelect={(d) => addComponent(d)}
+				/>
 			</div>
-			{/* <button onClick={handleDiscard}>Forkast</button> */}
+			{/* <button onClick={handleDiscard} type="button">Forkast</button> */}
 			{/* <UnsavedChangesModal isDirty={isDirty} save={handleSave} discard={handleDiscard} /> */}
 		</>
 	)

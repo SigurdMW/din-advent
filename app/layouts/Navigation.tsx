@@ -3,7 +3,7 @@ import classes from "app/layouts/Navigation.module.scss"
 import { useCurrentUser } from "app/hooks/useCurrentUser"
 import { Link, Router } from "blitz"
 import logout from "app/auth/mutations/logout"
-import ProfileDropdown from "app/components/ProfileDropdown"
+import Dropdown from "app/components/Dropdown"
 import { menuIcon } from "app/components/icons"
 
 const ProfilePicture = () => {
@@ -82,7 +82,7 @@ export const NavigationContent: FC<{ width: number }> = ({ width, children }) =>
 					<a className="button small">Dine kalendere</a>
 				</Link>{" "}
 				{width > 600 && (
-					<ProfileDropdown triggerContent={<ProfilePicture />}>
+					<Dropdown triggerContent={<ProfilePicture />} id="profiledropdown">
 						<span style={{ fontSize: "0.8em" }}>Hei{user.name ? ", " + user.name : ""}!</span>
 						<ul>
 							<li>
@@ -92,7 +92,7 @@ export const NavigationContent: FC<{ width: number }> = ({ width, children }) =>
 								<Logout />
 							</li>
 						</ul>
-					</ProfileDropdown>
+					</Dropdown>
 				)}
 				{children}
 			</>
