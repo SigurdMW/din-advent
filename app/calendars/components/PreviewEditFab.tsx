@@ -27,7 +27,7 @@ export const PreviewEditFab = ({ defaultPreview = false, onChange }) => {
 	return (
 		<FAB
 			onClick={() => setPreviewMode(!previewMode)}
-			style={{ position: "fixed", bottom: "45px", right: "45px" }}
+			style={{ position: "fixed", bottom: "90px", right: "20px" }}
 			title={previewMode ? "Bytt til redigeringsmodus" : "Bytt til forhåndsvisning"}
 			aria-label={previewMode ? "Bytt til redigeringsmodus" : "Bytt til forhåndsvisning"}
 		>
