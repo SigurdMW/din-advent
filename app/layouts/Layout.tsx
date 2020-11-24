@@ -3,10 +3,11 @@ import Navigation from "./Navigation"
 
 const GAKey = process.env.NEXT_PUBLIC_GA_KEY
 
-const Layout = ({ title, children, hideHeader = false }) => (
+const Layout = ({ title, children, hideHeader = false, description }) => (
 	<>
 		<Head>
 			<title>{title || "Din Advent"}</title>
+			<meta name="description" content={description || "Gled noen du kjenner med en digital julekalender i år! På Din Advent får du en kalender til en hyggelig pris. Prøv gratis på dinadvent.no."} />
 			<meta charSet="utf-8" />
 			<meta httpEquiv="X-UA-Compatible" content="IE=edge" />
 			<meta name="viewport" content="width=device-width,initial-scale=1.0" />
@@ -28,7 +29,7 @@ const Layout = ({ title, children, hideHeader = false }) => (
 			/>
 			<meta
 				property="og:description"
-				content="Med Din Advent kan du gi noen du bryr deg om en spennende adventstid. Opprett gratis bruker i dag for å komme i gang! Skulle du like tjenesten, kan du se hvilken pakke som passer deg."
+				content="Gled noen du kjenner med en digital julekalender i år! På Din Advent får du en kalender til en hyggelig pris. Prøv gratis på dinadvent.no."
 			/>
 			<meta property="og:type" content="website" />
 			{GAKey && (

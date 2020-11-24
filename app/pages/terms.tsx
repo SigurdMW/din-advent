@@ -33,6 +33,6 @@ export const TermsPage = () => (
 	</div>
 )
 
-TermsPage.getLayout = (page) => <Layout title="Vilkår - Din Advent">{page}</Layout>
+TermsPage.getLayout = (page) => <Layout title="Vilkår for bruk - Din Advent">{page}</Layout>
 
 export default TermsPage

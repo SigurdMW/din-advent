@@ -52,6 +52,6 @@ const BusinessPage: BlitzPage = () => (
 	</>
 )
 
-BusinessPage.getLayout = (page) => <FullWidthLayout title="Forside - Din Advent">{page}</FullWidthLayout>
+BusinessPage.getLayout = (page) => <FullWidthLayout title="Digital julekalender for bedrifter - Din Advent">{page}</FullWidthLayout>
 
 export default BusinessPage
