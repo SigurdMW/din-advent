@@ -27,6 +27,6 @@ export const PrivacyPage = () => (
 	</div>
 )
 
-PrivacyPage.getLayout = (page) => <Layout title="Personvern - Din Advent">{page}</Layout>
+PrivacyPage.getLayout = (page) => <Layout title="Cookies - Din Advent">{page}</Layout>
 
 export default PrivacyPage
