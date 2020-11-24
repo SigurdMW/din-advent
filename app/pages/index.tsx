@@ -63,6 +63,6 @@ const Home: BlitzPage = () => (
 	</>
 )
 
-Home.getLayout = (page) => <FullWidthLayout title="Forside - Din Advent">{page}</FullWidthLayout>
+Home.getLayout = (page) => <FullWidthLayout title="Lag en digtal julekalender i år - Din Advent">{page}</FullWidthLayout>
 
 export default Home

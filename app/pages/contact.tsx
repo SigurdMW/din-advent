@@ -13,6 +13,6 @@ export const ContactPage = () => (
 	</div>
 )
 
-ContactPage.getLayout = (page) => <Layout title="Kontakt - Din Advent">{page}</Layout>
+ContactPage.getLayout = (page) => <Layout title="Kontakt oss - Din Advent">{page}</Layout>
 
 export default ContactPage

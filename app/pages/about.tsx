@@ -26,6 +26,6 @@ export const AboutPage = () => (
 	</>
 )
 
-AboutPage.getLayout = (page) => <Layout title="Om oss">{page}</Layout>
+AboutPage.getLayout = (page) => <Layout title="Om oss - Din Advent">{page}</Layout>
 
 export default AboutPage
