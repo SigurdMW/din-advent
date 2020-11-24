@@ -3,7 +3,7 @@ import Navigation from "./Navigation"
 
 const GAKey = process.env.NEXT_PUBLIC_GA_KEY
 
-const Layout = ({ title, children, hideHeader = false, description }) => (
+const Layout = ({ title, children, hideHeader = false, description = "" }) => (
 	<>
 		<Head>
 			<title>{title || "Din Advent"}</title>
