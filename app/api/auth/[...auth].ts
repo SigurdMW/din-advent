@@ -1,4 +1,4 @@
-import { createOrUpdateUser, getPrivateData, getPublicData } from "app/users/utils"
+import { createOrUpdateUser, getPublicData } from "app/users/utils"
 import { passportAuth } from "blitz"
 import FacebookStrategy from "passport-facebook"
 import GoogleStrategy from "passport-google-oauth20"
@@ -50,7 +50,6 @@ const auth = async (req, res) => {
 					}
 					const user = await createOrUpdateUser({ email, name: profile.displayName, active: true })
 					const publicData = getPublicData(user, "facebook")
-					// const privateData = await getPrivateData(user.id)
 					done(null, { publicData, redirectUrl: returnTo })
 				}
 			),
@@ -68,7 +67,6 @@ const auth = async (req, res) => {
 					}
 					const user = await createOrUpdateUser({ email, name: profile.displayName, active: true })
 					const publicData = getPublicData(user, "google")
-					// const privateData = await getPrivateData(user.id)
 					done(null, { publicData, redirectUrl: returnTo })
 				}
 			),

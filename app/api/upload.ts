@@ -2,6 +2,7 @@ import { IncomingForm } from "formidable"
 import db from "db"
 import { getSessionContext } from "@blitzjs/server"
 import cloudinary from "app/utils/cloudinary"
+import Sentry from "integrations/sentry"
 
 export const config = {
 	api: {
@@ -41,7 +42,7 @@ const imageUpload = async (req, res) => {
 			res.setHeader("Content-Type", "application/json")
 			res.end(JSON.stringify({ data: { link: image.secure_url } }))
 		} catch (e) {
-			console.error("Error in catch", e)
+			Sentry.captureException(e)
 			res.statusCode = 500
 			res.setHeader("Content-Type", "application/json")
 			res.end(e.message)

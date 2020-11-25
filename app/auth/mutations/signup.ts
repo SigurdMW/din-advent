@@ -3,6 +3,7 @@ import { SignupInput, SignupInputType } from "app/auth/validations"
 import { createLoginRequest } from "../utils"
 import { createOrUpdateUser } from "app/users/utils"
 import { sendEmail } from "app/email"
+import Sentry from "integrations/sentry"
 
 export default async function signup(input: SignupInputType) {
 	// This throws an error if input is invalid
@@ -33,6 +34,7 @@ export default async function signup(input: SignupInputType) {
 		})
 		return
 	} catch (e) {
+		Sentry.captureException(e)
 		// Fail silently if the user already exist
 		return
 	}

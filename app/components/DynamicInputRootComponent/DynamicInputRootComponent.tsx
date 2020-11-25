@@ -14,6 +14,7 @@ import { ConfettiComponent } from "../DynamicComponents/ConfettiComponent"
 import RichTextComponent from "../DynamicComponents/RichTextComponent"
 import SnowComponent from "../DynamicComponents/SnowComponent"
 import AddComponent from "./AddComponent"
+import Sentry from "integrations/sentry"
 
 const componentEmptyState: ComponentEmptyState = {
 	richtext: {
@@ -170,6 +171,9 @@ export const DynamicInputRootComponent = ({
 				// This ensures the Blitz useQuery hooks will automatically refetch
 				// data any time you reset the error boundary
 				queryCache.resetErrorBoundaries()
+			}}
+			onError={(error, componentStack) => {
+				Sentry.captureException(error, { contexts: { react: { componentStack } } })
 			}}
 		>
 			{localComponents.map(componentWithFrame)}
