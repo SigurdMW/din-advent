@@ -4,6 +4,7 @@ import Alert from "../Alert"
 import Button from "../Button"
 import SelectImage from "../SelectImage"
 import classes from "./UploadImage.module.scss"
+import Sentry from "integrations/sentry"
 
 interface UploadImageProps {
   onSubmit: (v: string) => void
@@ -33,7 +34,8 @@ export const UploadImage: FC<UploadImageProps> = ({ onSubmit }) => {
 				setFile(undefined)
 				form.reset()
 			} catch (e) {
-				console.error(e)
+				Sentry.captureMessage("Error when trying to upload image")
+				Sentry.captureException(e)
 				setError(
 					"Whoops, noe gikk galt når vi forsøkte å laste opp bildet. Vennligst forsøk igjen."
 				)

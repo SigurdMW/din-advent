@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import { useRouter, BlitzPage, Link } from "blitz"
 import login from "app/auth/mutations/login"
 import ArticleLayout from "app/layouts/ArticleLayout"
+import Sentry from "integrations/sentry"
 
 const LoginRequestPage: BlitzPage = () => {
 	const router = useRouter()
@@ -17,6 +18,8 @@ const LoginRequestPage: BlitzPage = () => {
 					await login({ request: requestId })
 					router.push("/calendars")
 				} catch (error) {
+					Sentry.captureMessage("Error handling login request " + requestId)
+					Sentry.captureException(error)
 					setError(error.toString())
 				} finally {
 					setIsLoggingIn(false)

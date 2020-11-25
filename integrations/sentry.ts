@@ -2,6 +2,7 @@ import * as Sentry from "@sentry/node"
 import getConfig from "next/config"
 import { RewriteFrames } from "@sentry/integrations"
 
+// thanks to https://github.com/flybayer/blitz-sentry
 if (process.env.SENTRY_DSN) {
 	const config = getConfig()
 	const distDir = `${config.serverRuntimeConfig.rootDir}/.next`

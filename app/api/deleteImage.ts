@@ -2,6 +2,7 @@ import cloudinary from "app/utils/cloudinary"
 import db from "db"
 import { getSessionContext } from "@blitzjs/server"
 import { NotFoundError, AuthenticationError } from "app/utils/errors"
+import Sentry from "integrations/sentry"
 
 const deleteImage = async (req, res) => {
 	if (req.method === "DELETE") {
@@ -20,6 +21,7 @@ const deleteImage = async (req, res) => {
 			res.setHeader("Content-Type", "application/json")
 			res.end(JSON.stringify({ data: {} }))
 		} catch (e) {
+			Sentry.captureException(e)
 			res.statusCode = e.statusCode || 500
 			console.error("Error in catch", e)
 			res.setHeader("Content-Type", "application/json")

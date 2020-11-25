@@ -1,20 +1,26 @@
 import db, { User, UserCreateInput } from "db"
-import { logger } from "app/utils/logger"
 import { PrivateData } from "blitz"
+import Sentry from "integrations/sentry"
 
 export const createOrUpdateUser = async ({ email, name, active, role }: UserCreateInput) => {
-	const user = await db.user.upsert({
-		where: { email },
-		create: {
-			email,
-			name,
-			active,
-			role,
-		},
-		update: { email, active },
-	})
-	await createRoleFromUserInvite(user)
-	return user
+	try {
+		const user = await db.user.upsert({
+			where: { email },
+			create: {
+				email,
+				name,
+				active,
+				role,
+			},
+			update: { email, active },
+		})
+		await createRoleFromUserInvite(user)
+		return user
+	} catch (e) {
+		Sentry.captureMessage("createOrUpdateUser failed", Sentry.Severity.Critical)
+		Sentry.captureException(e)
+		throw e
+	}
 }
 
 const createRoleFromUserInvite = async ({ email, id }: User) => {
@@ -39,9 +45,8 @@ const createRoleFromUserInvite = async ({ email, id }: User) => {
 				})
 				await db.userInvite.delete({ where: { id: inviteId } })
 			} catch (e) {
-				logger(
-					"Create role or delete userInvite failed for inviteId " + inviteId + " and userId " + id
-				)
+				Sentry.captureMessage("Create role or delete userInvite failed for inviteId " + inviteId + " and userId " + id, Sentry.Severity.Critical)
+				Sentry.captureException(e)
 			}
 		})
 	}
