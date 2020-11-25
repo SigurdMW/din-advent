@@ -91,6 +91,7 @@
 
   & svg {
     width: 100%;
-    height: auto;
+	height: auto;
+	max-height: 60px;
   }
 }

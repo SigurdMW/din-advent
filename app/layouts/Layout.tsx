@@ -57,6 +57,13 @@ const Layout = ({ title, children, hideHeader = false, description = "" }) => (
 				<div className="da-footer-trademark">Made with ❤ in Drammen</div>
 			</div>
 		</div>
+		{/**
+		 * Polyfill needed for Safari (and other browsers)
+		 */}
+		<script src="https://polyfill.io/v3/polyfill.min.js?features=es5%2Ces6%2Ces7%2CObject.fromEntries%2CObject.entries%2CObject.values" type="text/javascript" />
+		{/**
+		 * Chat script
+		 */}
 		<script type="text/javascript" dangerouslySetInnerHTML={{__html: `
 			var Tawk_API=Tawk_API ||{ }
 			var Tawk_LoadStart= new Date();
