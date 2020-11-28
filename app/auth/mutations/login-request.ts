@@ -10,7 +10,9 @@ if (!process.env.RECAPTCHA_SECRET) {
 
 export default async function loginRequest(input: LoginInputType) {
 	// This throws an error if input is invalid
-	const { email } = LoginInput.parse(input)
+	const { email: theMail } = LoginInput.parse(input)
+	const email = theMail.toLowerCase()
+	
 	const response = await axios({
 		url: "https://www.google.com/recaptcha/api/siteverify",
 		method: "POST",

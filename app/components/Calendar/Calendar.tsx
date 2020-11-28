@@ -36,8 +36,8 @@ export const Calendar: FC<CalendarProps> = ({ calendar, isShare = false }) => {
 				}
 				<div className={classes.overflow}>
 					<ul className={classes.windowList}>
-						{new Array(24).fill(0).map((c, i) => {
-							const day = i + 1
+						{[10, 5, 1, 9, 2, 17, 23, 14, 11, 24, 6, 21, 8, 3, 4, 22, 16, 13, 18, 7, 19, 20, 12, 15].map((c) => {
+							const day = c
 							return (
 								<li key={day}>
 									<Link href={windowPath(day)}>

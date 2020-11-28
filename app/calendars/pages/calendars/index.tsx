@@ -57,7 +57,7 @@ export const CalendarsList = () => {
 					</div>
 				) : (
 					<p>
-						Du har ingen kalendere ennå.{" "}
+						Du har ingen kalendere ennå.{" "}<br/><br/>
 						<Link href="/calendars/new" passHref>
 							<Button type="primary" anchor={true}>Opprett kalender</Button>
 						</Link>

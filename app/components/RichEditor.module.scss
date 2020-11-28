@@ -2,6 +2,10 @@
   color: #000;
   background-color: #fff;
   border-radius: 5px;
+  
+  & img {
+	  max-width: 100%;
+  }
 }
 
 .editor {
