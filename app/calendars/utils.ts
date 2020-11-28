@@ -1,5 +1,5 @@
 import { sendEmail } from "app/email"
-import db, { UserInviteCreateInput, User, Role } from "db"
+import db, { UserInviteCreateInput, User } from "db"
 import { Plan } from "app/interfaces/Payment"
 import { AuthorizationError, ExceededPlanError, NotFoundError, PaymentRequiredError } from "app/utils/errors"
 import { SessionContext } from "blitz"

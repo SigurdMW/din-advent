@@ -13,12 +13,7 @@ export default async function createAdmin(
 
   const user = await db.user.findOne({ where: {id: userId }})
   if (!user) throw new AuthorizationError()
-  if (user.email === "sigurdmwahl@gmail.com") {
-  	await db.user.update({ where: { email: data.email }, data: { role: "admin" } })
-  	return
-  }
-
   ctx.session?.authorize("admin")
-  await db.user.update({ where: { email: data.email }, data: { role: "admin" } })
+  await db.user.update({ where: { email: data.email.toLowerCase() }, data: { role: "admin" } })
   return
 }

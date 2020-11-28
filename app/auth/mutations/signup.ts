@@ -1,3 +1,4 @@
+import db from "db"
 import axios from "axios"
 import { SignupInput, SignupInputType } from "app/auth/validations"
 import { createLoginRequest } from "../utils"
@@ -7,7 +8,8 @@ import Sentry from "integrations/sentry"
 
 export default async function signup(input: SignupInputType) {
 	// This throws an error if input is invalid
-	const { email, recaptcha } = SignupInput.parse(input)
+	const { email: theMail, recaptcha } = SignupInput.parse(input)
+	const email = theMail.toLowerCase()
 	try {
 		const response = await axios({
 			url: "https://www.google.com/recaptcha/api/siteverify",
@@ -20,6 +22,8 @@ export default async function signup(input: SignupInputType) {
 		if (!response.data.success) {
 			throw new Error("Ugyldig recaptcha verdi.")
 		}
+		const userExist = await db.user.findOne({ where: { email }})
+		if (userExist) return // so that we don't run activation email again
 		const user = await createOrUpdateUser({ email })
 		const request = await createLoginRequest(user)
 		const link = process.env.BASE_URL + "auth/" + request.loginToken
