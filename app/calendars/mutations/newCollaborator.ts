@@ -5,10 +5,12 @@ import { allowedEditCalendar, AvailableRoles, createUserInvite, giveCollaborator
 import { sendEmail } from "app/email"
 
 export default async function shareCalendarByEmail(
-	{ email, roles, calendarId }: ShareByEmailFunctionArgsType & { roles: AvailableRoles[] },
+	{ calendarId, ...rest }: ShareByEmailFunctionArgsType & { roles: AvailableRoles[] },
 	ctx: { session?: SessionContext } = {}
 ) {
-	NewCollaboratorInput.parse({ email, roles })
+	const {email: theMail, roles } = NewCollaboratorInput.parse(rest)
+	const email = theMail.toLowerCase()
+
 	// const userId = await authAndValidatePlanLimit(ctx) no limit on collaborators until we find the correct pricing
 	const userId = await allowedEditCalendar({ calendarId, ctx })
 
@@ -20,7 +22,7 @@ export default async function shareCalendarByEmail(
 			email
 		}})
 		const relevantInvites = roles.filter((r) => !invites.map((i) => i.role).includes(r))
-		relevantInvites.forEach(async (role) => {
+		relevantInvites.forEach(async (role: AvailableRoles) => {
 			await createUserInvite({
 				userId,
 				email,

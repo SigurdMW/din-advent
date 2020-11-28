@@ -8,7 +8,9 @@ export default async function getUserInfo(
 ) {
   ctx.session!.authorize("admin")
   if (!email) return
-  const user = await db.user.findOne({ where: { email }, include: { Calendar: true, Role: true, ShareKey: true, Payment: true, UserInvite: true } })
+  const user = await db.user.findOne({ 
+	  where: { email: email.toLowerCase() },
+  	include: { Calendar: true, Role: true, ShareKey: true, Payment: true, UserInvite: true } })
   if (!user) return
   return { ...user, hashedPassword: undefined }
 }

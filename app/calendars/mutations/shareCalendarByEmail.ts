@@ -6,10 +6,12 @@ import { allowedEditCalendar, authAndValidatePlanLimit, AvailableRoles, createUs
 import { sendEmail } from "app/email"
 
 export default async function shareCalendarByEmail(
-	{ email, role, calendarId }: ShareByEmailFunctionArgsType & { role: AvailableRoles },
+	{ role, ...rest }: ShareByEmailFunctionArgsType & { role: AvailableRoles },
 	ctx: { session?: SessionContext } = {}
 ) {
-	ShareByEmailFunctionArgs.parse({ email, calendarId })
+	const { email: theMail, calendarId } = ShareByEmailFunctionArgs.parse(rest)
+	const email = theMail.toLowerCase()
+	
 	const userId = await authAndValidatePlanLimit(ctx)
 	await allowedEditCalendar({ calendarId, ctx })
 

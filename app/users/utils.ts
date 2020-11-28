@@ -2,7 +2,8 @@ import db, { User, UserCreateInput } from "db"
 import { PrivateData } from "blitz"
 import Sentry from "integrations/sentry"
 
-export const createOrUpdateUser = async ({ email, name, active, role }: UserCreateInput) => {
+export const createOrUpdateUser = async ({ email: uncasedEmail, name, active, role }: UserCreateInput) => {
+	const email = uncasedEmail.toLowerCase()
 	try {
 		const user = await db.user.upsert({
 			where: { email },
@@ -23,7 +24,8 @@ export const createOrUpdateUser = async ({ email, name, active, role }: UserCrea
 	}
 }
 
-const createRoleFromUserInvite = async ({ email, id }: User) => {
+const createRoleFromUserInvite = async ({ email: uncasedEmail, id }: User) => {
+	const email = uncasedEmail.toLowerCase()
 	const userInvites = await db.userInvite.findMany({ where: { email } })
 	if (userInvites.length) {
 		userInvites.forEach(async ({ id: inviteId, calendarId, role, createdBy }) => {
