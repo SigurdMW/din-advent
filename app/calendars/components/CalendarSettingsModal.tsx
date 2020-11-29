@@ -34,8 +34,8 @@ const CalendarSettingsModal = ({ calendarId, isOpen = false, onClose }) => {
 				<hr className="da-divider da-divider--white-bg" />
 				<CalendarBackgroundSection calendarId={calendarId} />
 				<hr className="da-divider da-divider--white-bg" />
-				<Button type="secondary" onClick={handleDeleteCalendar}>
-          Slett kalender
+				<Button type="red" onClick={handleDeleteCalendar}>
+        			Slett kalender
 				</Button>
 			</Modal>
 		</Suspense>

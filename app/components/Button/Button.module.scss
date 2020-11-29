@@ -21,6 +21,17 @@
 			fill: currentColor;
 		}
 	}
+
+	&:disabled {
+		color: #646464;
+		background: #c5c5c5;
+
+		&:focus, 
+		&:hover {
+			color: #646464;
+			background: #c5c5c5;
+		}
+	}
 }
 
 a.button {
@@ -87,5 +98,14 @@ a.button {
 
 	&:hover {
 		background-color: darken(#66369D, 20);
+	}
+}
+
+.red {
+	background-color: #9e1616;
+	color: white;
+
+	&:hover {
+		background-color: darken(#9e1616, 20);
 	}
 }
