@@ -48,7 +48,7 @@ module.exports = withSourceMaps({
 		return [{
 			source: "/",
 			headers: [cspHeader]
-		},{
+		}, {
 			source: "/:all*",
 			headers: [cspHeader]
 		}]

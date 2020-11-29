@@ -3,7 +3,8 @@ import { CalendarWindowUpdateInput } from "db"
 export enum DynamicInputTypes {
   richtext = "richtext",
   confetti = "confetti",
-  snow = "snow"
+  snow = "snow",
+  youtube = "youtube"
 }
 
 interface DynamicInputCommon<T> {
@@ -21,6 +22,14 @@ export interface RichText
   type: DynamicInputTypes.richtext
 }
 
+export interface YouTube
+  extends DynamicInputCommon<{
+	youtubeId: string
+	youtubeUrl: string
+  }> {
+  type: DynamicInputTypes.youtube
+}
+
 interface Confetti extends DynamicInputCommon<{}> {
   type: DynamicInputTypes.confetti
 }
@@ -30,7 +39,7 @@ interface Snow extends DynamicInputCommon<{}> {
 }
 
 // type DropSome<T> = Omit<T, "onChange" | "editorMode">
-export type DynamicComponent = RichText | Confetti | Snow
+export type DynamicComponent = RichText | Confetti | Snow | YouTube
 
 export interface DynamicInput {
   components: Array<DynamicComponent> // TODO: this should be without editorMode and onChange that are purely frontend
