@@ -15,6 +15,7 @@ import RichTextComponent from "../DynamicComponents/RichTextComponent"
 import SnowComponent from "../DynamicComponents/SnowComponent"
 import AddComponent from "./AddComponent"
 import Sentry from "integrations/sentry"
+import Button from "../Button"
 
 const componentEmptyState: ComponentEmptyState = {
 	richtext: {
@@ -147,13 +148,13 @@ export const DynamicInputRootComponent = ({
 	const editorContent = (
 		<>
 			<div className={classes.actions}>
-				<button
+				<Button
+					type="green"
 					onClick={handleSave}
 					disabled={!isDirty || isSaving}
-					className="da-button da-golden-btn"
 				>
-          Lagre
-				</button>
+					Lagre
+				</Button>
 				<AddComponent 
 					components={getAvailableComponents()}
 					onSelect={(d) => addComponent(d)}

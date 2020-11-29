@@ -3,6 +3,19 @@ const { sessionMiddleware, unstable_simpleRolesIsAuthorized } = require("@blitzj
 // publicly available on the servers, only to the error reporting
 const withSourceMaps = require("@zeit/next-source-maps")
 
+
+const styleSrc = "; style-src 'self' 'unsafe-inline' fonts.googleapis.com https://cdn.jsdelivr.net/emojione/2.2.7/assets/css/emojione.min.css"
+const scriptSrc = "; script-src 'self' 'unsafe-inline' data polyfill.io *.tawk.to https://cdn.jsdelivr.net/emojione/2.2.7/lib/js/emojione.min.js"
+const imgSrc = "; img-src 'self' data: *.cloudinary.com *.jsdelivr.net"
+const connectSrc = "; connect-src 'self' wss://*.tawk.to *.tawk.to"
+const reportTo = "; report-to https://c255e9556ec6a33714eee5bf1d3fbe00.report-uri.com/r/d/csp/enforce"
+const cspString = "default-src 'self' fonts.gstatic.com *.tawk.to *.youtube.com *.youtu.be 'sha256-AJhf7SfDbCOGtG4Jt4Dyynp7aRDJsVMm0zBtXbYpHW8='" + styleSrc + scriptSrc + imgSrc + connectSrc + reportTo
+
+const cspHeader = {
+	key: "Content-Security-Policy",
+	value: cspString
+}
+
 // Use the SentryWebpack plugin to upload the source maps during build step
 const SentryWebpackPlugin = require("@sentry/webpack-plugin")
 const {
@@ -29,6 +42,14 @@ module.exports = withSourceMaps({
 		}),
 	],
 	poweredByHeader: false,
+	
+	// Thanks to https://github.com/vercel/next.js/discussions/14092
+	async headers() {
+		return [{
+			source: "/:all*",
+			headers: [cspHeader]
+		}]
+	},
   
 	webpack: (config, { isServer }) => {
 	  // In `pages/_app.js`, Sentry is imported from @sentry/browser. While

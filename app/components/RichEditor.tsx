@@ -3,6 +3,7 @@ import { EditorState, convertFromRaw, convertToRaw } from "draft-js"
 import { dynamic } from "blitz"
 import classes from "./RichEditor.module.scss"
 import { uploadImageCallBack } from "app/utils/uploadImage"
+import { ErrorName, ValidationError } from "app/utils/errors"
 
 // https://jpuri.github.io/react-draft-wysiwyg/#/docs?_k=jjqinp
 const editorOptions = {
@@ -33,12 +34,19 @@ const editorOptions = {
 		alignmentEnabled: true,
 		uploadCallback: async (file) => {
 			try {
+				if (file.size && file.size > 2097152) {
+					throw new ValidationError()
+				}
 				const res = await uploadImageCallBack(file)
 				return res
 			} catch (e) {
-				alert(
-					"Obs, vi klarte ikke å laster opp bilde. Vennligst prøv igjen. Ved gjentatte problemer, ta kontakt med oss."
-				)
+				if (e.name === ErrorName.ValidationError) {
+					alert("Bildet du lastet opp er for stort. Maks størrelse er 2MB.")
+				} else {
+					alert(
+						"Obs, vi klarte ikke å laster opp bilde. Vennligst prøv igjen. Ved gjentatte problemer, ta kontakt med oss."
+					)
+				}
 			}
 		},
 		previewImage: true,
