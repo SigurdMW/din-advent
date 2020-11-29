@@ -45,10 +45,11 @@ export const UploadImage: FC<UploadImageProps> = ({ onSubmit }) => {
 		}
 	}
 	const handleChange = (file: File | null) => {
-		setIsValid(true)
 		if (file && file.size > 2097152) {
+			setIsValid(false)
 			setError("Whoops, bildet er for stort. Maks størrelse er 2MB.")
 		} else {
+			setIsValid(true)
 			setError("")
 		}
 		setFile(file || undefined)
