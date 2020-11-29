@@ -46,6 +46,9 @@ module.exports = withSourceMaps({
 	// Thanks to https://github.com/vercel/next.js/discussions/14092
 	async headers() {
 		return [{
+			source: "/",
+			headers: [cspHeader]
+		},{
 			source: "/:all*",
 			headers: [cspHeader]
 		}]
