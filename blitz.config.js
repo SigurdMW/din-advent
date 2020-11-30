@@ -5,11 +5,11 @@ const withSourceMaps = require("@zeit/next-source-maps")
 
 
 const styleSrc = "; style-src 'self' 'unsafe-inline' fonts.googleapis.com https://cdn.jsdelivr.net/emojione/2.2.7/assets/css/emojione.min.css *.googletagmanager.com *.google-analytics.com"
-const scriptSrc = "; script-src 'self' 'unsafe-inline' data polyfill.io *.tawk.to https://cdn.jsdelivr.net/emojione/2.2.7/lib/js/emojione.min.js *.googletagmanager.com *.google-analytics.com"
+const scriptSrc = "; script-src 'self' 'unsafe-inline' data polyfill.io *.tawk.to https://cdn.jsdelivr.net/emojione/2.2.7/lib/js/emojione.min.js *.googletagmanager.com *.google-analytics.com *.google.com"
 const imgSrc = "; img-src 'self' data: *.cloudinary.com *.jsdelivr.net *.googletagmanager.com *.google-analytics.com *.tawk.to"
 const connectSrc = "; connect-src 'self' wss://*.tawk.to *.tawk.to *.googletagmanager.com *.google-analytics.com"
 const reportTo = "; report-to https://c255e9556ec6a33714eee5bf1d3fbe00.report-uri.com/r/d/csp/enforce"
-const cspString = "default-src 'self' fonts.gstatic.com *.tawk.to *.youtube.com *.youtu.be *.youtube-nocookie.com 'sha256-AJhf7SfDbCOGtG4Jt4Dyynp7aRDJsVMm0zBtXbYpHW8=' *.googletagmanager.com *.google-analytics.com" + styleSrc + scriptSrc + imgSrc + connectSrc + reportTo
+const cspString = "default-src 'self' fonts.gstatic.com *.tawk.to *.youtube.com *.youtu.be *.youtube-nocookie.com 'sha256-AJhf7SfDbCOGtG4Jt4Dyynp7aRDJsVMm0zBtXbYpHW8=' *.googletagmanager.com *.google-analytics.com *.google.com" + styleSrc + scriptSrc + imgSrc + connectSrc + reportTo
 
 const cspHeader = {
 	key: "Content-Security-Policy",
