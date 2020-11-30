@@ -3,6 +3,8 @@ import {
 	DynamicComponent,
 	DynamicInput,
 	DynamicInputTypes,
+	RichText,
+	YouTube,
 } from "app/interfaces/DynamicInputComponent"
 import React, { useEffect, useState } from "react"
 import { ErrorBoundary } from "react-error-boundary"
@@ -15,6 +17,8 @@ import RichTextComponent from "../DynamicComponents/RichTextComponent"
 import SnowComponent from "../DynamicComponents/SnowComponent"
 import AddComponent from "./AddComponent"
 import Sentry from "integrations/sentry"
+import Button from "../Button"
+import YouTubeComponent from "../DynamicComponents/YouTubeComponent"
 
 const componentEmptyState: ComponentEmptyState = {
 	richtext: {
@@ -30,6 +34,12 @@ const componentEmptyState: ComponentEmptyState = {
 	snow: {
 		type: DynamicInputTypes.snow,
 		props: {},
+	},
+	youtube: {
+		type: DynamicInputTypes.youtube,
+		props: {
+			youtubeId: undefined
+		}
 	}
 }
 
@@ -110,13 +120,17 @@ export const DynamicInputRootComponent = ({
 
 		switch (component.type) {
 		case DynamicInputTypes.richtext:
+			const richTextProps = component.props as RichText["props"]
 			return (
-				<RichTextComponent {...component.props} editorMode={editorMode} onChange={onChange} />
+				<RichTextComponent {...richTextProps} editorMode={editorMode} onChange={onChange} />
 			)
 		case DynamicInputTypes.confetti:
 			return <ConfettiComponent editorMode={editorMode} />
 		case DynamicInputTypes.snow:
 			return <SnowComponent editorMode={editorMode} />
+		case DynamicInputTypes.youtube:
+			const youtubeProps = component.props as YouTube["props"]
+			return <YouTubeComponent {...youtubeProps} editorMode={editorMode} onChange={onChange} />
 		default:
 			return null
 		}
@@ -147,13 +161,13 @@ export const DynamicInputRootComponent = ({
 	const editorContent = (
 		<>
 			<div className={classes.actions}>
-				<button
+				<Button
+					type="green"
 					onClick={handleSave}
 					disabled={!isDirty || isSaving}
-					className="da-button da-golden-btn"
 				>
-          Lagre
-				</button>
+					Lagre
+				</Button>
 				<AddComponent 
 					components={getAvailableComponents()}
 					onSelect={(d) => addComponent(d)}

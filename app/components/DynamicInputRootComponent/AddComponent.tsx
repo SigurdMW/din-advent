@@ -12,6 +12,9 @@ const translations: ComponentTranslations = {
 	},
 	snow: {
 		name: "Snøfall"
+	},
+	youtube: {
+		name: "YouTube"
 	}
 }
 

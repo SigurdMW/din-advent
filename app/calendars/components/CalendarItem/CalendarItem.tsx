@@ -39,7 +39,7 @@ const CalendarItem: FC<CalendarItemProps> = ({ calendar, userId }) => {
 
 	const createdByText = "Laget av " + (createdByMe ? "deg " : displayName) + " " + calendar.createdAt.toLocaleDateString()
 	return (
-		<Link href="/calendars/[calendarId]" as={`/calendars/${calendar.id}`}>
+		<Link href={`/calendars/${calendar.id}`}>
 			<a className={classes.item}>
 				<span className={classes.icon} aria-hidden="true">
 					{calendarIcon}

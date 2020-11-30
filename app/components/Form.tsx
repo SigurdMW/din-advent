@@ -2,6 +2,7 @@ import React, { ReactNode, PropsWithoutRef } from "react"
 import { Form as FinalForm, FormProps as FinalFormProps } from "react-final-form"
 import * as z from "zod"
 import Alert from "./Alert"
+import Button from "./Button"
 export { FORM_ERROR } from "final-form"
 export { Field } from "react-final-form"
 
@@ -58,14 +59,13 @@ export function Form<FormValues extends Record<string, unknown>>({
 							<Alert type={submitError.type || "danger"}>{submitError.message || submitError || "Noe gikk feil :/ Vennligst prøv igjen og gi oss beskjed om feilen gjentar seg."}</Alert>
 						)}
 
-						<button
-							type="submit"
+						<Button
+							type="green"
+							buttonType="submit"
 							disabled={submitting || disabled || hasValidationErrors || !dirty}
-							className="da-button da-golden-btn"
 						>
 							{submitText}
-						</button>
-
+						</Button>
 						<style global jsx>{`
               .form > * + * {
                 margin-top: 1rem;

@@ -1,6 +1,6 @@
 .frame {
-  position: relative;
-  margin-bottom: 30px;
+	position: relative;
+  	margin-bottom: 30px;
 
   &:hover {
     &:before {
@@ -12,16 +12,22 @@
       bottom: -0.5em;
       border: 1px dashed rgba(255, 255, 255, 0.5);
       z-index: -1;
-    }
+	}
+	
+	button {
+		visibility: visible;
+	}
   }
 }
 
+.content {
+	margin-bottom: 1em;
+}
+
 .remove {
-  position: absolute;
+	visibility: hidden;
   text-transform: uppercase;
-  left: -40px;
-  top: -8px;
-  border: none;
+  border: 1px solid #fff;
   padding: 14px;
   color: white;
   background-color: transparent;

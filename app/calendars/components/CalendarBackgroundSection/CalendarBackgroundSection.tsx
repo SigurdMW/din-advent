@@ -9,8 +9,8 @@ import classes from "./CalendarBackgroundSection.module.scss"
 import { deleteImage } from "app/utils/deleteImage"
 
 const colorTheme: Record<CalendarBackgroundColorTheme, string> = {
-	dark: "Mørk",
-	light: "Lys",
+	dark: "Hvit tekst (for mørk bakgrunn)",
+	light: "Sort tekst (for lys bakgrunn)",
 }
 
 export const CalendarBackgroundSection = ({ calendarId }) => {
@@ -68,7 +68,7 @@ export const CalendarBackgroundSection = ({ calendarId }) => {
 				value={selectedColorTheme}
 				id="selectcolortheme"
 			>
-				<option value="">Velg en</option>
+				<option value="">Gull (standard)</option>
 				{Object.entries(colorTheme).map(([key, value]) => {
 					return (
 						<option value={key} key={key}>
