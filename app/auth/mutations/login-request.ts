@@ -33,7 +33,8 @@ export default async function loginRequest(input: LoginInputType) {
 			heading: "Innlogging til Din Advent",
 			html: `
 				<p>Noen, forhåpentlig vis du, har bedt om å bli logget inn på dinadvent.no. Trykk på linken for å fullføre innlogging:</p>
-				<p><a href="${process.env.BASE_URL + "auth/" + request.loginToken}">Fullfør innlogging</a></p>`,
+				<p><a href="${process.env.BASE_URL + "auth/" + request.loginToken}">Fullfør innlogging</a></p>
+				<p>Merk! Denne linken må benyttes innen en time fra du mottok den og linken kan bare brukes en gang.</p>`,
 		})
 	}
 	return

@@ -12,7 +12,7 @@ const ConfirmationMessage = ({ sessionId }) => {
 			<>
 				<h1>Noe gikk galt 🤔</h1>
 				<p>
-          Noe gikk dessverre galt under betalingen. Vi har logget saken, så om feilen gjentar seg
+          Noe gikk dessverre galt under betalingen. Vi har logget saken, men om feilen gjentar seg
           anbefaler vi at du{" "}
 					<Link href="/contact">
 						<a>tar kontakt.</a>
@@ -24,7 +24,7 @@ const ConfirmationMessage = ({ sessionId }) => {
 	return (
 		<>
 			<h1>Takk for din betaling 🎉</h1>
-			<p>Din betaling var vellykket og du skal gå kvittering på mail til din e-postadresse.</p>
+			<p>Din betaling var vellykket og du skal få kvittering på mail til din e-postadresse.</p>
 
 			<hr className="da-divider" />
 			<h2 style={{ fontSize: "25px" }}>Slik deler du din første kalender</h2>

@@ -6,7 +6,7 @@ import Sentry from "integrations/sentry"
 const expiredRequest = (millisecondsSinceRequest: number) => {
 	const now = Date.now()
 	const secondsDifference = (now - millisecondsSinceRequest) / 1000
-	const threshold = 12 * 60 * 60
+	const threshold = 60 * 60 * 60
 	if (secondsDifference > threshold) return true
 	return false
 }

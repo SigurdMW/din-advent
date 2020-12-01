@@ -2,6 +2,7 @@ import { CalendarInput, CalendarInputType } from "../validations"
 import { SessionContext } from "blitz"
 import db from "db"
 import { ExceededPlanError } from "app/utils/errors"
+import { emptyWindowContent } from "../utils"
 
 export default async function createCalendar(
 	{ data }: { data: CalendarInputType },
@@ -24,7 +25,7 @@ export default async function createCalendar(
 			calendarWindows: {
 				create: (new Array(24).fill(0)).map((v, index) => ({
 					day: index + 1,
-					content: JSON.stringify({ components: [] }),
+					content: emptyWindowContent,
 				}))
 			}
 		},

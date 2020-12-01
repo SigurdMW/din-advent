@@ -21,7 +21,8 @@ export const CalendarUpdate = z.object({
 	options: z.object({
 		background: z.object({
 			image: z.string().optional(),
-			colorTheme: z.string().optional()
+			colorTheme: z.string().optional(),
+			position: z.string().optional()
 		}).optional()
 	}).optional()
 })

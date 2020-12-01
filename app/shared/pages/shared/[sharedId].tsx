@@ -8,7 +8,7 @@ import Spinner from "app/components/Spinner"
 export const SharedCalendarRenderer = ({ sharedId }) => {
 	const [calendar] = useQuery(getSharedCalendar, { sharedId })
 	return (
-		<Calendar calendar={calendar} isShare={true} />
+		<Calendar calendar={calendar} editMode={false} />
 	)
 }
 

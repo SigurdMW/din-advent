@@ -15,10 +15,12 @@ import PreviewEditFab from "app/calendars/components/PreviewEditFab"
 import HeroBanner from "app/components/HeroBanner"
 import { cooperateIcon, settingsSvg, shareIcon } from "app/components/icons"
 import Button from "app/components/Button"
+import getEmptyWindows from "app/calendars/queries/getEmptyWindows"
 
 export const CalendarRenderer = ({ calendarId }) => {
 	const [calendar] = useQuery(getCalendar, { where: { id: calendarId } })
 	const [calendarRoles] = useQuery(getCalendarRoles, { calendarId })
+	const [emptyWindows] = useQuery(getEmptyWindows, calendarId)
 	const [openSettingModal, setOpenSettingsModal] = useState(false)
 	const [previewMode, setPreviewMode] = useState(false)
 
@@ -60,7 +62,7 @@ export const CalendarRenderer = ({ calendarId }) => {
 				}
 			</HeroBanner>
 			<div style={{ position: "relative" }}>
-				<Calendar calendar={calendar} />
+				<Calendar calendar={calendar} emptyWindows={emptyWindows} editMode={!previewMode} />
 				{allowedToEdit && <PreviewEditFab defaultPreview={previewMode} onChange={(val) => setPreviewMode(val)} />}
 				{allowedToEdit &&
 					<CalendarSettingsModal
