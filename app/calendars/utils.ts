@@ -203,3 +203,5 @@ export const giveCollaboratorAccess = async ({ user, calendarId, createdBy, role
 		})
 	}
 }
+
+export const emptyWindowContent = JSON.stringify({ components: [] })
