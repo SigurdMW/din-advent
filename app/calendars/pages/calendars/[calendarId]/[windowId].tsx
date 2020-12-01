@@ -19,9 +19,9 @@ const GetWindow = ({ day, calendarId }) => {
 	const [window, { mutate }] = useQuery(getWindow, { where: { calendarId, day } })
 	const [calendarRoles] = useQuery(getCalendarRoles, { calendarId })
 	const { user } = useCurrentUser()
-	const [previewMode, setPreviewMode] = useState(false)
-
+	
 	const allowedToEdit = calendarRoles.includes("admin") || calendarRoles.includes("editor") || calendarRoles.includes("editor/" + day as any)
+	const [previewMode, setPreviewMode] = useState(allowedToEdit)
 
 	const saveWindow = async (v: CalendarWindowUpdateInput) => {
 		const newWindow = await updateWindow({
@@ -38,9 +38,10 @@ const GetWindow = ({ day, calendarId }) => {
 		const allowedToView = allowedToViewCalendarWindow(day)
 		if (!allowedToView) return <NotAllowedView day={day} /> 
 	}
+
 	return (
 		<>
-			<CalendarWindow calendarWindow={window} editorMode={!previewMode} save={saveWindow} />
+			<CalendarWindow calendarWindow={window} editorMode={previewMode} save={saveWindow} />
 			{allowedToEdit && <PreviewEditFab defaultPreview={previewMode} onChange={(val) => setPreviewMode(val)} />}
 			<Link href={`/calendars/${calendarId}`}>Tilbake til kalenderen</Link>
 		</>
