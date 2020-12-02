@@ -28,6 +28,16 @@ const AdminsPage: BlitzPage = () => {
 					</Link>
 				</li>
 				<li>
+					<Link href="/admins/copycalendar">
+						<a>Kopier kalender</a>
+					</Link>
+				</li>
+				<li>
+					<Link href="/admins/findowner">
+						<a>Finn eier basert på kalender ID</a>
+					</Link>
+				</li>
+				<li>
 					<Link href="/admins/statistics">
 						<a>Statistikk</a>
 					</Link>
