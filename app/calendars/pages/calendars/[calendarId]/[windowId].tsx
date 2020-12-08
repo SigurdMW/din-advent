@@ -1,5 +1,5 @@
 import React, { Suspense, useState } from "react"
-import { useParam, BlitzPage, useQuery, Link } from "blitz"
+import { useParam, BlitzPage, useQuery, Link, Router } from "blitz"
 import AuthLayout from "app/layouts/AuthLayout"
 import getWindow from "app/calendars/queries/getWindow"
 // import Modal from "react-modal"
@@ -12,16 +12,34 @@ import getCalendarRoles from "app/calendars/queries/getCalendarRoles"
 import { allowedToViewCalendarWindow } from "app/utils/allowedToViewCalendarWindow"
 import NotAllowedView from "app/components/NotAllowedView"
 import PreviewEditFab from "app/calendars/components/PreviewEditFab"
+import { usePreviewState } from "app/utils/usePreviewState"
 
 // Modal.setAppElement("#__next")
 
-const GetWindow = ({ day, calendarId }) => {
+const JumpToWindow = ({calendarId, day}) => {
+	const jumpTo = (new Array(24).fill(0)).map((c,i) => i + 1)
+	return (
+		<>
+			<label htmlFor="gotocalendarwindow">Hopp til en annen luke</label>
+			<select
+				id="gotocalendarwindow"
+				onChange={(v) => Router.push(`/calendars/${calendarId}/${v.target.value}`)}
+				style={{ maxWidth: "240px", marginBottom: "1em" }}
+			>
+				<option>Gå til luke...</option>
+				{jumpTo.filter((d) => d !== day).map((d) => <option value={d}>{d}</option>)}
+			</select>
+		</>
+	)
+}
+
+const GetWindow = ({ day, calendarId }: {day: number, calendarId: number}) => {
 	const [window, { mutate }] = useQuery(getWindow, { where: { calendarId, day } })
 	const [calendarRoles] = useQuery(getCalendarRoles, { calendarId })
 	const { user } = useCurrentUser()
 	
 	const allowedToEdit = calendarRoles.includes("admin") || calendarRoles.includes("editor") || calendarRoles.includes("editor/" + day as any)
-	const [previewMode, setPreviewMode] = useState(allowedToEdit)
+	const [previewMode, setPreviewMode] = usePreviewState(calendarId)
 
 	const saveWindow = async (v: CalendarWindowUpdateInput) => {
 		const newWindow = await updateWindow({
@@ -41,8 +59,11 @@ const GetWindow = ({ day, calendarId }) => {
 
 	return (
 		<>
-			<CalendarWindow calendarWindow={window} editorMode={previewMode} save={saveWindow} />
-			{allowedToEdit && <PreviewEditFab defaultPreview={previewMode} onChange={(val) => setPreviewMode(val)} />}
+			<CalendarWindow calendarWindow={window} editorMode={!previewMode} save={saveWindow} />
+			{allowedToEdit && <PreviewEditFab preview={previewMode} onChange={setPreviewMode} />}
+			{!previewMode && 
+				<JumpToWindow calendarId={calendarId} day={day} />
+			}
 			<Link href={`/calendars/${calendarId}`}>Tilbake til kalenderen</Link>
 		</>
 	)

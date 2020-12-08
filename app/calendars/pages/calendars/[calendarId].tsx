@@ -16,13 +16,14 @@ import HeroBanner from "app/components/HeroBanner"
 import { cooperateIcon, settingsSvg, shareIcon } from "app/components/icons"
 import Button from "app/components/Button"
 import getEmptyWindows from "app/calendars/queries/getEmptyWindows"
+import { usePreviewState } from "app/utils/usePreviewState"
 
 export const CalendarRenderer = ({ calendarId }) => {
 	const [calendar] = useQuery(getCalendar, { where: { id: calendarId } })
 	const [calendarRoles] = useQuery(getCalendarRoles, { calendarId })
 	const [emptyWindows] = useQuery(getEmptyWindows, calendarId)
 	const [openSettingModal, setOpenSettingsModal] = useState(false)
-	const [previewMode, setPreviewMode] = useState(false)
+	const [previewMode, setPreviewMode] = usePreviewState(calendarId)
 
 	const allowedToEdit = calendarRoles.includes("admin") || calendarRoles.includes("editor*")
 	const otherEditRights = calendarRoles.filter((r) => r !== "reader").length > 0
@@ -63,7 +64,7 @@ export const CalendarRenderer = ({ calendarId }) => {
 			</HeroBanner>
 			<div style={{ position: "relative" }}>
 				<Calendar calendar={calendar} emptyWindows={emptyWindows} editMode={!previewMode} />
-				{allowedToEdit && <PreviewEditFab defaultPreview={previewMode} onChange={(val) => setPreviewMode(val)} />}
+				{allowedToEdit && <PreviewEditFab preview={previewMode} onChange={setPreviewMode} />}
 				{allowedToEdit &&
 					<CalendarSettingsModal
 						isOpen={openSettingModal}
