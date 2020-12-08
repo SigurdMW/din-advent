@@ -1,5 +1,5 @@
 import FAB from "app/components/FAB"
-import React, { useEffect, useState } from "react"
+import React from "react"
 
 const penSvg = (
 	<svg x="0px" y="0px" viewBox="0 0 383.947 383.947" width="19" height="19">
@@ -17,23 +17,15 @@ const eyeSvg = (
 	</svg>
 )
 
-export const PreviewEditFab = ({ defaultPreview = false, onChange }) => {
-	const [previewMode, setPreviewMode] = useState(defaultPreview)
-	
-	useEffect(() => {
-		onChange(previewMode)
-	}, [previewMode])
-
-	return (
-		<FAB
-			onClick={() => setPreviewMode(!previewMode)}
-			style={{ position: "fixed", bottom: "90px", right: "20px" }}
-			title={previewMode ? "Bytt til redigeringsmodus" : "Bytt til forhåndsvisning"}
-			aria-label={previewMode ? "Bytt til redigeringsmodus" : "Bytt til forhåndsvisning"}
-		>
-			{previewMode ? penSvg : eyeSvg}
-		</FAB>
-	)
-}
+export const PreviewEditFab = ({ preview, onChange }) => (
+	<FAB
+		onClick={() => onChange(!preview)}
+		style={{ position: "fixed", bottom: "90px", right: "20px" }}
+		title={preview ? "Bytt til redigeringsmodus" : "Bytt til forhåndsvisning"}
+		aria-label={preview ? "Bytt til redigeringsmodus" : "Bytt til forhåndsvisning"}
+	>
+		{preview ? penSvg : eyeSvg}
+	</FAB>
+)
 
 export default PreviewEditFab
