@@ -1,15 +1,15 @@
 import { CalendarInput, CalendarInputType } from "../validations"
-import { SessionContext } from "blitz"
+import { Ctx } from "blitz"
 import db from "db"
 import { ExceededPlanError } from "app/utils/errors"
 import { emptyWindowContent } from "../utils"
 
 export default async function createCalendar(
 	{ data }: { data: CalendarInputType },
-	ctx: { session?: SessionContext } = {}
+	ctx: Ctx
 ) {
 	CalendarInput.parse(data)
-	ctx.session!.authorize()
+	ctx.session.authorize()
 	const userId = ctx.session!.userId
 	const numCalendars = await db.calendar.count({ where: { userId } })
 	if (numCalendars > 50) throw new ExceededPlanError("Du har laget maks antall kalendere.")

@@ -1,12 +1,12 @@
 import { NewCollaboratorInput, ShareByEmailFunctionArgsType } from "../validations"
-import { SessionContext } from "blitz"
+import { Ctx } from "blitz"
 import db from "db"
 import { allowedEditCalendar, AvailableRoles, createUserInvite, giveCollaboratorAccess } from "../utils"
 import { sendEmail } from "app/email"
 
 export default async function shareCalendarByEmail(
 	{ calendarId, ...rest }: ShareByEmailFunctionArgsType & { roles: AvailableRoles[] },
-	ctx: { session?: SessionContext } = {}
+	ctx: Ctx
 ) {
 	const {email: theMail, roles } = NewCollaboratorInput.parse(rest)
 	const email = theMail.toLowerCase()
@@ -14,7 +14,7 @@ export default async function shareCalendarByEmail(
 	// const userId = await authAndValidatePlanLimit(ctx) no limit on collaborators until we find the correct pricing
 	const userId = await allowedEditCalendar({ calendarId, ctx })
 
-	const userWithRole = await db.user.findOne({ where: { email } })
+	const userWithRole = await db.user.findUnique({ where: { email } })
 	if (!userWithRole) {
 		const invites = await db.userInvite.findMany({ where: {
 			calendarId,
@@ -31,7 +31,7 @@ export default async function shareCalendarByEmail(
 			})
 		})
 		if (!relevantInvites.length) return
-		const userSharing = await db.user.findOne({ where: { id: userId }})
+		const userSharing = await db.user.findUnique({ where: { id: userId }})
 		if (!userSharing) return
 		const displayName = userSharing.name || userSharing.email
 		const messageAndTitle = `${displayName} ønsker å samarbeide`

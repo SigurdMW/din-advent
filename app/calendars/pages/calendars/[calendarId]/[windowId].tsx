@@ -1,5 +1,5 @@
-import React, { Suspense, useState } from "react"
-import { useParam, BlitzPage, useQuery, Link, Router } from "blitz"
+import React, { Suspense } from "react"
+import { useParam, BlitzPage, useQuery, Link, Router, useMutation } from "blitz"
 import AuthLayout from "app/layouts/AuthLayout"
 import getWindow from "app/calendars/queries/getWindow"
 // import Modal from "react-modal"
@@ -34,21 +34,22 @@ const JumpToWindow = ({calendarId, day}) => {
 }
 
 const GetWindow = ({ day, calendarId }: {day: number, calendarId: number}) => {
-	const [window, { mutate }] = useQuery(getWindow, { where: { calendarId, day } })
+	const [window, { setQueryData }] = useQuery(getWindow, { where: { calendarId, day } })
 	const [calendarRoles] = useQuery(getCalendarRoles, { calendarId })
 	const { user } = useCurrentUser()
+	const [updateWindowMutation] = useMutation(updateWindow)
 	
 	const allowedToEdit = calendarRoles.includes("admin") || calendarRoles.includes("editor") || calendarRoles.includes("editor/" + day as any)
 	const [previewMode, setPreviewMode] = usePreviewState(calendarId)
 
 	const saveWindow = async (v: CalendarWindowUpdateInput) => {
-		const newWindow = await updateWindow({
+		const newWindow = await updateWindowMutation({
 			windowId: window.id,
 			calendarId,
 			day: window.day,
 			data: v,
 		})
-		mutate(newWindow)
+		setQueryData(newWindow)
 	}
 
 	if (!user) return null

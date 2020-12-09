@@ -1,9 +1,9 @@
 import db from "db"
-import { SessionContext } from "blitz"
+import { Ctx } from "blitz"
 
 export default async function getCurrentUserPayments(
 	_ = null,
-	ctx: { session?: SessionContext } = {}
+	ctx: Ctx
 ) {
 	if (!ctx.session?.userId) return null
 

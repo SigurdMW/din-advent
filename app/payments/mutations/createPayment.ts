@@ -1,6 +1,6 @@
 import { Plan } from "app/interfaces/Payment"
 import { createPaymentRequest } from "app/Stripe"
-import { SessionContext } from "blitz"
+import { Ctx } from "blitz"
 import { PaymentCreateArgs } from "db"
 
 type CreatePaymentInput = {
@@ -8,10 +8,10 @@ type CreatePaymentInput = {
 }
 export default async function createPayment(
 	{ data }: CreatePaymentInput,
-	ctx: { session?: SessionContext } = {}
+	ctx: Ctx
 ) {
-  ctx.session!.authorize()
-  const userId = ctx.session?.userId
-  const id = await createPaymentRequest({ userId, plan: data.plan as Plan })
-  return id
+	ctx.session.authorize()
+	const userId = ctx.session?.userId
+	const id = await createPaymentRequest({ userId, plan: data.plan as Plan })
+	return id
 }

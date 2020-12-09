@@ -1,7 +1,7 @@
 import React, { FC, Suspense, useEffect, useState } from "react"
 import classes from "app/layouts/Navigation.module.scss"
 import { useCurrentUser } from "app/hooks/useCurrentUser"
-import { Link, Router } from "blitz"
+import { Link, Router, useMutation } from "blitz"
 import logout from "app/auth/mutations/logout"
 import Dropdown from "app/components/Dropdown"
 import { menuIcon } from "app/components/icons"
@@ -54,17 +54,20 @@ const AnonHeader = () => (
 	</>
 )
 
-const Logout = () => (
-	<button
-		onClick={async () => {
-			await Router.push("/logout")
-			await logout()
-			if (window) window.location.reload()
-		}}
-	>
+const Logout = () => {
+	const [logoutMutation] = useMutation(logout)
+	return (
+		<button
+			onClick={async () => {
+				await Router.push("/logout")
+				await logoutMutation()
+				if (window) window.location.reload()
+			}}
+		>
 	Logg ut
-	</button>
-)
+		</button>
+	)
+}
 
 export const NavigationContent: FC<{ width: number }> = ({ width, children }) => {
 	const { user } = useCurrentUser()

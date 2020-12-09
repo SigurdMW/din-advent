@@ -1,4 +1,4 @@
-import { SessionContext } from "blitz"
+import { Ctx } from "blitz"
 import { validateLoginRequest } from "app/auth/auth-utils"
 import { LoginRequestInput, LoginRequestInputType } from "../validations"
 import createSession from "./createSession"
@@ -12,7 +12,7 @@ class LoginRequestError extends Error {
 
 export default async function login(
 	input: LoginRequestInputType,
-	ctx: { session?: SessionContext } = {}
+	ctx: Ctx
 ) {
 	// This throws an error if input is invalid
 	const { request } = LoginRequestInput.parse(input)

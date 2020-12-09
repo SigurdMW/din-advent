@@ -1,13 +1,13 @@
 import db from "db"
-import { SessionContext } from "blitz"
+import { Ctx } from "blitz"
 
 export default async function getAdminList(
 	// eslint-disable-next-line no-empty-pattern
 	nothing: any,
-	ctx: { session?: SessionContext } = {}
+	ctx: Ctx
 ) {
-  ctx.session!.authorize("admin")
-  const admins = await db.user.findMany({
+	ctx.session.authorize("admin")
+	const admins = await db.user.findMany({
 	  where: {
 		  role: {
 			  in: "admin"
@@ -18,6 +18,6 @@ export default async function getAdminList(
 		 name: true,
 		 id: true
 	 }
-  })
-  return admins
+	})
+	return admins
 }

@@ -1,0 +1,38 @@
+$listItemGap: 50px;
+$listItemGapSmall: 20px;
+$listBreakPoint: 975px;
+
+.list {
+	list-style: none;
+	padding: 0;
+	display: flex;
+	margin: 0 -#{$listItemGap};
+	flex-wrap: wrap;
+  
+	@media (max-width: 700px) {
+	  margin: 0 -#{$listItemGapSmall};
+	}
+  
+	@media (max-width: 600px) {
+	  
+	  flex-flow: column;
+	}
+}
+
+.listItem {
+	padding: 20px $listItemGap;
+
+	@media (max-width: 700px) {
+		padding: 20px $listItemGapSmall;
+	 }
+
+  @media (min-width: 600px) {
+	display: flex;
+	max-width: 50%;
+	flex-grow: 1;
+  }
+
+  @media (min-width: $listBreakPoint) {
+	max-width: 33.33333%;	
+  }
+}

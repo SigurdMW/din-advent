@@ -6,19 +6,20 @@ import Layout from "app/layouts/ArticleLayout"
 import { pricePlanAndFeatures } from "app/price"
 import updateCurrentUserName from "app/users/mutations/updateCurrentUserName"
 import getCurrentUserPayments from "app/users/queries/getCurrentUserPayments"
-import { Link, useQuery } from "blitz"
+import { Link, useMutation, useQuery } from "blitz"
 import React, { Suspense, useState } from "react"
 import classes from "./profile.module.scss"
 
 const NameField = ({ name, mutate }: { name: string | null; mutate: (name: string) => void }) => {
 	const [newName, setNewName] = useState(name || "")
 	const [error, setError] = useState("")
+	const [updateCurrentUserNameMutation] = useMutation(updateCurrentUserName)
 
 	const disabled = !newName ? true : name ? name === newName.trim() : false
 	const update = async () => {
 		try {
 			if (!newName) return
-			await updateCurrentUserName({ name: newName })
+			await updateCurrentUserNameMutation({ name: newName })
 			await mutate(newName)
 		} catch (e) {
 			setError(e.message ? e.message : "Noe gikk galt. Vennligst forsøk igjen.")
@@ -48,7 +49,7 @@ const NameField = ({ name, mutate }: { name: string | null; mutate: (name: strin
 }
 
 const Profile = () => {
-	const { user, mutate } = useCurrentUser()
+	const { user, setQueryData } = useCurrentUser()
 	const [payments, { isLoading }] = useQuery(getCurrentUserPayments, null)
 	//   const [showDeleteModal, setShowDeleteModal] = useState(false)
 	//   const [didCheck, setDidCheck] = useState(false)
@@ -58,7 +59,7 @@ const Profile = () => {
 
 	const mutateName = async (name: string) => {
 		user.name = name
-		await mutate(user)
+		await setQueryData(user)
 	}
 
 	const userPayments = payments || []

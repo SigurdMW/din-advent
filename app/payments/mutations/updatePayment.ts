@@ -1,4 +1,4 @@
-import { SessionContext } from "blitz"
+import { Ctx } from "blitz"
 import db, { PaymentUpdateArgs } from "db"
 
 type UpdatePaymentInput = {
@@ -8,11 +8,11 @@ type UpdatePaymentInput = {
 
 export default async function updatePayment(
 	{ where, data }: UpdatePaymentInput,
-	ctx: { session?: SessionContext } = {}
+	ctx: Ctx
 ) {
-  ctx.session!.authorize()
+	ctx.session.authorize()
 
-  const payment = await db.payment.update({ where, data })
+	const payment = await db.payment.update({ where, data })
 
-  return payment
+	return payment
 }

@@ -2,7 +2,7 @@ import { sendEmail } from "app/email"
 import db, { UserInviteCreateInput, User } from "db"
 import { Plan } from "app/interfaces/Payment"
 import { AuthorizationError, ExceededPlanError, NotFoundError, PaymentRequiredError } from "app/utils/errors"
-import { SessionContext } from "blitz"
+import { Ctx } from "blitz"
 
 export type AvailableRoles =
 	| "reader"
@@ -40,8 +40,8 @@ interface GrantCalendarAccess {
 	role: AvailableRoles
 }
 
-export const authAndValidatePlanLimit = async (ctx: { session?: SessionContext }) => {
-	ctx.session!.authorize()
+export const authAndValidatePlanLimit = async (ctx: Ctx) => {
+	ctx.session.authorize()
 	const userId = ctx.session?.userId
 	if (!userId) throw new Error("Missing userId")
 	const userPublicData = ctx.session?.publicData
@@ -53,11 +53,11 @@ export const authAndValidatePlanLimit = async (ctx: { session?: SessionContext }
 	return userId
 }
 
-export const allowedEditCalendar = async ({ calendarId, ctx }: { calendarId: number, ctx: { session?: SessionContext } }) => {
-	ctx.session!.authorize()
+export const allowedEditCalendar = async ({ calendarId, ctx }: { calendarId: number, ctx: Ctx }) => {
+	ctx.session.authorize() as any
 	const userId = ctx.session?.userId
 	if (!userId || !ctx.session) throw new Error("Missing userId")
-	const calendar = await db.calendar.findOne({ where: { id: calendarId } })
+	const calendar = await db.calendar.findUnique({ where: { id: calendarId } })
 	if (!calendar) throw new NotFoundError()
 	if (userId === calendar.userId) return userId
 
@@ -73,11 +73,11 @@ export const allowedEditCalendar = async ({ calendarId, ctx }: { calendarId: num
 	return userId
 }
 
-export const allowedEditCalendarWindow = async ({ calendarId, day, ctx }: { calendarId: number, day: number, ctx: { session?: SessionContext } }) => {
-	ctx.session!.authorize()
+export const allowedEditCalendarWindow = async ({ calendarId, day, ctx }: { calendarId: number, day: number, ctx: Ctx }) => {
+	ctx.session.authorize() as any
 	const userId = ctx.session?.userId
 	if (!userId || !ctx.session) throw new Error("Missing userId")
-	const calendar = await db.calendar.findOne({ where: { id: calendarId } })
+	const calendar = await db.calendar.findUnique({ where: { id: calendarId } })
 	if (!calendar) throw new NotFoundError()
 	if (userId === calendar.userId) return userId
 	const hasRole = await db.role.count({
@@ -92,11 +92,11 @@ export const allowedEditCalendarWindow = async ({ calendarId, day, ctx }: { cale
 	return userId
 }
 
-export const allowedToAccessWindow = async ({ calendarId, day, ctx }: { calendarId: number, day: number, ctx: { session?: SessionContext } }) => {
-	ctx.session!.authorize()
+export const allowedToAccessWindow = async ({ calendarId, day, ctx }: { calendarId: number, day: number, ctx: Ctx }) => {
+	ctx.session.authorize() as any
 	const userId = ctx.session?.userId
 	if (!userId || !ctx.session) throw new Error("Missing userId")
-	const calendar = await db.calendar.findOne({ where: { id: calendarId } })
+	const calendar = await db.calendar.findUnique({ where: { id: calendarId } })
 	if (!calendar) throw new NotFoundError()
 	if (userId === calendar.userId) return userId
 	const hasRole = await db.role.count({
@@ -131,7 +131,7 @@ export const grantCalendarAccess = async ({
 			},
 		},
 	})
-	const createdByUser = await db.user.findOne({ where: { id: createdBy } })
+	const createdByUser = await db.user.findUnique({ where: { id: createdBy } })
 	if (!createdByUser) throw new NotFoundError()
 
 	const displayName = createdByUser.name || createdByUser.email
@@ -165,7 +165,7 @@ export const createUserInvite = async ({ calendarId, email, userId, role }: Crea
 			},
 		},
 	})
-	const user = await db.user.findOne({ where: { id: userId } })
+	const user = await db.user.findUnique({ where: { id: userId } })
 	return user
 }
 
@@ -188,7 +188,7 @@ export const giveCollaboratorAccess = async ({ user, calendarId, createdBy, role
 	})
 
 	if (sendMail) {
-		const createdByUser = await db.user.findOne({ where: { id: createdBy } })
+		const createdByUser = await db.user.findUnique({ where: { id: createdBy } })
 		if (!createdByUser) throw new NotFoundError()
 
 		const displayName = createdByUser.name || createdByUser.email

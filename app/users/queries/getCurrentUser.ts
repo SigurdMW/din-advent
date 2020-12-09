@@ -1,5 +1,5 @@
 import db from "db"
-import { SessionContext } from "blitz"
+import { Ctx } from "blitz"
 import Sentry from "integrations/sentry"
 
 // const data = await ctx.session.getPrivateData()
@@ -12,13 +12,13 @@ import Sentry from "integrations/sentry"
 // 	await ctx.session.setPrivateData(privateData)
 // }
 
-export default async function getCurrentUser(_ = null, ctx: { session?: SessionContext } = {}) {
+export default async function getCurrentUser(_ = null, ctx: Ctx) {
 	const userId = ctx.session?.userId
 	if (!ctx.session || !userId) return null
 
 	try {
-		const user = await db.user.findOne({
-			where: { id: userId },
+		const user = await db.user.findFirst({
+			where: {id: ctx.session.userId},
 			select: { id: true, name: true, email: true, role: true, plan: true },
 		})
 		return user

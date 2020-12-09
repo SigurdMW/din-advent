@@ -12,7 +12,7 @@ export default async function getSharedCalendarWindow({
 	const shareKeys = await db.shareKey.findMany({ where: { key: sharedId } })
 	if (shareKeys.length !== 1) throw new NotFoundError()
 	const shareKey = shareKeys[0]
-	const calendar = await db.calendar.findOne({ where: { id: shareKey.calendarId } })
+	const calendar = await db.calendar.findUnique({ where: { id: shareKey.calendarId } })
 	if (!calendar) throw new NotFoundError()
 	const windows = await db.calendarWindow.findMany({ where: { day, calendarId: calendar.id } })
 	if (windows.length === 0) throw new NotFoundError()
