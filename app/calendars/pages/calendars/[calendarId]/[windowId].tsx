@@ -1,4 +1,4 @@
-import React, { Suspense, useState } from "react"
+import React, { Suspense } from "react"
 import { useParam, BlitzPage, useQuery, Link, Router } from "blitz"
 import AuthLayout from "app/layouts/AuthLayout"
 import getWindow from "app/calendars/queries/getWindow"
@@ -39,7 +39,13 @@ const GetWindow = ({ day, calendarId }: {day: number, calendarId: number}) => {
 	const { user } = useCurrentUser()
 	
 	const allowedToEdit = calendarRoles.includes("admin") || calendarRoles.includes("editor") || calendarRoles.includes("editor/" + day as any)
-	const [previewMode, setPreviewMode] = usePreviewState(calendarId)
+	const isReader = calendarRoles.includes("reader")
+	const isReaderOnly = isReader && calendarRoles.length === 1
+	const allowedToView = allowedToViewCalendarWindow(day)
+	
+	const defaultPreviewState = isReaderOnly ? true : isReader ? allowedToView : false
+
+	const [previewMode, setPreviewMode] = usePreviewState(calendarId,  defaultPreviewState)
 
 	const saveWindow = async (v: CalendarWindowUpdateInput) => {
 		const newWindow = await updateWindow({
@@ -53,7 +59,6 @@ const GetWindow = ({ day, calendarId }: {day: number, calendarId: number}) => {
 
 	if (!user) return null
 	if (!allowedToEdit) {
-		const allowedToView = allowedToViewCalendarWindow(day)
 		if (!allowedToView) return <NotAllowedView day={day} /> 
 	}
 
