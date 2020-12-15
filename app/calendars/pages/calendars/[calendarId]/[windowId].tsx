@@ -23,7 +23,7 @@ const JumpToWindow = ({calendarId, day}) => {
 			<label htmlFor="gotocalendarwindow">Hopp til en annen luke</label>
 			<select
 				id="gotocalendarwindow"
-				onChange={(v) => Router.push(`/calendars/${calendarId}/${v.target.value}`)}
+				onChange={(v) => window.location.href = `/calendars/${calendarId}/${v.target.value}`} // TODO: fix this to use JS navigation but make sure RichText editor updates content accordingly
 				style={{ maxWidth: "240px", marginBottom: "1em" }}
 			>
 				<option>Gå til luke...</option>
