@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Link, useRouter, BlitzPage } from "blitz"
+import { Link, useRouter, BlitzPage, useMutation } from "blitz"
 import createCalendar from "app/calendars/mutations/createCalendar"
 import CalendarForm from "app/calendars/components/CalendarForm"
 import HeroBanner from "app/components/HeroBanner"
@@ -8,6 +8,7 @@ import FullWidthLayout from "app/layouts/FullWidthLayout"
 const NewCalendarPage: BlitzPage = () => {
 	const [isCreating, setIsCreating] = useState(false)
 	const router = useRouter()
+	const [createCalendarMutation] = useMutation(createCalendar)
 
 	return (
 		<HeroBanner>
@@ -21,7 +22,7 @@ const NewCalendarPage: BlitzPage = () => {
 				onSubmit={async (values) => {
 					try {
 						setIsCreating(true)
-						const calendarId = await createCalendar({ data: { name: values.name } })
+						const calendarId = await createCalendarMutation({ data: { name: values.name } })
 						router.push("/calendars/[calendarId]", `/calendars/${calendarId}`)
 					} catch (error) {
 						throw error

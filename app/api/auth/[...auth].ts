@@ -35,41 +35,45 @@ const auth = async (req, res) => {
 		successRedirectUrl: afterLoginUrl,
 		errorRedirectUrl: "/error",
 		strategies: [
-			new FacebookStrategy(
-				{
-					clientID: FACEBOOK_APP_ID,
-					clientSecret: FACEBOOK_APP_SECRET,
-					callbackURL: getCallbackUrl("facebook"),
-					profileFields: ["id", "displayName", "email"],
-					scope: ["email"],
-				},
-				async function (_token, _tokenSecret, profile, done) {
-					const email = profile.emails && profile.emails[0]?.value
-					if (!email) {
-						return done(new Error("Facebook OAuth response doesn't have email."))
+			{
+				strategy: new FacebookStrategy(
+					{
+						clientID: FACEBOOK_APP_ID,
+						clientSecret: FACEBOOK_APP_SECRET,
+						callbackURL: getCallbackUrl("facebook"),
+						profileFields: ["id", "displayName", "email"],
+						scope: ["email"],
+					},
+					async function (_token, _tokenSecret, profile, done) {
+						const email = profile.emails && profile.emails[0]?.value
+						if (!email) {
+							return done(new Error("Facebook OAuth response doesn't have email."))
+						}
+						const user = await createOrUpdateUser({ email, name: profile.displayName, active: true })
+						const publicData = getPublicData(user, "facebook")
+						done(null, { publicData, redirectUrl: returnTo })
 					}
-					const user = await createOrUpdateUser({ email, name: profile.displayName, active: true })
-					const publicData = getPublicData(user, "facebook")
-					done(null, { publicData, redirectUrl: returnTo })
-				}
-			),
-			new GoogleStrategy(
-				{
-					clientID: GOOGLE_CLIENT_ID,
-					clientSecret: GOOGLE_CLIENT_SECRET,
-					callbackURL: getCallbackUrl("google"),
-					scope: ["profile", "email"],
-				},
-				async function (_token, _tokenSecret, profile, done) {
-					const email = profile.emails && profile.emails[0]?.value
-					if (!email) {
-						return done(new Error("Google OAuth response doesn't have email."))
+				)
+			},
+			{
+				strategy: new GoogleStrategy(
+					{
+						clientID: GOOGLE_CLIENT_ID,
+						clientSecret: GOOGLE_CLIENT_SECRET,
+						callbackURL: getCallbackUrl("google"),
+						scope: ["profile", "email"],
+					},
+					async function (_token, _tokenSecret, profile, done) {
+						const email = profile.emails && profile.emails[0]?.value
+						if (!email) {
+							return done(new Error("Google OAuth response doesn't have email."))
+						}
+						const user = await createOrUpdateUser({ email, name: profile.displayName, active: true })
+						const publicData = getPublicData(user, "google")
+						done(null, { publicData, redirectUrl: returnTo })
 					}
-					const user = await createOrUpdateUser({ email, name: profile.displayName, active: true })
-					const publicData = getPublicData(user, "google")
-					done(null, { publicData, redirectUrl: returnTo })
-				}
-			),
+				)
+			}
 		],
 	})(req, res)
 }

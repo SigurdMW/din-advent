@@ -1,25 +1,23 @@
 import { AuthenticationError, NotFoundError } from "app/utils/errors"
-import { SessionContext } from "blitz"
-import db, { FindOneCalendarArgs } from "db"
+import { Ctx } from "blitz"
+import db, { FindUniqueCalendarArgs } from "db"
 import Sentry from "integrations/sentry"
 
 type GetCalendarInput = {
-  where: FindOneCalendarArgs["where"]
-  // Only available if a model relationship exists
-  // include?: FindOneCalendarArgs['include']
+  where: FindUniqueCalendarArgs["where"]
 }
 
 export default async function getCalendar(
 	{ where }: GetCalendarInput,
-	ctx: { session?: SessionContext } = {}
+	ctx: Ctx
 ) {
 	if (!where.id) throw new NotFoundError()
-  ctx.session!.authorize()
-  const userId = ctx.session?.userId
-  if (!ctx.session || !userId) throw new AuthenticationError()
+	ctx.session.authorize()
+	const userId = ctx.session?.userId
+	if (!ctx.session || !userId) throw new AuthenticationError()
 
-  try {
-  	const calendar = await db.calendar.findOne({ where })
+	try {
+  	const calendar = await db.calendar.findUnique({ where })
   	if (!calendar) throw new NotFoundError()
   	if (userId === calendar.userId) return calendar
 	
@@ -32,8 +30,8 @@ export default async function getCalendar(
 
   	if (roles === 0) throw new NotFoundError() 
   	return calendar
-  } catch (e) {
+	} catch (e) {
   	Sentry.captureException(e)
   	throw e
-  }
+	}
 }

@@ -1,19 +1,19 @@
-import React, { useState } from "react"
+import React from "react"
 import { LabeledTextField } from "app/components/LabeledTextField"
 import { Form, FORM_ERROR } from "app/components/Form"
 import { CalendarInput, CalendarInputType } from "../validations"
 import updateCalendar from "../mutations/updateCalendar"
-import { useQuery } from "blitz"
+import { useMutation, useQuery } from "blitz"
 import getCalendar from "../queries/getCalendar"
 
 type ChangeNameFormProps = {
   calendarId: number
-//   mutate: (v: CalendarInputType) => Promise<void>
 }
 
 export const ChangeNameForm = ({ calendarId }: ChangeNameFormProps) => {
-	const [calendar, { mutate }] = useQuery(getCalendar, { where: { id: calendarId } })
-	const [name, setName] = useState(calendar.name)
+	const [calendar, { setQueryData }] = useQuery(getCalendar, { where: { id: calendarId } })	
+	const [updateCalendarMutation] = useMutation(updateCalendar)
+
 	return (
 		<Form<CalendarInputType>
 			submitText="Endre navn"
@@ -21,8 +21,8 @@ export const ChangeNameForm = ({ calendarId }: ChangeNameFormProps) => {
 			initialValues={{ name: calendar.name }}
 			onSubmit={async (values) => {
 				try {
-					const calendar = await updateCalendar({ where: { id: calendarId }, data: { name: values.name } })
-					await mutate(calendar)
+					const calendar = await updateCalendarMutation({ where: { id: calendarId }, data: { name: values.name } })
+					await setQueryData(calendar)
 				} catch (error) {
 					return {
 						[FORM_ERROR]: {

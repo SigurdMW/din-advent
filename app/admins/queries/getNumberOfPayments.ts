@@ -1,12 +1,12 @@
 import db from "db"
-import { SessionContext } from "blitz"
+import { Ctx } from "blitz"
 
 export default async function getNumberOfPayments(
 	// eslint-disable-next-line no-empty-pattern
 	{ }: any,
-	ctx: { session?: SessionContext } = {}
+	ctx: Ctx
 ) {
-	ctx.session!.authorize("admin")
+	ctx.session.authorize("admin")
 	const payments = await db.payment.count({
 		where: {
 			user: {

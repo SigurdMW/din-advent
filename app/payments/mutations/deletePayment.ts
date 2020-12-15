@@ -1,4 +1,4 @@
-import { SessionContext } from "blitz"
+import { Ctx } from "blitz"
 import db, { PaymentDeleteArgs } from "db"
 
 type DeletePaymentInput = {
@@ -7,11 +7,11 @@ type DeletePaymentInput = {
 
 export default async function deletePayment(
 	{ where }: DeletePaymentInput,
-	ctx: { session?: SessionContext } = {}
+	ctx: Ctx
 ) {
-  ctx.session!.authorize()
+	ctx.session.authorize()
 
-  const payment = await db.payment.delete({ where })
+	const payment = await db.payment.delete({ where })
 
-  return payment
+	return payment
 }

@@ -1,5 +1,5 @@
 import React, { Suspense } from "react"
-import { useParam, BlitzPage, useQuery, Link } from "blitz"
+import { useParam, BlitzPage, useQuery, Link, useMutation } from "blitz"
 import AuthLayout from "app/layouts/AuthLayout"
 import Spinner from "app/components/Spinner"
 import InviteCollaborateSection from "app/calendars/components/Collaborate/InviteCollaborateSection"
@@ -13,19 +13,20 @@ import deleteInvites from "app/calendars/mutations/deleteInvites"
 import { EmailAndInvite, UserAndRoles } from "app/interfaces/Collaborate"
 
 const GetCollaboratePage = ({ calendarId }) => {
-	const [{ users, invites }, { mutate, refetch }] = useQuery(getCalendarCollaborators, {
+	const [deleteInvitesMutation] = useMutation(deleteInvites)
+	const [{ users, invites }, { setQueryData, refetch }] = useQuery(getCalendarCollaborators, {
 		calendarId,
 	})
 
 	const deleteUserRoles = async (user: UserAndRoles) => {
 		const oldUsers = [...users]
 		const newUsers = users.filter((u) => u.user.id !== user.user.id)
-		await mutate({ users: newUsers, invites })
+		await setQueryData({ users: newUsers, invites })
 		try {
 			await deleteRoles({ calendarId, roles: user.roles })
 			await refetch() // TODO: figure out why this is needed
 		} catch (e) {
-			await mutate({ users: oldUsers, invites })
+			await setQueryData({ users: oldUsers, invites })
 		}
 	}
 
@@ -39,12 +40,12 @@ const GetCollaboratePage = ({ calendarId }) => {
 	const deleteUserInvites = async (invite: EmailAndInvite) => {
 		const oldInvites = [...invites]
 		const newInvites = invites.filter((i) =>i.email !== invite.email)
-		await mutate({ users, invites: newInvites })
+		await setQueryData({ users, invites: newInvites })
 		try {
-			await deleteInvites({ calendarId, invites: invite.invites })
+			await deleteInvitesMutation({ calendarId, invites: invite.invites })
 			await refetch() // TODO: figure out why this is needed
 		} catch (e) {
-			await mutate({ users, invites: oldInvites })
+			await setQueryData({ users, invites: oldInvites })
 		}
 	}
 	const handleDeleteInvite = (invite: EmailAndInvite) => {

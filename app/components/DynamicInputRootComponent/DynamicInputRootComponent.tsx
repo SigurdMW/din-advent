@@ -82,6 +82,10 @@ export const DynamicInputRootComponent = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [localComponents, components])
 
+	useEffect(() => {
+		setLocalComponents(components)
+	}, [id])
+
 	const handleSave = async () => {
 		if (!save) return
 		try {

@@ -1,5 +1,5 @@
 import { AuthenticationError } from 'app/utils/errors';
-import { SessionContext } from "blitz"
+import { Ctx } from "blitz"
 import db, { FindManyCalendarArgs } from "db"
 
 type GetCalendarsInput = {
@@ -14,19 +14,19 @@ type GetCalendarsInput = {
 
 export default async function getCalendars(
 	{ where, orderBy, cursor, take, skip }: GetCalendarsInput,
-	ctx: { session?: SessionContext } = {}
+	ctx: Ctx
 ) {
-  ctx.session!.authorize()
-  const userId = ctx.session?.userId
-  if (!userId) throw new AuthenticationError()
-  const roles = await db.role.findMany({ where: { calendarId: where?.id, userId }})
-  const calendars = await db.calendar.findMany({
+	ctx.session.authorize()
+	const userId = ctx.session?.userId
+	if (!userId) throw new AuthenticationError()
+	const roles = await db.role.findMany({ where: { calendarId: where?.id, userId }})
+	const calendars = await db.calendar.findMany({
 	  where: { OR: [{ id: { in: roles.map((r) => r.calendarId) } }, { userId: userId }] },
 	  include: {
 		  user: true,
 		  lastUpdateBy: true
 	  },
   	orderBy,
-  })
-  return calendars
+	})
+	return calendars
 }

@@ -1,5 +1,5 @@
 import React, { Suspense } from "react"
-import { useParam, BlitzPage, useQuery, Link, Router } from "blitz"
+import { useParam, BlitzPage, useQuery, Link, Router, useMutation } from "blitz"
 import AuthLayout from "app/layouts/AuthLayout"
 import getWindow from "app/calendars/queries/getWindow"
 // import Modal from "react-modal"
@@ -23,20 +23,21 @@ const JumpToWindow = ({calendarId, day}) => {
 			<label htmlFor="gotocalendarwindow">Hopp til en annen luke</label>
 			<select
 				id="gotocalendarwindow"
-				onChange={(v) => Router.push(`/calendars/${calendarId}/${v.target.value}`)}
+				onChange={(v) => window.location.href = `/calendars/${calendarId}/${v.target.value}`} // TODO: fix this to use JS navigation but make sure RichText editor updates content accordingly
 				style={{ maxWidth: "240px", marginBottom: "1em" }}
 			>
 				<option>Gå til luke...</option>
-				{jumpTo.filter((d) => d !== day).map((d) => <option value={d}>{d}</option>)}
+				{jumpTo.filter((d) => d !== day).map((d) => <option key={d} value={d}>{d}</option>)}
 			</select>
 		</>
 	)
 }
 
 const GetWindow = ({ day, calendarId }: {day: number, calendarId: number}) => {
-	const [window, { mutate }] = useQuery(getWindow, { where: { calendarId, day } })
+	const [window, { setQueryData }] = useQuery(getWindow, { where: { calendarId, day } })
 	const [calendarRoles] = useQuery(getCalendarRoles, { calendarId })
 	const { user } = useCurrentUser()
+	const [updateWindowMutation] = useMutation(updateWindow)
 	
 	const allowedToEdit = calendarRoles.includes("admin") || calendarRoles.includes("editor") || calendarRoles.includes("editor/" + day as any)
 	const isReader = calendarRoles.includes("reader")
@@ -48,13 +49,13 @@ const GetWindow = ({ day, calendarId }: {day: number, calendarId: number}) => {
 	const [previewMode, setPreviewMode] = usePreviewState(calendarId,  defaultPreviewState)
 
 	const saveWindow = async (v: CalendarWindowUpdateInput) => {
-		const newWindow = await updateWindow({
+		const newWindow = await updateWindowMutation({
 			windowId: window.id,
 			calendarId,
 			day: window.day,
 			data: v,
 		})
-		mutate(newWindow)
+		setQueryData(newWindow)
 	}
 
 	if (!user) return null

@@ -22,7 +22,7 @@ export default async function signup(input: SignupInputType) {
 		if (!response.data.success) {
 			throw new Error("Ugyldig recaptcha verdi.")
 		}
-		const userExist = await db.user.findOne({ where: { email }})
+		const userExist = await db.user.findUnique({ where: { email }})
 		if (userExist) return // so that we don't run activation email again
 		const user = await createOrUpdateUser({ email })
 		const request = await createLoginRequest(user)
