@@ -1,13 +1,13 @@
 import { ValidationError } from "app/utils/errors"
 import { ShareByEmailFunctionArgsType, ShareByEmailFunctionArgs } from "../validations"
-import { SessionContext } from "blitz"
+import { Ctx } from "blitz"
 import db from "db"
 import { allowedEditCalendar, authAndValidatePlanLimit, AvailableRoles, createUserInvite, grantCalendarAccess } from "../utils"
 import { sendEmail } from "app/email"
 
 export default async function shareCalendarByEmail(
 	{ role, ...rest }: ShareByEmailFunctionArgsType & { role: AvailableRoles },
-	ctx: { session?: SessionContext } = {}
+	ctx: Ctx
 ) {
 	const { email: theMail, calendarId } = ShareByEmailFunctionArgs.parse(rest)
 	const email = theMail.toLowerCase()
@@ -15,7 +15,7 @@ export default async function shareCalendarByEmail(
 	const userId = await authAndValidatePlanLimit(ctx)
 	await allowedEditCalendar({ calendarId, ctx })
 
-	const user = await db.user.findOne({ where: { email } })
+	const user = await db.user.findUnique({ where: { email } })
 	const invites = await db.userInvite.findMany({ where: {
 		calendarId,
 		createdBy: userId,

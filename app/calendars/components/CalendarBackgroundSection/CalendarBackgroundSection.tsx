@@ -1,5 +1,5 @@
 import React from "react"
-import { useQuery } from "blitz"
+import { useMutation, useQuery } from "blitz"
 import getCalendar from "app/calendars/queries/getCalendar"
 import { CalendarBackgroundColorTheme, CalendarBackgroundPosition } from "app/interfaces/CalendarOptions"
 import updateCalendar from "app/calendars/mutations/updateCalendar"
@@ -20,7 +20,9 @@ const positionOptions: Record<CalendarBackgroundPosition, string> = {
 }
 
 export const CalendarBackgroundSection = ({ calendarId }) => {
-	const [calendar, { mutate }] = useQuery(getCalendar, { where: { id: calendarId } })
+	const [calendar, { setQueryData }] = useQuery(getCalendar, { where: { id: calendarId } })
+	const [updateCalendarMutation] = useMutation(updateCalendar)
+
 	const options = calendar.options ? JSON.parse(calendar.options) : {}
 	const selectedColorTheme =
     options.background && options.background.colorTheme ? options.background.colorTheme : ""
@@ -35,8 +37,8 @@ export const CalendarBackgroundSection = ({ calendarId }) => {
 			background: { ...(options.background || {}), colorTheme: val },
 		})
 		calendar.options = newOptions
-		await updateCalendar({ where: { id: calendarId }, data: { options: newOptions } })
-		await mutate(calendar)
+		await updateCalendarMutation({ where: { id: calendarId }, data: { options: newOptions } })
+		await setQueryData(calendar)
 	}
 
 	const handleImageChange = async (val: string) => {
@@ -45,8 +47,8 @@ export const CalendarBackgroundSection = ({ calendarId }) => {
 			background: { ...(options.background || {}), image: val },
 		})
 		calendar.options = newOptions
-		await updateCalendar({ where: { id: calendarId }, data: { options: newOptions } })
-		await mutate(calendar)
+		await updateCalendarMutation({ where: { id: calendarId }, data: { options: newOptions } })
+		await setQueryData(calendar)
 	}
 
 	const handleBgPosChange = async (val: string) => {
@@ -55,8 +57,8 @@ export const CalendarBackgroundSection = ({ calendarId }) => {
 			background: { ...(options.background || {}), position: val },
 		})
 		calendar.options = newOptions
-		await updateCalendar({ where: { id: calendarId }, data: { options: newOptions } })
-		await mutate(calendar)
+		await updateCalendarMutation({ where: { id: calendarId }, data: { options: newOptions } })
+		await setQueryData(calendar)
 	}
 
 	const handleRemove = async () => {

@@ -12,22 +12,22 @@ import ShareLinkListing from "app/calendars/components/Share/ShareLinkListing"
 import UserInviteListing from "app/calendars/components/Share/UserInviteListing"
 
 const GetSharePage = ({ calendarId }) => {
-	const [{ shareKeys, roles, userInvites }, { mutate, refetch }] = useQuery(getCalendarShares, {
+	const [{ shareKeys, roles, userInvites }, { setQueryData, refetch }] = useQuery(getCalendarShares, {
 		calendarId,
 	})
 	const { user } = useCurrentUser()
 
 	const handleDeleteRole = async (roleId: number) => {
 		const newRoles = roles.filter((r) => r.id !== roleId)
-		await mutate({ shareKeys, roles: newRoles, userInvites })
+		await setQueryData({ shareKeys, roles: newRoles, userInvites })
 	}
 	const handleDeleteLink = async (shareKeyId: number) => {
 		const newLinks = shareKeys.filter((s) => s.id !== shareKeyId)
-		await mutate({ shareKeys: newLinks, roles, userInvites })
+		await setQueryData({ shareKeys: newLinks, roles, userInvites })
 	}
 	const handleDeleteInvite = async (inviteId: number) => {
 		const newInvites = userInvites.filter((i) => i.id !== inviteId)
-		await mutate({ shareKeys, roles, userInvites: newInvites })
+		await setQueryData({ shareKeys, roles, userInvites: newInvites })
 	}
 	const onShared = async () => await refetch()
 

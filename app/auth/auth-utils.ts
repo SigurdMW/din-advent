@@ -14,7 +14,7 @@ const expiredRequest = (millisecondsSinceRequest: number) => {
 export const validateLoginRequest = async (requestToken: string) => {
 	try {
 		logger("Authentication with loginToken " + requestToken)
-		const loginRequest = await db.loginrequest.findOne({ where: { loginToken: requestToken } })
+		const loginRequest = await db.loginrequest.findUnique({ where: { loginToken: requestToken } })
 		if (!loginRequest) {
 			logger("No loginrequest found for token " + requestToken)
 			throw new Error("Noe gikk feil. Vennligst forsøk igjen")
@@ -26,7 +26,7 @@ export const validateLoginRequest = async (requestToken: string) => {
 		}
 
 		await db.loginrequest.delete({ where: { id: loginRequest.id } })
-		const user = await db.user.findOne({ where: { id: loginRequest?.userId } })
+		const user = await db.user.findUnique({ where: { id: loginRequest?.userId } })
 		if (!user) {
 			logger("No user found for userId: " + loginRequest.userId + " for token " + requestToken)
 			throw new Error("Noe gikk feil. Vennligst forsøk igjen")

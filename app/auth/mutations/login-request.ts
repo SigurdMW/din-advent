@@ -24,7 +24,7 @@ export default async function loginRequest(input: LoginInputType) {
 	if (!response.data.success) {
 		throw new Error("Ugyldig recaptcha verdi.")
 	}
-	const user = await db.user.findOne({ where: { email } })
+	const user = await db.user.findUnique({ where: { email } })
 	if (user && user.active) {
 		const request = await createLoginRequest(user)
 		await sendEmail({

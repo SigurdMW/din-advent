@@ -1,19 +1,19 @@
 import { AuthenticationError, NotFoundError } from "app/utils/errors"
-import { SessionContext } from "blitz"
+import { Ctx } from "blitz"
 import db from "db"
 
 export default async function getCalendarRoles(
 	{ calendarId }: { calendarId: number },
-	ctx: { session?: SessionContext } = {}
+	ctx: Ctx
 ) {
 	if (!calendarId) throw new NotFoundError()
-  ctx.session!.authorize()
-  const userId = ctx.session?.userId
-  if (!ctx.session || !userId) throw new AuthenticationError()
-  const calendar = await db.calendar.findOne({where: { id: calendarId }})
-  if (!calendar) throw new NotFoundError()
+	ctx.session.authorize()
+	const userId = ctx.session?.userId
+	if (!ctx.session || !userId) throw new AuthenticationError()
+	const calendar = await db.calendar.findUnique({where: { id: calendarId }})
+	if (!calendar) throw new NotFoundError()
 
-  try {
+	try {
   	const roles = await db.role.findMany({
 		  where: {
 			  calendarId, userId
@@ -27,7 +27,7 @@ export default async function getCalendarRoles(
   		userRoles.push("admin")
   	}
   	return userRoles
-  } catch (e) {
+	} catch (e) {
 	  return []
-  }
+	}
 }

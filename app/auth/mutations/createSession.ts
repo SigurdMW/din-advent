@@ -1,8 +1,8 @@
 import { getPublicData } from "app/users/utils"
-import { SessionContext, PublicData } from "blitz"
+import { PublicData, Ctx } from "blitz"
 import { User } from "db"
 
-export default async function createSession(user: User, ctx: { session?: SessionContext } = {}) {
+export default async function createSession(user: User, ctx: Ctx) {
 	// const privateData = await getPrivateData(user.id)
 	const publicData = getPublicData(user, "email") as PublicData
 	await ctx.session!.create(

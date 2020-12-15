@@ -1,6 +1,6 @@
 import { EmailAndInvite, UserAndRoles } from "app/interfaces/Collaborate"
 import { NotFoundError, AuthorizationError } from "app/utils/errors"
-import { SessionContext } from "blitz"
+import { Ctx } from "blitz"
 import db from "db"
 import { allowedEditCalendar } from "../utils"
 
@@ -11,22 +11,22 @@ interface ColabReturn {
 
 export default async function getCalendarCollaborators(
 	{ calendarId }: { calendarId: number },
-	ctx: { session?: SessionContext } = {}
+	ctx: Ctx
 ): Promise<ColabReturn> {
-  ctx.session!.authorize()
+	ctx.session.authorize()
 
-  await allowedEditCalendar({ calendarId, ctx })
-  const calendar = await db.calendar.findOne({
+	await allowedEditCalendar({ calendarId, ctx })
+	const calendar = await db.calendar.findUnique({
 	  where: { id: calendarId },
   	include: { Role: { include: { user: true } }, UserInvite: true },
-  })
+	})
 
-  if (!calendar) throw new NotFoundError()
-  if (calendar.userId !== ctx.session?.userId) {
+	if (!calendar) throw new NotFoundError()
+	if (calendar.userId !== ctx.session?.userId) {
 	  throw new AuthorizationError()
-  }
+	}
 
-  const uniqueInvitesWithoutReader = calendar.UserInvite.reduce((obj, invite) => {
+	const uniqueInvitesWithoutReader = calendar.UserInvite.reduce((obj, invite) => {
 	  if (!invite.role || invite.role === "reader") return obj
 	  const key = invite.email.toLowerCase()
   	if (obj.hasOwnProperty(key)) {
@@ -38,9 +38,9 @@ export default async function getCalendarCollaborators(
   		}
   	}
   	return obj
-  }, {})
+	}, {})
 
-  const uniqueUsersWithoutReader = calendar.Role.reduce((obj, role) => {
+	const uniqueUsersWithoutReader = calendar.Role.reduce((obj, role) => {
   	if (role.role === "reader") return obj
 	  const key = role.userId
   	if (obj.hasOwnProperty(key)) {
@@ -52,10 +52,10 @@ export default async function getCalendarCollaborators(
   		}
   	}
   	return obj
-  }, {})
+	}, {})
 
-  return {
+	return {
   	users: Object.values(uniqueUsersWithoutReader),
   	invites: Object.values(uniqueInvitesWithoutReader),
-  }
+	}
 }
