@@ -33,15 +33,18 @@ const editorOptions = {
 		uploadEnabled: true,
 		alignmentEnabled: true,
 		uploadCallback: async (file) => {
+			const max = 10 // MB
+			const mbInBytes = 1048576
+			
 			try {
-				if (file.size && file.size > 2097152) {
+				if (file.size && file.size > (max * mbInBytes)) {
 					throw new ValidationError()
 				}
 				const res = await uploadImageCallBack(file)
 				return res
 			} catch (e) {
 				if (e.name === ErrorName.ValidationError) {
-					alert("Bildet du lastet opp er for stort. Maks størrelse er 2MB.")
+					alert(`Bildet du lastet opp er for stort. Maks størrelse er ${max}MB.`)
 				} else {
 					alert(
 						"Obs, vi klarte ikke å laster opp bilde. Vennligst prøv igjen. Ved gjentatte problemer, ta kontakt med oss."
