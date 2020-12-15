@@ -27,7 +27,7 @@ const JumpToWindow = ({calendarId, day}) => {
 				style={{ maxWidth: "240px", marginBottom: "1em" }}
 			>
 				<option>Gå til luke...</option>
-				{jumpTo.filter((d) => d !== day).map((d) => <option value={d}>{d}</option>)}
+				{jumpTo.filter((d) => d !== day).map((d) => <option key={d} value={d}>{d}</option>)}
 			</select>
 		</>
 	)
